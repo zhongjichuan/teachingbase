@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>密码修改</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="Bookmark" href="/favicon.ico" >
+    <link rel="Shortcut Icon" href="/favicon.ico" />
+
+    <script type="text/javascript" src="/lib/respond.min.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/h-ui/css/H-ui.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/static/h-ui.admin/css/H-ui.admin.css}" />
+    <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/style.css" />
+
+    <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <script>DD_belatedPNG.fix('*');</script>
+
+ </head>
+<body>
+<!--_header 作为公共模版分离出去-->
+<div th:replace="common/header::header"></div>
+<div th:replace="common/menu::menu"></div>
+<!--/_menu 作为公共模版分离出去-->
+
+<section class="Hui-article-box">
+    <nav class="breadcrumb"><i class="Hui-iconfont"></i> <a href="/index" class="maincolor">首页</a>
+    <span class="c-999 en">&gt;</span><span class="c-666">个人中心</span>
+    <span class="c-999 en">&gt;</span></span><span class="c-666">密码修改</span></nav>
+    <form class="form form-horizontal responsive" th:action="@{/user/updatePassword}" id="passwordForm">
+
+    <div class="panel panel-default">
+        <div class="panel-header">密码修改</div>
+        <div class="panel-body">
+            <div  class="row cl">
+                <label class="form-label col-xs-3"><span class="c-red">*</span>&nbsp;&nbsp;为必填项</label>
+
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-3"><span class="c-red">*</span>&nbsp;&nbsp;原始密码：</label>
+                <div class="formControls col-xs-4">
+                    <input type="text" class="input-text radius" autocomplete="off" placeholder="原始密码" name="oldPassword" style="width:74%">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-3"><span class="c-red">*</span>&nbsp;&nbsp;新密码：</label>
+                <div class="formControls col-xs-4">
+                    <input type="text" class="input-text radius" autocomplete="off" placeholder="新密码" name="newPassword" id="newPassword" style="width: 74%">
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-3"><span class="c-red">*</span>&nbsp;&nbsp;确认密码：</label>
+                <div class="formControls col-xs-4">
+                    <input type="text" class="input-text radius" autocomplete="off" placeholder="确认密码" name="newPassword2" style="width: 74%">
+                </div>
+            </div>
+            <div class="row cl">
+                <div class="col-xs-8 col-xs-offset-3">
+                    <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;确认&nbsp;&nbsp;"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+</section>
+
+
+</body>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+    $(function () {
+        $("#passwordForm").validate({
+            rules: {
+                oldPassword: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 6,
+                    digits: true,//只能填整数
+                },
+                newPassword: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 6,
+                    digits: true,//只能填整数
+                },
+                newPassword2: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 6,
+                    digits: true,//只能填整数
+                    equalTo: "#newPassword"
+                }
+            },
+            messages: {
+                oldPassword: {
+                    required: "请填写原始密码",
+                    minlength: "账号为6位",
+                    maxlength: "账号为6位",
+                    digits: "账号须为整数"
+                },
+                newPassword: {
+                    required: "请填写新密码",
+                    minlength: "密码为6位",
+                    maxlength: "密码为6位",
+                    digits: "账号须为整数"
+                },
+                newPassword2: {
+                    required: "请填写确认密码",
+                    minlength: "密码为6位",
+                    maxlength: "密码为6位",
+                    digits: "账号须为整数",
+                    equalTo: "输入密码不一致"
+                }
+            }
+        })
+    });
+
+
+</script>
+</html>

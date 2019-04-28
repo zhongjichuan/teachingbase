@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teachingbase.dao.AdminMapper">
+
+     <select id="getCounselorListBySearchParams" parameterType="map" resultType="user">
+        select * from User where role_id = '201'
+        <if test="username!=null and username!=''">
+            and username like concat('%',#{username},'%')
+        </if>
+         <if test="name!=null and name!=''">
+            and name like concat('%',#{name},'%')
+         </if>
+         <if test="college!=null and college!=''">
+            and college = #{college}
+        </if>
+	 </select>
+
+    <insert id="addCounselor" parameterType="user">
+      INSERT into user(
+      <if test="username!=null and username!=''">
+        username,
+      </if>
+        <if test="password!=null and password!=''">
+            password,
+        </if>
+        <if test="name!=null and name!=''">
+            name,
+        </if>
+        <if test="sex!=null and sex!=''">
+            sex,
+        </if>
+        <if test="age!=null and age!=''">
+            age,
+        </if>
+        role_id,
+        <if test="phone!=null and phone!=''">
+            phone,
+        </if>
+        <if test="email!=null and email!=''">
+            email,
+        </if>
+        <if test="college!=null and college!=''">
+            college,
+        </if>
+        is_active,create_time,update_time)
+      VALUES(
+        <trim suffixOverrides=",">
+            <if test="username!=null and username!=''">
+                #{username},
+            </if>
+            <if test="password!=null and password!=''">
+                #{password},
+            </if>
+            <if test="name!=null and name!=''">
+                #{name},
+            </if>
+            <if test="sex!=null and sex!=''">
+                #{sex},
+            </if>
+            <if test="age!=null and age!=''">
+                #{age},
+            </if>
+            '201',
+            <if test="phone!=null and phone!=''">
+                #{phone},
+            </if>
+            <if test="email!=null and email!=''">
+                #{email},
+            </if>
+            <if test="college!=null and college!=''">
+                #{college},
+            </if>
+            1,NOW(),NOW())
+        </trim>
+    </insert>
+
+    <insert id="addManager" parameterType="user">
+        INSERT into user(
+        <if test="username!=null and username!=''">
+            username,
+        </if>
+        <if test="password!=null and password!=''">
+            password,
+        </if>
+        <if test="name!=null and name!=''">
+            name,
+        </if>
+        <if test="sex!=null and sex!=''">
+            sex,
+        </if>
+        <if test="age!=null and age!=''">
+            age,
+        </if>
+        role_id,
+        <if test="phone!=null and phone!=''">
+            phone,
+        </if>
+        <if test="email!=null and email!=''">
+            email,
+        </if>
+        <if test="company!=null and company!=''">
+            company,
+        </if>
+        is_active,create_time,update_time)
+        VALUES(
+        <trim suffixOverrides=",">
+            <if test="username!=null and username!=''">
+                #{username},
+            </if>
+            <if test="password!=null and password!=''">
+                #{password},
+            </if>
+            <if test="name!=null and name!=''">
+                #{name},
+            </if>
+            <if test="sex!=null and sex!=''">
+                #{sex},
+            </if>
+            <if test="age!=null and age!=''">
+                #{age},
+            </if>
+            '401',
+            <if test="phone!=null and phone!=''">
+                #{phone},
+            </if>
+            <if test="email!=null and email!=''">
+                #{email},
+            </if>
+            <if test="company!=null and company!=''">
+                #{company},
+            </if>
+            1,NOW(),NOW())
+        </trim>
+    </insert>
+
+    <select id="getManagerListBySearchParams" parameterType="map" resultType="user">
+        select * from User where role_id = '401'
+        <if test="username!=null and username!=''">
+            and username like concat('%',#{username},'%')
+        </if>
+        <if test="name!=null and name!=''">
+            and name like concat('%',#{name},'%')
+        </if>
+        <if test="company!=null and company!=''">
+            and company = #{company}
+        </if>
+    </select>
+</mapper>

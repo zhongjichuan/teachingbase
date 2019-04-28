@@ -1,0 +1,140 @@
+<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="Bookmark" th:href="@{/favicon.ico}" >
+    <link rel="shortcut icon" th:href="@{/favicon.ico}"/>
+    <link rel="bookmark" th:href="@{/favicon.ico}"/>
+    <link rel="Shortcut Icon" th:href="@{/favicon.ico}" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="/lib/html5.js"></script>
+    <script type="text/javascript" src="/lib/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css" />
+
+    <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/lib/zTree/zTreeStyle.css">
+    <!--[if IE 6]>
+    <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <script>DD_belatedPNG.fix('*');</script><![endif]-->
+    <!--/meta 作为公共模版分离出去-->
+    <title>创建基地</title>
+
+</head>
+<body>
+<!--_header 作为公共模版分离出去-->
+<div th:replace="common/header::header"></div>
+<!--_menu 作为公共模版分离出去-->
+<div th:replace="common/menu::menu"></div>
+
+<section class="Hui-article-box">
+    <nav class="breadcrumb"><i class="Hui-iconfont"></i> <a href="/" class="maincolor">首页</a>
+        <span class="c-999 en">&gt;</span><span class="c-666">员工详情</span>
+    </nav>
+    <div class="Hui-article">
+        <article class="cl pd-20">
+            <div class="panel panel-default">
+                <div class="panel-header">员工详情</div>
+                <div class="panel-body text-c form-horizontal">
+                    <dl th:each="tree:${session.treeList}">
+                        <dt><i class="Hui-iconfont">&#xe[[${tree.iconUrl}]]</i> [[${tree.name}]]<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+                        <dd>
+                            <ul th:each="child:${tree.children}">
+                                <li><a th:href="${child.url}" th:title="${child.name}">[[${child.name}]]</a></li>
+                            </ul>
+                        </dd>
+                    </dl>
+<input type="hidden" th:value="${session.treeList}" id="nodes">
+                    <div >
+                        <ul id="treeDemo" class="ztree"></ul>
+                    </div>
+                </div>
+            </div>
+
+        </article>
+    </div>
+</section>
+
+
+
+
+
+
+<script src="/lib/zTree/jquery.ztree.all-3.5.min.js"></script>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+$(function () {
+    var nodes = $("#nodes").val();
+    // var zNodes =[
+    //     { name:"父节点1 - 展开11111", open:true,
+    //         children: [
+    //             { name:"父节点11 - 折叠",
+    //                 children: [
+    //                     { name:"叶子节点111"},
+    //                     { name:"叶子节点112"},
+    //                     { name:"叶子节点113"},
+    //                     { name:"叶子节点114"}
+    //                 ]},
+    //             { name:"父节点12 - 折叠",
+    //                 children: [
+    //                     { name:"叶子节点121"},
+    //                     { name:"叶子节点122"},
+    //                     { name:"叶子节点123"},
+    //                     { name:"叶子节点124"}
+    //                 ]},
+    //             { name:"父节点13 - 没有子节点", isParent:true}
+    //         ]},
+    //     { name:"父节点2 - 折叠",
+    //         children: [
+    //             { name:"父节点21 - 展开", open:true,
+    //                 children: [
+    //                     { name:"叶子节点211"},
+    //                     { name:"叶子节点212"},
+    //                     { name:"叶子节点213"},
+    //                     { name:"叶子节点214"}
+    //                 ]},
+    //             { name:"父节点22 - 折叠",
+    //                 children: [
+    //                     { name:"叶子节点221"},
+    //                     { name:"叶子节点222"},
+    //                     { name:"叶子节点223"},
+    //                     { name:"叶子节点224"}
+    //                 ]},
+    //             { name:"父节点23 - 折叠",
+    //                 children: [
+    //                     { name:"叶子节点231"},
+    //                     { name:"叶子节点232"},
+    //                     { name:"叶子节点233"},
+    //                     { name:"叶子节点234"}
+    //                 ]}
+    //         ]},
+    //     { name:"父节点3 - 没有子节点", isParent:true}
+    //
+    // ];
+    console.log(nodes);
+    var setting={
+        async: { // 属性配置
+            enable: true,
+            url:"/admin/getNodes",
+            autoParam:["parentId"],
+            // otherParam:{"otherParam":"zTreeAsyncTest"},
+            type: 'get'
+
+        },
+    };
+    $.fn.zTree.init($("#treeDemo"), setting);
+})
+
+
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

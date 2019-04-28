@@ -1,0 +1,482 @@
+<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="Bookmark" href="/favicon.ico" >
+    <link rel="Shortcut Icon" href="/favicon.ico" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="/lib/html5.js"></script>
+    <script type="text/javascript" src="/lib/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css" />
+
+    <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/style.css" />
+    <!--[if IE 6]>
+    <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <script>DD_belatedPNG.fix('*');</script><![endif]-->
+    <!--/meta 作为公共模版分离出去-->
+    <title>基地报名</title>
+
+</head>
+<body>
+<!--_header 作为公共模版分离出去-->
+<div th:replace="common/header::header"></div>
+<!--_menu 作为公共模版分离出去-->
+<div th:replace="common/menu::menu"></div>
+
+<section class="Hui-article-box">
+    <nav class="breadcrumb"><i class="Hui-iconfont"></i> <a href="/" class="maincolor">首页</a>
+        <span class="c-999 en">&gt;</span><span class="c-666">管理员管理</span>
+        <span class="c-999 en">&gt;</span><span class="c-666">辅导员管理</span></nav>
+    <div class="Hui-article">
+        <article class="cl pd-20">
+            <div class="panel panel-default">
+                <div class="panel-header">辅导员管理</div>
+                <form id="form" class="panel-body text-c">
+                    工号：<input type="text" class="input-text radius mr-5" style="width:210px" name="username">
+                    姓名：<input type="text" class="input-text radius mr-5" style="width:210px" name="name">
+                    学院：
+                    <select class="input-text radius mr-5" style="width:210px" name="company">
+                        <option class="input-text radius mr-5" value="">选择学院</option>
+                        <option th:each="college:${colleges}" th:value ="${college}" th:text="${college}"></option>
+                    </select>
+                    <button type="submit" class="btn btn-success radius" name="search_btn" id="search_btn"><i class="Hui-iconfont"></i> 查询</button>
+                </form>
+            </div>
+            <div class="mt-20">
+                <div class="cl pd-5 bg-1 bk-gray mt-20 ">
+					<span class="l">
+						<a href="javascript:;" onclick="teacher_add()" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加辅导员</a>
+					</span>
+                    <span class="r">共有数据：<strong id="dataLength">4</strong> 条</span>
+                </div>
+                <table class="table table-border table-bordered table-striped table-hover" id="table">
+                    <tbody class="text-c" id="tbody">
+                    <tr>
+                        <td>工号</td>
+                        <td>姓名</td>
+                        <td>学院</td>
+                        <td>电话</td>
+                        <td>邮箱</td>
+                        <td>上次修改时间</td>
+                        <td>操作</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </article>
+    </div>
+</section>
+
+<!--增加辅导员modal-->
+<div id="addTeacher" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="height: 650px;overflow-y :auto">
+    <div class="modal-dialog">
+        <div class="modal-content radius">
+            <div class="modal-header">
+                <h3 class="modal-title">添加实训教师</h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true" href="#;">×</a>
+            </div>
+            <form class="modal-body" id="addForm">
+                <div class="mb-10"><strong>工号：</strong><input type="text " disabled="disabled" style="background-color: #CDD0D4" class="input-text radius" name="newUsername" id="newUsername">
+                <input type="hidden" name="username" id="add_username"></div>
+                <div class="mb-10"><span class="c-red">*</span><strong class="mt-5">姓名：</strong><input type="text"  class="input-text radius " autocomplete="off" name="name" id="new_name"></div>
+                <div class="mb-10"><strong class="mt-5">性别：</strong>
+                    <select class="input-text radius mr-5"  name="sex" id="new_sex">
+                     <option class="input-text radius mr-5" value="1" selected>男</option>
+                     <option value="2">女</option>
+                   </select>
+                </div>
+                <div class="mb-10"><span class="c-red">*</span><strong>学院：</strong> <select class="input-text radius mr-5" name="college" id="new_college">
+                    <option class="input-text radius mr-5" value="">选择学院</option>
+                    <option th:each="college:${colleges}" th:value ="${college}" th:text="${college}"></option>
+                </select></div>
+                <div class="mb-10"><strong>年龄：</strong><input type="text"  class="input-text radius" name="age" ></div>
+                <div class="mb-10"><span class="c-red">*</span><strong>手机：</strong><input type="text"  class="input-text radius" autocomplete="off" name="phone"></div>
+                <div class="mb-10"><strong>邮箱：</strong><input type="email"  class="input-text radius" placeholder="@" name="email"></div>
+                <div class="text-r">
+                    <button class="btn btn-primary" type="submit">添加</button>
+                    <button class="btn" data-dismiss="modal" aria-hidden="true" id="addCancel">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--编辑实训老师modal-->
+<div id="editTeacher" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content radius">
+            <div class="modal-header">
+                <h3 class="modal-title">修改教师信息</h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true" href="#;">×</a>
+            </div>
+            <form class="modal-body" id="editForm">
+                <div class="mb-10"><strong>工号：</strong>
+                    <input type="text " disabled="disabled" style="background-color: #CDD0D4" class="input-text radius" name="username" id="edit_username">
+                    <input type="hidden"  name="username" id="edit_username2">
+                </div>
+                <div class="mb-10"><span class="c-red">*</span><strong class="mt-5">姓名：</strong><input type="text"  class="input-text radius " name="name" id="edit_name"></div>
+                <div class="mb-10"><strong class="mt-5">性别：</strong>
+                    <select class="input-text radius mr-5"  name="sex" id="edit_sex">
+                        <option class="input-text radius mr-5" value="1" selected>男</option>
+                        <option value="2">女</option>
+                    </select>
+                </div>
+                <div class="mb-10"><span class="c-red">*</span><strong>学院：</strong>
+                    <select class="input-text radius mr-5" name="college" id="edit_college">
+                    <option class="input-text radius mr-5" value="">选择学院</option>
+                    <option th:each="college:${colleges}" th:value ="${college}" th:text="${college}"></option>
+                    </select></div>
+                <div class="mb-10"><strong>年龄：</strong><input type="text"  class="input-text radius" name="age" id="edit_age"></div>
+                <div class="mb-10"><span class="c-red">*</span><strong>手机：</strong><input type="text"  class="input-text radius" name="phone" id="edit_phone"></div>
+                <div class="mb-10"><strong>邮箱：</strong><input type="email"  class="input-text radius" placeholder="@" name="email" id="edit_email"></div>
+                <div class="text-r">
+                    <button class="btn btn-primary" type="submit">保存</button>
+                    <button class="btn" data-dismiss="modal" aria-hidden="true" id="updateCancel">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--修改实训老师密码的modal-->
+<div id="modifyPassword" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form class="modal-content radius form-horizontal" id="modifyPasswordForm">
+            <div class="modal-header">
+                <h3 class="modal-title">修改密码</h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true" href="#;">×</a>
+            </div>
+            <div class="row cl mb-15 mt-15">
+                <label class="form-label col-xs-3"><span class="c-red">*</span>&nbsp;&nbsp;账户：</label>
+                <div class="formControls col-xs-8" >
+                    <label class="form-label" id = "label_user" style="float: left"></label>
+                    <input type="hidden" name="username" id="hidden_username">
+                </div>
+            </div>
+            <div class="row cl mb-15">
+                <label class="form-label col-xs-3"><span class="c-red">*</span>&nbsp;&nbsp;新密码：</label>
+                <div class="formControls col-xs-8">
+                    <input type="text" class="input-text radius" autocomplete="off" placeholder="新密码" name="newPassword" id="newPassword">
+                </div>
+            </div>
+            <div class="row cl mb-15">
+                <label class="form-label col-xs-3"><span class="c-red">*</span>&nbsp;&nbsp;确认密码：</label>
+                <div class="formControls col-xs-8">
+                    <input type="text" class="input-text radius" autocomplete="off" placeholder="确认密码" name="newPassword2" id="newPassword2">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="submit" >保存</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true" id="modifyPassword_cancel">取消</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+    $(function () {
+        getCounselors();
+
+        //条件查询表单提交
+        $("#form").submit(function () {
+            var searchParams = $('#form').serializeArray();
+            $(".singleData").empty();
+            $.ajax({
+                type: "POST",
+                data: searchParams,
+                url: "/admin/getCounselorList",
+                dataType: "json",
+                success: function(data){
+                    showCounselor(data);
+                }
+            });
+
+            return false;//实现页面不刷新
+        });
+
+        //增加辅导员表单提交
+        $("#addForm").submit(function () {
+            if ($("#addForm").valid()) {//如果表单全部验证通过
+                var counselorParams = $('#addForm').serializeArray();
+                $.ajax({
+                    type: "POST",
+                    data: counselorParams,
+                    url: "/admin/addCounselor",
+                    dataType: "text",
+                    success: function (data) {
+                        console.log(data);
+                        if (data == "true") {
+                            $("#addForm input").val("");
+                            //$("#addForm input").removeAttr("value")
+                            $("#new_college").val("");
+                            $("#new_sex").val(1);
+                            $("#addCancel").click();
+                            layer.msg("添加成功", {icon: 1, time: 1000});
+                        } else {
+                            layer.msg("添加失败", {icon: 2, time: 1000});
+                        }
+                        getCounselors();
+                    },
+                    error: function () {
+                        layer.msg("添加失败！", {icon: 2, time: 1000});
+                    }
+                });
+            }
+            return false;//实现页面不刷新
+        });
+
+        //编辑表单提交
+        $("#editForm").submit(function () {
+            if ($("#editForm").valid()) {//如果表单全部验证通过
+                var user = $('#editForm').serializeArray();
+                $.ajax({
+                    type: "POST",
+                    data: user,
+                    url: "/admin/editCounselor",
+                    dataType: "json",
+                    success: function(data){
+                        console.log(data);
+                        if (data){
+                            $("#updateCancel").click();
+                            layer.msg("保存成功",{icon:1,time:1200});
+                            getCounselors();
+                        } else {
+                            layer.msg("保存失败",{icon:2,time:1200});
+                        }
+                    },
+                    error:function () {
+                        layer.msg("保存失败！",{icon:2,time:1000});
+                    }
+                });
+            }
+            return false;//实现页面不刷新
+        });
+
+        //修改密码表单提交
+        $("#modifyPasswordForm").submit(function () {
+            if ($("#modifyPasswordForm").valid()) {//如果表单全部验证通过
+                var username=$("#hidden_username").val();
+                var password=$("#newPassword").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/modifyPassword?username="+username+"&&password="+password,
+                    dataType: "json",
+                    success: function(data){
+                        console.log(data);
+                        if (data){
+                            $("#modifyPassword_cancel").click();
+                            layer.msg("修改成功",{icon:1,time:1200});
+                        } else {
+                            layer.msg("修改失败",{icon:2,time:1200});
+                        }
+                        $("#newPassword").val("");
+                        $("#newPassword2").val("");
+                    },
+                    error:function () {
+                        layer.msg("保存失败！",{icon:2,time:1000});
+                    }
+                });
+            }
+            return false;//实现页面不刷新
+        });
+
+
+    });
+    /*实训教师-添加*/
+    function teacher_add(){
+        //layer_show("增加教师","/addTeacher","","510");
+        $("#addTeacher").modal();
+
+        $.get("/admin/getMaxUsernameOfCounselor",function(data){
+            console.log(data);
+            $("#newUsername").val(data+"(初始密码：123456)");
+            $("#add_username").val(data);
+        });
+    }
+    /*实训教师-编辑*/
+    function teacher_edit(username){
+        $.get("/admin/getUser/"+username,function (data) {
+            console.log(data);
+            $("#edit_username").val(data.username);
+            $("#edit_username2").val(data.username);
+            $("#edit_name").val(data.name);
+            $("#edit_sex").val(data.sex);
+            $("#edit_college").val(data.college);
+            $("#edit_age").val(data.age);
+            $("#edit_phone").val(data.phone);
+            $("#edit_email").val(data.email);
+        });
+        $("#editTeacher").modal();
+    }
+    /*实训教师-密码修改*/
+    function modifyPassword(username,name){
+        $("#modifyPassword").modal();
+        console.log(username)
+        $("#hidden_username").val(username);
+        $("#label_user").text(name+"("+username+")");
+    }
+
+    /*实训教师-删除*/
+    function teacher_del(obj,username){
+        console.log("将要删除id"+username);
+        layer.confirm('确认要删除吗？',function(index){
+            $.post("/admin/delCounselors/"+username,function(data,status){
+                if (data){
+                    layer.msg('已删除!',{icon:1,time:1200});
+                    getCounselors();
+                } else {
+                    layer.msg('删除失败!',{icon:2,time:1200});
+                }
+            });
+        });
+    }
+
+    /*查询辅导员，进行表格填充*/
+     function getCounselors() {
+        $.ajax({
+            type: "GET",
+            url: "/admin/getCounselorList",
+            dataType: "json",
+            success: function(data){
+                showCounselor(data);
+            }
+        });
+    }
+    /*遍历数据进行渲染*/
+    function showCounselor(data) {
+        $(".singleData").empty();
+        if (data[0]){
+            $.each(data,function (index,user) {
+                $("#tbody").append("<tr class='singleData'>\n" +
+                    "                        <td><a th:href=\"@{#}\" class=\"c-primary\">"+user.username+"</a></td>\n" +
+                    "                        <td>"+user.name+"</td>\n" +
+                    "                        <td>"+user.college+"</td>\n" +
+                    "                        <td>"+user.phone+"</td>\n" +
+                    "                        <td>"+user.email+"</td>\n" +
+                    "                        <td>"+user.updateTime+"</td>\n" +
+                    "                        <td class=\"td-manage\">\n" +
+                    "                            <a title=\"编辑\" href=\"javascript:;\" onclick=\"teacher_edit("+user.username+")\" style=\"text-decoration:none\"><i class=\"Hui-iconfont\">&#xe6df;</i></a>\n" +
+                    "                            <a style=\"text-decoration:none\" class=\"ml-10\" onClick=\"modifyPassword("+user.username+",'"+user.name+"')\" href=\"javascript:;\" title=\"修改密码\"><i class=\"Hui-iconfont\">&#xe63f;</i></a>\n" +
+                    "                            <a title=\"删除\" href=\"javascript:;\" onclick=\"teacher_del(this,"+user.username+")\" class=\"ml-10\" style=\"text-decoration:none\"><i class=\"Hui-iconfont\">&#xe6e2;</i></a>\n" +
+                    "                        </td>\n" +
+                    "                    </tr>");
+            });
+            $("#dataLength").text(data.length);
+        } else {
+            $(".singleData").empty();
+            $("#tbody").append("<tr class='singleData'><td colspan='7' style='color: red'><h4>"+data[1]+"</h4></td></tr>");
+            $("#dataLength").text("0");
+        }
+    }
+
+</script>
+<script>
+    $(function () {
+        $("#addForm").validate({
+            rules:{
+                name:{
+                    required: true
+                },
+                college:{
+                    required: true
+                },
+                phone:{
+                    required: true,
+                    minlength: 11,
+                    maxlength: 11,
+                    digits: true//只能填整数
+                },
+                email:{
+                    email:true
+                }
+            },
+            messages:{
+                name:{required:"请正确填写信息"},
+                college:{required:"请正确填写信息"},
+                phone:{
+                    required: "请正确填写信息",
+                    minlength: "请正确填写信息",
+                    maxlength: "请正确填写信息",
+                    digits: "请正确填写信息"//只能填整数
+                },
+                email:{email:"请正确填写信息"}
+            }
+        });
+        $("#editForm").validate({
+            rules:{
+                name:{
+                    required: true
+                },
+                college:{
+                    required: true
+                },
+                phone:{
+                    required: true,
+                    minlength: 11,
+                    maxlength: 11,
+                    digits: true//只能填整数
+                },
+                email:{
+                    email:true
+                }
+            },
+            messages:{
+                name:{required:"请正确填写信息"},
+                college:{required:"请正确填写信息"},
+                phone:{
+                    required: "请正确填写信息",
+                    minlength: "请正确填写信息",
+                    maxlength: "请正确填写信息",
+                    digits: "请正确填写信息"//只能填整数
+                },
+                email:{email:"请正确填写信息"}
+            }
+        });
+        $("#modifyPasswordForm").validate({
+            rules:{
+                newPassword:{
+                    required: true,
+                    minlength: 6,
+                    maxlength: 6,
+                    digits: true//只能填整数
+                },
+                newPassword2:{
+                    required: true,
+                    minlength: 6,
+                    maxlength: 6,
+                    digits: true,//只能填整数
+                    equalTo: "#newPassword"
+                }
+            },
+            messages:{
+                newPassword: {
+                    required: "请填写新密码",
+                    minlength: "密码为6位",
+                    maxlength: "密码为6位",
+                    digits: "账号须为整数"
+                },
+                newPassword2: {
+                    required: "请填写确认密码",
+                    minlength: "密码为6位",
+                    maxlength: "密码为6位",
+                    digits: "账号须为整数",
+                    equalTo: "输入密码不一致"
+                }
+            }
+        });
+    });
+
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

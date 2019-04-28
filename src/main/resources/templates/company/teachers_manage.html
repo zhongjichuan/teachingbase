@@ -1,0 +1,247 @@
+<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="Bookmark" href="favicon.ico" >
+    <link rel="Shortcut Icon" href="favicon.ico" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="lib/html5.js"></script>
+    <script type="text/javascript" src="lib/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+    <!--[if IE 6]>
+    <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <script>DD_belatedPNG.fix('*');</script><![endif]-->
+    <!--/meta 作为公共模版分离出去-->
+    <title>基地报名</title>
+
+</head>
+<body>
+<!--_header 作为公共模版分离出去-->
+<div th:replace="common/header::header"></div>
+<!--_menu 作为公共模版分离出去-->
+<div th:replace="common/menu::menu"></div>
+
+<section class="Hui-article-box">
+    <nav class="breadcrumb"><i class="Hui-iconfont"></i> <a href="/" class="maincolor">首页</a>
+        <span class="c-999 en">&gt;</span><span class="c-666">基地中心</span>
+        <span class="c-999 en">&gt;</span><span class="c-666">实训教师管理</span></nav>
+    <div class="Hui-article">
+        <article class="cl pd-20">
+            <div class="panel panel-default">
+                <div class="panel-header">实训教师管理</div>
+                <div class="panel-body text-c">
+                    员工号：<input type="text" class="input-text radius mr-5" style="width:210px" name="">
+                    姓名：<input type="text" class="input-text radius mr-5" style="width:210px" name="">
+                    负责基地：<input type="text" class="input-text radius mr-5" style="width:210px" name="">
+                    <button type="submit" class="btn btn-success radius" name=""><i class="Hui-iconfont"></i> 查询</button>
+                </div>
+            </div>
+            <div class="mt-20">
+                <div class="cl pd-5 bg-1 bk-gray mt-20 ">
+					<span class="l">
+						<a href="javascript:;" onclick="teacher_add()" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加教师</a>
+					</span>
+                    <span class="r">共有数据：<strong>4</strong> 条</span>
+                </div>
+                <table class="table table-border table-bordered table-striped table-hover">
+                    <tbody class="text-c">
+                    <tr>
+                        <td>员工号</td>
+                        <td>姓名</td>
+                        <td>职位</td>
+                        <td>电话</td>
+                        <td>负责基地</td>
+                        <td>状态</td>
+                        <td>操作</td>
+                    </tr>
+                    <tr>
+                        <td><a th:href="@{#}" class="c-primary">1001</a></td>
+                        <td>马化腾</td>
+                        <td>java软件开发</td>
+                        <td>1101233</td>
+                        <td>Web开发实训</td>
+                        <td>在职</td>
+                        <td class="td-manage">
+                            <a title="编辑" href="javascript:;" onclick="teacher_edit(this,3001)" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+                            <a style="text-decoration:none" class="ml-10" onClick="modifyPassword()" href="javascript:;" title="修改密码"><i class="Hui-iconfont">&#xe63f;</i></a>
+                            <a title="删除" href="javascript:;" onclick="teacher_del(this,'1')" class="ml-10" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a th:href="@{#}" class="c-primary">1001</a></td>
+                        <td>马化腾</td>
+                        <td>java软件开发</td>
+                        <td>1101233</td>
+                        <td>Web开发实训</td>
+                        <td>在职</td>
+                        <td class="td-manage">
+                            <a title="编辑" href="javascript:;" onclick="teacher_edit(this,3001)" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+                            <a style="text-decoration:none" class="ml-10" onClick="modifyPassword()" href="javascript:;" title="修改密码"><i class="Hui-iconfont">&#xe63f;</i></a>
+                            <a title="删除" href="javascript:;" onclick="teacher_del(this,'1')" class="ml-10" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a th:href="@{#}" class="c-primary">1001</a></td>
+                        <td>马化腾</td>
+                        <td>java软件开发</td>
+                        <td>1101233</td>
+                        <td>Web开发实训</td>
+                        <td>在职</td>
+                        <td class="td-manage">
+                            <a title="编辑" href="javascript:;" onclick="teacher_edit(this,3001)" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+                            <a style="text-decoration:none" class="ml-10" onClick="modifyPassword()" href="javascript:;" title="修改密码"><i class="Hui-iconfont">&#xe63f;</i></a>
+                            <a title="删除" href="javascript:;" onclick="teacher_del(this,'1')" class="ml-10" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><a th:href="@{#}" class="c-primary">1001</a></td>
+                        <td>马化腾</td>
+                        <td>java软件开发</td>
+                        <td>1101233</td>
+                        <td>Web开发实训</td>
+                        <td>在职</td>
+                        <td class="td-manage">
+                            <a title="编辑" href="javascript:;" onclick="teacher_edit(this,3001)" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+                            <a style="text-decoration:none" class="ml-10" onClick="modifyPassword()" href="javascript:;" title="修改密码"><i class="Hui-iconfont">&#xe63f;</i></a>
+                            <a title="删除" href="javascript:;" onclick="teacher_del(this,'1')" class="ml-10" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </article>
+    </div>
+</section>
+
+<!--增加辅导员modal-->
+<div id="addTeacher" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="height: 650px;overflow-y :auto">
+    <div class="modal-dialog">
+        <div class="modal-content radius">
+            <div class="modal-header">
+                <h3 class="modal-title">添加实训教师</h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true" href="#;">×</a>
+            </div>
+            <div class="modal-body">
+
+                <div class="mb-10"><strong>员工号：</strong><input type="text "  class="input-text radius"></div>
+                <div class="mb-10"><strong class="mt-5">姓名：</strong><input type="text"  class="input-text radius "></div>
+                <div class="mb-10"><strong class="mt-5">性别：</strong>
+                    <span class="select-box">
+							  <select class="select radius" size="1" name="demo1">
+								<option value="" selected>男</option>
+								<option value="1">女</option>
+							  </select>
+					</span>
+                </div>
+                <div class="mb-10"><strong>职位：</strong><input type="text"  class="input-text radius" ></div>
+                <div class="mb-10"><strong>年龄：</strong><input type="text"  class="input-text radius" ></div>
+                <div class="mb-10"><strong>手机：</strong><input type="text"  class="input-text radius" ></div>
+                <div class="mb-10"><strong>邮箱：</strong><input type="email"  class="input-text radius" placeholder="@"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary">添加</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--编辑实训老师modal-->
+<div id="editTeacher" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content radius">
+            <div class="modal-header">
+                <h3 class="modal-title">修改教师信息</h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true" href="#;">×</a>
+            </div>
+            <div class="modal-body">
+                <div class="mb-10"><strong>员工号：</strong><input type="text "  class="input-text radius" value="3001"></div>
+                <div class="mb-10"><strong>姓名：</strong><input type="text"  class="input-text radius " value="马云"></div>
+                <div class="mb-10"><strong>职位：</strong><input type="text"  class="input-text radius" value="java开发工程师"></div>
+                <div class="mb-10"><strong>年龄：</strong><input type="text"  class="input-text radius" value="56"></div>
+                <div class="mb-10"><strong>手机：</strong><input type="text"  class="input-text radius" value="1231110"></div>
+                <div class="mb-10"><strong>邮箱：</strong><input type="email"  class="input-text radius" placeholder="@" value="dsfa@16652.com"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary">保存</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--修改实训老师密码的modal-->
+<div id="modifyPassword" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content radius form-horizontal">
+            <div class="modal-header">
+                <h3 class="modal-title">修改密码</h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true" href="#;">×</a>
+            </div>
+            <div class="row cl mb-15 mt-15">
+                <label class="form-label col-xs-3"><span class="c-red">*</span>&nbsp;&nbsp;账户：</label>
+                <div class=" col-xs-8">
+                    <label class="form-label col-xs-2">马云</label>
+                </div>
+            </div>
+            <div class="row cl mb-15">
+                <label class="form-label col-xs-3"><span class="c-red">*</span>&nbsp;&nbsp;新密码：</label>
+                <div class="formControls col-xs-8">
+                    <input type="text" class="input-text radius" autocomplete="off" placeholder="新密码" name="telephone">
+                </div>
+            </div>
+            <div class="row cl mb-15">
+                <label class="form-label col-xs-3"><span class="c-red">*</span>&nbsp;&nbsp;确认密码：</label>
+                <div class="formControls col-xs-8">
+                    <input type="text" class="input-text radius" autocomplete="off" placeholder="确认密码" name="telephone">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary">保存</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+    /*实训教师-添加*/
+    function teacher_add(){
+        //layer_show("增加教师","/addTeacher","","510");
+        $("#addTeacher").modal();
+    }
+    /*实训教师-编辑*/
+    function teacher_edit(){
+        $("#editTeacher").modal();
+    }
+    /*实训教师-密码修改*/
+    function modifyPassword(){
+        $("#modifyPassword").modal();
+    }
+
+    /*实训教师-删除*/
+    function teacher_del(obj,id){
+        layer.confirm('确认要删除吗？',function(index){
+            $(obj).parents("tr").remove();
+            layer.msg('已删除!',{icon:1,time:1000});
+        });
+    }
+
+
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

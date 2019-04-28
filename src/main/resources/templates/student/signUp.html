@@ -1,0 +1,120 @@
+﻿<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link rel="Bookmark" href="favicon.ico" >
+<link rel="Shortcut Icon" href="favicon.ico" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script><![endif]-->
+<!--/meta 作为公共模版分离出去-->
+<title>基地报名</title>
+</head>
+<body>
+<!--_header 作为公共模版分离出去-->
+<div th:replace="common/header::header"></div>
+<!--_menu 作为公共模版分离出去-->
+<div th:replace="common/menu::menu"></div>
+
+<section class="Hui-article-box">
+	<nav class="breadcrumb"><i class="Hui-iconfont"></i> <a href="/" class="maincolor">首页</a>
+		<span class="c-999 en">&gt;</span><span class="c-666">学生中心</span>
+		<span class="c-999 en">&gt;</span><span class="c-666">教学基地报名</span></nav>
+	<div class="Hui-article">
+		<article class="cl pd-20">
+			<div class="panel panel-default">
+				<div class="panel-header">基地报名</div>
+				<div class="panel-body">
+					<div class="text-c">
+
+						基地编号：<input type="text" class="input-text radius mr-5" style="width:210px" name="">
+						基地名称：<input type="text" class="input-text radius mr-5" style="width:210px" name="">
+						实训描述：<input type="text" class="input-text radius mr-5" style="width:210px" name="">
+						<button type="submit" class="btn btn-success radius" name=""><i class="Hui-iconfont"></i> 查询</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="mt-20">
+				<table class="table table-border table-bordered table-striped table-hover">
+					<tbody class="text-c">
+					<tr>
+						<td>基地编号</td>
+						<td>基地所属公司</td>
+						<td>基地名称</td>
+						<td>实训老师</td>
+						<td>基地地点</td>
+						<td>报名人数</td>
+						<td>操作</td>
+					</tr>
+					<tr>
+						<td><a th:href="@{/baseDetails}" class="c-primary">2001</a></td>
+						<td>阿里巴巴</td>
+						<td>java实习</td>
+						<td>马云</td>
+						<td>杭州</td>
+						<td>12/50</td>
+						<td><input class="btn btn-success radius size-MINI" type="button" value="报名" onclick="statusChange(this,id)"></td>
+					</tr>
+					<tr>
+						<td><a th:href="@{/baseDetails}" class="c-primary">2001</a></td>
+						<td>阿里巴巴</td>
+						<td>java实习</td>
+						<td>马云</td>
+						<td>杭州</td>
+						<td>50/50</td>
+						<td><input class="btn btn-success radius size-MINI" type="button" value="报名" onclick="statusChange(this,id)"></td>
+					</tr>
+					<tr>
+						<td><a th:href="@{/baseDetails}" class="c-primary">2001</a></td>
+						<td>阿里巴巴</td>
+						<td>java实习</td>
+						<td>马云</td>
+						<td>杭州</td>
+						<td>46/50</td>
+						<td><input class="btn btn-success radius size-MINI" type="button" value="报名" onclick="statusChange(this,id)"></td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</article>
+	</div>
+
+</section>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+	function statusChange(obj,id){
+		//layer.confirm("确认")
+		if ($("input").hasClass("btn-danger") && $(obj).hasClass("btn-success")) {
+			//alert("仅能报名一个校外基地");
+			layer.msg("仅能报名一个校外基地",{icon:5,time:1300});
+		}else{
+			if ($(obj).hasClass("btn-success")) {
+				$(obj).parents("td").prepend("<input class=\"btn btn-danger radius size-MINI\" type=\"button\" value=\"取消\" onclick=\"statusChange(this,id)\">");
+				$(obj).remove();
+			}else {
+				$(obj).parents("td").prepend("<input class=\"btn btn-success radius size-MINI\" type=\"button\" value=\"成功\" onclick=\"statusChange(this,id)\">");
+				$(obj).remove();
+			}
+		}
+
+	}
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

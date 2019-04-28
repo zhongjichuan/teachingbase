@@ -1,0 +1,151 @@
+﻿<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link rel="Bookmark" href="favicon.ico" >
+<link rel="Shortcut Icon" href="favicon.ico" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<!--/meta 作为公共模版分离出去-->
+
+<title>首页</title>
+
+<style>
+
+</style>
+
+</head>
+<body>
+<!--_header 作为公共模版分离出去-->
+<div th:replace="common/header::header"></div>
+<!--_menu 作为公共模版分离出去-->
+<div th:replace="common/menu::menu"></div>
+
+<section class="Hui-article-box">
+	<nav class="breadcrumb"><i class="Hui-iconfont"></i> <a href="/index" class="maincolor">首页</a>
+		<span class="c-999 en">&gt;</span><span class="c-666">个人中心</span>
+		<span class="c-999 en">&gt;</span><span class="c-666">用户信息</span>
+		<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+	<div class="Hui-article">
+		<article class="cl pd-20">
+			<p class="f-20 text-success">欢迎使用教学基地管理系统！</p>
+			<p>当前时间：<span id="currentTime"></span></p>
+
+		</article>
+
+
+		<div class="panel panel-default">
+			<div class="panel-header"><span>用户信息</span>
+				<input class="btn radius btn-primary" onClick="modaldemo()" type="button" value="修改">
+			</div>
+			<div class="panel-body">
+					<ul class="inline ml-30 f-20">
+						<li class="ml-20">ID:1001</li>
+						<li class="ml-20">姓名:小川</li>
+						<li class="ml-20">角色:学生</li>
+						<li class="ml-20">学院:计科院</li>
+					</ul>
+			</div>
+			<table class="table table-border mt-20">
+				<tbody class="text-c">
+
+				<tr>
+					<td>基地编号</td>
+					<td>基地所属公司</td>
+					<td>基地名称</td>
+					<td>基地负责老师</td>
+					<td>报到地点</td>
+					<td>报道日期</td>
+				</tr>
+				<tr>
+					<td><a th:href="@{/baseDetails}" class="c-primary">2001</a></td>
+					<td>阿里巴巴</td>
+					<td>java实习</td>
+					<td>马云</td>
+					<td>杭州</td>
+					<td>2019-09-09</td>
+				</tr>
+				<tr><td colspan="6" style="color: red">
+					<h4>未报名校外实训</h4>
+				</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</section>
+<div id="modal-demo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content radius">
+			<div class="modal-header">
+				<h3 class="modal-title">个人信息修改</h3>
+				<a class="close" data-dismiss="modal" aria-hidden="true" href="#;">×</a>
+			</div>
+			<div class="modal-body">
+				ID：<input type="text" placeholder="默认尺寸" class="input-text radius " disabled="true"><br>
+				姓名：<input type="text" placeholder="用户姓名" class="input-text radius " disabled="true"><br>
+				角色：<input type="text"  class="input-text radius" value="学生" disabled="true"><br>
+				学院：<input type="text"  class="input-text radius" value="计科院" disabled="true"><br>
+				手机号：<input type="text" placeholder="用户姓名" class="input-text radius " ><br>
+				邮箱：<input type="text" placeholder="用户姓名" class="input-text radius " ><br>
+
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-primary">保存</button>
+				<button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+
+	function modaldemo(){
+		$("#modal-demo").modal("show")}
+	$(function () {
+		setInterval("getNowFormatDate()",1);
+
+	});
+
+	function getNowFormatDate() {
+		var date = new Date();
+		var seperator1 = "-";
+		var seperator2 = ":";
+		var month = date.getMonth() + 1;
+		var strDate = date.getDate();
+		if (month >= 1 && month <= 9) {
+			month = "0" + month;
+		}
+		if (strDate >= 0 && strDate <= 9) {
+			strDate = "0" + strDate;
+		}
+		var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+				+ " " + date.getHours() + seperator2 + date.getMinutes()
+				+ seperator2 + date.getSeconds();
+		$("#currentTime").html(currentdate);
+	}
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+
+
+</body>
+</html>

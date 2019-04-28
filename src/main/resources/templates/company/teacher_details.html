@@ -1,0 +1,110 @@
+<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="Bookmark" th:href="@{/favicon.ico}" >
+    <link rel="shortcut icon" th:href="@{/favicon.ico}"/>
+    <link rel="bookmark" th:href="@{/favicon.ico}"/>
+    <link rel="Shortcut Icon" th:href="@{/favicon.ico}" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="lib/html5.js"></script>
+    <script type="text/javascript" src="lib/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+    <!--[if IE 6]>
+    <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <script>DD_belatedPNG.fix('*');</script><![endif]-->
+    <!--/meta 作为公共模版分离出去-->
+    <title>创建基地</title>
+
+</head>
+<body>
+<!--_header 作为公共模版分离出去-->
+<div th:replace="common/header::header"></div>
+<!--_menu 作为公共模版分离出去-->
+<div th:replace="common/menu::menu"></div>
+
+<section class="Hui-article-box">
+    <nav class="breadcrumb"><i class="Hui-iconfont"></i> <a href="/" class="maincolor">首页</a>
+        <span class="c-999 en">&gt;</span><span class="c-666">员工详情</span>
+    </nav>
+    <div class="Hui-article">
+        <article class="cl pd-20">
+            <div class="panel panel-default">
+                <div class="panel-header">员工详情</div>
+                <div class="panel-body text-c form-horizontal">
+
+                    <div class="row cl mt-10">
+                        <label class="form-label col-xs-4 col-sm-2 ">员工号：</label>
+                        <label class=" col-sm-5 text-l">4001</label>
+                    </div>
+                    <div class="row cl mt-10">
+                        <label class="form-label col-xs-4 col-sm-2 ">姓名：</label>
+                        <label class=" col-sm-5 text-l">王健林</label>
+                    </div>
+                    <div class="row cl mt-10">
+                        <label class="form-label col-xs-4 col-sm-2 ">性别：</label>
+                        <label class=" col-sm-5 text-l">男</label>
+                    </div>
+                    <div class="row cl mt-10">
+                        <label class="form-label col-xs-4 col-sm-2 ">工龄：</label>
+                        <label class=" col-sm-5 text-l">6</label>
+                    </div>
+                    <div class="row cl mt-10">
+                        <label class="form-label col-xs-4 col-sm-2 ">年龄：</label>
+                        <label class=" col-sm-5 text-l">36</label>
+                    </div>
+                    <div class="row cl mt-10">
+                        <label class="form-label col-xs-4 col-sm-2 ">所属公司：</label>
+                        <label class=" col-sm-5 text-l">阿里巴巴</label>
+                    </div>
+                    <div class="row cl mt-10">
+                        <label class="form-label col-xs-4 col-sm-2 ">手机：</label>
+                        <label class=" col-sm-5 text-l">17805058402</label>
+                    </div>
+                    <div class="row cl mt-10">
+                        <label class="form-label col-xs-4 col-sm-2 ">邮箱：</label>
+                        <label class=" col-sm-5 text-l">1048683661@qq.coms</label>
+                    </div>
+
+
+                    <div class="row cl mt-10">
+                        <div class="col-xs-8 col-sm-3 col-xs-offset-1">
+
+                            <a class="btn btn-default radius" onclick="javascript:history.back(-1)">&nbsp;返回上一页&nbsp;</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </article>
+    </div>
+</section>
+
+
+
+
+
+
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+
+
+
+
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>
