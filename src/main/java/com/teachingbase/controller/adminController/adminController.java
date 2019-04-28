@@ -205,7 +205,7 @@ public class adminController {
     @RequestMapping("/getNodes")
     @ResponseBody
     public Object getNodes(String username){
-        List<Tree<Resource>> treeList = resourceService.getResourceByUsername("100001");
+        List<Tree<Resource>> treeList = resourceService.getAllResource();
         return treeList;
     }
 

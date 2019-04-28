@@ -26,7 +26,7 @@
     <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
     <script>DD_belatedPNG.fix('*');</script><![endif]-->
     <!--/meta 作为公共模版分离出去-->
-    <title>创建基地</title>
+    <title>资源配置</title>
 
 </head>
 <body>
@@ -37,25 +37,18 @@
 
 <section class="Hui-article-box">
     <nav class="breadcrumb"><i class="Hui-iconfont"></i> <a href="/" class="maincolor">首页</a>
-        <span class="c-999 en">&gt;</span><span class="c-666">员工详情</span>
+        <span class="c-999 en">&gt;</span><span class="c-666">资源配置</span>
     </nav>
     <div class="Hui-article">
         <article class="cl pd-20">
             <div class="panel panel-default">
-                <div class="panel-header">员工详情</div>
+                <div class="panel-header">资源配置</div>
                 <div class="panel-body text-c form-horizontal">
-                    <dl th:each="tree:${session.treeList}">
-                        <dt><i class="Hui-iconfont">&#xe[[${tree.iconUrl}]]</i> [[${tree.name}]]<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
-                        <dd>
-                            <ul th:each="child:${tree.children}">
-                                <li><a th:href="${child.url}" th:title="${child.name}">[[${child.name}]]</a></li>
-                            </ul>
-                        </dd>
-                    </dl>
-<input type="hidden" th:value="${session.treeList}" id="nodes">
+
                     <div >
                         <ul id="treeDemo" class="ztree"></ul>
                     </div>
+
                 </div>
             </div>
 
@@ -72,7 +65,6 @@
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript">
 $(function () {
-    var nodes = $("#nodes").val();
     // var zNodes =[
     //     { name:"父节点1 - 展开11111", open:true,
     //         children: [
@@ -119,18 +111,26 @@ $(function () {
     //     { name:"父节点3 - 没有子节点", isParent:true}
     //
     // ];
-    console.log(nodes);
+
     var setting={
         async: { // 属性配置
             enable: true,
             url:"/admin/getNodes",
-            autoParam:["parentId"],
+            //autoParam:["parentId"],
             // otherParam:{"otherParam":"zTreeAsyncTest"},
             type: 'get'
-
         },
+        view: { showLine: false },//不是最后一个node，其他node不显示name,需要设置？
+        callback: {
+            onAsyncSuccess:onAsyncSuccess
+        }
     };
-    $.fn.zTree.init($("#treeDemo"), setting);
+    var zTreeObj = $.fn.zTree.init($("#treeDemo"), setting);
+
+    //异步加载成功回调函数
+    function onAsyncSuccess(event, treeId, treeNode, msg) {
+        zTreeObj.expandAll(true);//展开所有结点
+    }
 })
 
 

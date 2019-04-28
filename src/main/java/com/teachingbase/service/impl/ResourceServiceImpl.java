@@ -33,6 +33,23 @@ public class ResourceServiceImpl implements ResourceService {
         return buildTree(treeList);
     }
 
+    @Override
+    public List<Tree<Resource>> getAllResource() {
+        List<Resource> resourceList = resourceMapper.getAllResource();
+        //将资源路径转换成tree
+        List<Tree<Resource>> treeList = new ArrayList<>();
+        for(Resource resource : resourceList){
+            Tree<Resource> tree = new Tree<Resource>();
+            tree.setId(resource.getResourceId());
+            tree.setParentId(resource.getParentId());
+            tree.setUrl(resource.getUrl());
+            tree.setName(resource.getDescription());
+            tree.setIconUrl(resource.getIconUrl());
+            treeList.add(tree);
+        }
+        return buildTree(treeList);
+    }
+
     /**
     创建菜单资源tree,对父节点子节点进行归属。
      */

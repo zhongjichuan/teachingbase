@@ -8,4 +8,6 @@ import java.util.List;
 public interface ResourceService {
 
     public List<Tree<Resource>> getResourceByUsername(String username);
+
+    public List<Tree<Resource>> getAllResource();
 }
