@@ -24,6 +24,11 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
+    @RequestMapping("/index")
+    public String index(Model model, HttpSession session) {
+
+        return "userCenter/index";
+    }
 
     @RequestMapping("/toLogin")
     public String toLogin(){

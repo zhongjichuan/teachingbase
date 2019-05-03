@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teachingbase.dao.BaseMapper">
+
+    <resultMap id="baseResultMap" type="base">
+        <id property="baseId" column="base_id"></id>
+        <result property="baseName" column="base_name"></result>
+        <result property="baseDescription" column="base_description"></result>
+        <result property="baseNum" column="base_num"></result>
+        <result property="baseEnrolmentNum" column="base_enrolment_num"></result>
+        <result property="baseReportDate" column="base_report_data"></result>
+        <result property="baseAddress" column="base_address"></result>
+        <result property="baseStatus" column="base_status"></result>
+        <result property="baseCreateTime" column="base_createTime"></result>
+        <result property="baseUpdateTime" column="base_updateTime"></result>
+        <association property="teacher" column="base_id"
+            select = "com.teachingbase.dao.TeacherMapper.getTeacherByBaseId">
+        </association>
+    </resultMap>
+
+    <select id="getBaseListByCompanyName" resultMap="baseResultMap">
+        select base.* from base,company,company_base
+            where #{companyName}= company.company_name
+            and company.company_id = company_base.company_id
+            and company_base.base_id = base.base_id
+    </select>
+
+    <select id="getBaseListBySearchParams" resultMap="baseResultMap" parameterType="map">
+         select base.*,teacher.* from base,company,company_base,teacher
+            where #{companyName}= company.company_name
+            and company.company_id = company_base.company_id
+            and company_base.base_id = base.base_id
+            <if test="baseId!=null and baseId!=''">
+                and base.base_id like concat('%',#{baseId},'%')
+            </if>
+            <if test="baseName!=null and baseName!=''">
+                and base.base_name like concat('%',#{baseName},'%')
+            </if>
+            <if test="teacherName!=null and teacherName!=''">
+                and teacher.teacher_name like concat('%',#{teacherName},'%')
+            </if>
+    </select>
+
+</mapper>

@@ -15,6 +15,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+
     @GetMapping("/passwordUpdate")
     public String passwordUpdate() {
         return "userCenter/pwd-modify";

@@ -7,23 +7,23 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 	<meta http-equiv="Cache-Control" content="no-siteapp" />
-	<link rel="Bookmark" href="favicon.ico" >
-	<link rel="Shortcut Icon" href="favicon.ico" />
+	<link rel="Bookmark" href="/favicon.ico" >
+	<link rel="Shortcut Icon" href="/favicon.ico" />
 	<!--[if lt IE 9]>
-	<script type="text/javascript" src="lib/html5.js"></script>
-	<script type="text/javascript" src="lib/respond.min.js"></script>
+	<script type="text/javascript" src="/lib/html5.js"></script>
+	<script type="text/javascript" src="/lib/respond.min.js"></script>
 	<![endif]-->
-	<link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
-	<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
-	<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+	<link rel="stylesheet" type="text/css" href="/static/h-ui/css/H-ui.min.css" />
+	<link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/H-ui.admin.css" />
+	<link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css" />
 
-	<link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
-	<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+	<link rel="stylesheet" type="text/css" href="/static/h-ui.admin/skin/default/skin.css" id="skin" />
+	<link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/style.css" />
 	<!--[if IE 6]>
 	<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
 	<script>DD_belatedPNG.fix('*');</script><![endif]-->
 	<!--/meta 作为公共模版分离出去-->
-	<title>基地报名</title>
+	<title>基地管理</title>
 
 </head>
 <body>
@@ -33,19 +33,19 @@
 <div th:replace="common/menu::menu"></div>
 
 <section class="Hui-article-box">
-	<nav class="breadcrumb"><i class="Hui-iconfont"></i> <a href="/" class="maincolor">首页</a>
+	<nav class="breadcrumb"><i class="Hui-iconfont"></i> <a href="/index" class="maincolor">首页</a>
 		<span class="c-999 en">&gt;</span><span class="c-666">基地中心</span>
 		<span class="c-999 en">&gt;</span><span class="c-666">基地管理</span></nav>
 	<div class="Hui-article">
 		<article class="cl pd-20">
 			<div class="panel panel-default">
 				<div class="panel-header">基地管理</div>
-				<div class="panel-body text-c">
-					基地编号：<input type="text" class="input-text radius mr-5" style="width:210px" name="">
-					基地名：<input type="text" class="input-text radius mr-5" style="width:210px" name="">
-					实训老师：<input type="text" class="input-text radius mr-5" style="width:210px" name="">
+				<form class="panel-body text-c" id="form">
+					基地编号：<input type="text" class="input-text radius mr-5" style="width:210px" name="baseId">
+					基地名：<input type="text" class="input-text radius mr-5" style="width:210px" name="baseName">
+					实训老师：<input type="text" class="input-text radius mr-5" style="width:210px" name="teacherName">
 					<button type="submit" class="btn btn-success radius" name=""><i class="Hui-iconfont"></i> 查询</button>
-				</div>
+				</form>
 			</div>
 			<div class="mt-20">
 				<div class="cl pd-5 bg-1 bk-gray mt-20 ">
@@ -55,7 +55,7 @@
 					<span class="r">共有数据：<strong>4</strong> 条</span>
 				</div>
 				<table class="table table-border table-bordered table-striped table-hover">
-					<tbody class="text-c">
+					<tbody class="text-c" id="tbody">
 					<tr>
 						<td>基地编号</td>
 						<td>基地名</td>
@@ -64,39 +64,6 @@
 						<td>报名人数</td>
 						<td>状态</td>
 						<td>操作</td>
-					</tr>
-					<tr>
-						<td><a th:href="@{/baseDetails}" class="c-primary">4001</a></td>
-						<td>javaWeb实训基地</td>
-						<td>进行微博开发</td>
-						<td>马云</td>
-						<td><a th:href="@{/enrolledStudents}" class="c-primary">25/50</a></td>
-						<td class="td-status"><span class="label label-success radius">已启用</span></td>
-						<td >
-							<a class="btn btn-primary radius size-MINI" th:href="@{/editBase}">&nbsp;&nbsp;编辑&nbsp;&nbsp;</a>
-						</td>
-					</tr>
-					<tr>
-						<td><a th:href="@{/baseDetails}" class="c-primary">4001</a></td>
-						<td>javaWeb实训基地</td>
-						<td>进行微博开发</td>
-						<td>马云</td>
-						<td><a th:href="@{/enrolledStudents}" class="c-primary">25/50</a></td>
-						<td class="td-status"><span class="label label-danger radius">待审核</span></td>
-						<td >
-							<a class="btn btn-primary radius size-MINI" th:href="@{/editBase}">&nbsp;&nbsp;编辑&nbsp;&nbsp;</a>
-						</td>
-					</tr>
-					<tr>
-						<td><a th:href="@{/baseDetails}" class="c-primary">4001</a></td>
-						<td>javaWeb实训基地</td>
-						<td>进行微博开发</td>
-						<td>马云</td>
-						<td><a th:href="@{/enrolledStudents}" class="c-primary">25/50</a></td>
-						<td class="td-status"><span class="label radius">已停用</span></td>
-						<td >
-							<a class="btn btn-primary radius size-MINI" th:href="@{/editBase}">&nbsp;&nbsp;编辑&nbsp;&nbsp;</a>
-						</td>
 					</tr>
 
 					</tbody>
@@ -108,8 +75,71 @@
 
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript">
+	$(function () {
+		getBases();
 
+		//条件查询表单提交
+		$("#form").submit(function () {
+			var searchParams = $('#form').serializeArray();
+			$(".singleData").empty();
+			$.ajax({
+				type: "POST",
+				data: searchParams,
+				url: "/company/getBaseList",
+				dataType: "json",
+				success: function(data){
+					showData(data);
+				}
+			});
+			return false;//实现页面不刷新
+		});
+	});
 
+	/*查询基地，进行表格填充*/
+	function getBases() {
+		$.ajax({
+			type: "GET",
+			url: "/company/getBaseList",
+			dataType: "json",
+			success: function(data){
+				console.log(data);
+				showData(data);
+			}
+		});
+	}
+
+	/*遍历数据进行渲染*/
+	function showData(data) {
+		$(".singleData").empty();
+		if (data[0]){
+			$.each(data,function (index,base) {
+				var status = "";
+				if (base.baseStatus=="1") {
+					status = "<span class=\"label label-success radius\">已启用</span>";
+				}else if (base.baseStatus=="2") {
+					status = "<span class=\"label label-danger radius\">待审核</span>";
+				}else if(base.baseStatus=="3"){
+					status = "<span class=\"label radius\">已停用</span>";
+				}
+				$("#tbody").append("<tr class='singleData'>\n" +
+						"<td><a th:href=\"@{/company/baseDetails}\" class=\"c-primary\">"+base.baseId+"</a></td>\n" +
+						"<td>"+base.baseName+"</td>\n" +
+						"<td>"+base.baseDescription+"</td>\n" +
+						"<td>"+base.teacher.teacherName+"</td>\n" +
+						"<td><a th:href=\"@{/company/enrolledStudents}\" class=\"c-primary\">"+base.baseEnrolmentNum+"/"+base.baseNum+"</a></td>\n" +
+						"<td><span class=\"label label-success radius\">"+status+"</span></td>\n" +
+						"<td >\n" +
+						"<a class=\"btn btn-primary radius size-MINI\" th:href=\"@{/company/editBase}\">&nbsp;&nbsp;编辑&nbsp;&nbsp;</a>\n" +
+						"</td>\n" +
+						"</tr>");
+			});
+			$("#dataLength").text(data.length);
+		} else {
+			$(".singleData").empty();
+			$("#tbody").append("<tr class='singleData'><td colspan='7' style='color: red'><h4>"+data[1]+"</h4></td></tr>");
+			$("#dataLength").text("0");
+		}
+	}
 </script>
 <!--/请在上方写此页面业务相关的脚本-->
 </body>

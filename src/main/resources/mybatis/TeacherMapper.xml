@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teachingbase.dao.TeacherMapper">
+
+    <select id="getTeacherByBaseId" resultType="teacher">
+        select teacher.* from teacher,base,base_teacher
+          where base_teacher.base_id = #{baseId}
+          and base_teacher.teacher_id = teacher.teacher_id
+    </select>
+</mapper>

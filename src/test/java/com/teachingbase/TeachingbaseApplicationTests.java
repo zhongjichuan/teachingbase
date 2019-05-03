@@ -1,13 +1,11 @@
 package com.teachingbase;
 
 import com.teachingbase.dao.ResourceMapper;
+import com.teachingbase.domain.Base;
 import com.teachingbase.domain.Resource;
 import com.teachingbase.domain.Tree;
 import com.teachingbase.domain.User;
-import com.teachingbase.service.AdminService;
-import com.teachingbase.service.ResourceService;
-import com.teachingbase.service.RoleService;
-import com.teachingbase.service.UserService;
+import com.teachingbase.service.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +31,8 @@ public class TeachingbaseApplicationTests {
     UserService userService;
     @Autowired
     AdminService adminService;
+    @Autowired
+    public BaseService baseService;
 
     @Test
     public void test1() {
@@ -72,4 +72,9 @@ public class TeachingbaseApplicationTests {
         System.out.println(adminService.addCounselor(user));
     }
 
+    @Test
+    public void tets7(){
+        List<Base> list = baseService.getBaseListByCompanyName("阿里巴巴");
+        System.out.println(list);
+    }
 }
