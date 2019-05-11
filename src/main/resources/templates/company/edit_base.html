@@ -12,15 +12,15 @@
 	<link rel="bookmark" th:href="@{/favicon.ico}"/>
 	<link rel="Shortcut Icon" th:href="@{/favicon.ico}" />
 	<!--[if lt IE 9]>
-	<script type="text/javascript" src="lib/html5.js"></script>
-	<script type="text/javascript" src="lib/respond.min.js"></script>
+	<script type="text/javascript" src="/lib/html5.js"></script>
+	<script type="text/javascript" src="/lib/respond.min.js"></script>
 	<![endif]-->
-	<link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
-	<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
-	<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+	<link rel="stylesheet" type="text/css" href="/static/h-ui/css/H-ui.min.css" />
+	<link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/H-ui.admin.css" />
+	<link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css" />
 
-	<link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
-	<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+	<link rel="stylesheet" type="text/css" href="/static/h-ui.admin/skin/default/skin.css" id="skin" />
+	<link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/style.css" />
 	<!--[if IE 6]>
 	<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
 	<script>DD_belatedPNG.fix('*');</script><![endif]-->
@@ -45,28 +45,27 @@
 			<div class="panel panel-default">
 				<div class="panel-header">编辑基地</div>
 				<div class="panel-body text-c">
-					<form class="form form-horizontal">
+					<form class="form form-horizontal" action="/company/updateBase" id="editBaseForm">
 						<div class="row cl">
 							<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>&nbsp;&nbsp;基地编号：</label>
 							<div class="formControls col-xs-8 col-sm-5">
-								<input type="text" class="input-text radius"  placeholder="" id="" name="">
+								<input type="text" class="input-text radius"  placeholder="" name="" disabled="disabled" th:value="${base.baseId}">
+								<input type="hidden" class="input-text radius"  placeholder="" name="baseId" th:value="${base.baseId}">
 							</div>
 						</div>
 						<div class="row cl">
 							<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>&nbsp;&nbsp;基地名称：</label>
 							<div class="formControls col-xs-8 col-sm-5">
-								<input type="text" class="input-text radius"  placeholder="" id="" name="">
+								<input type="text" class="input-text radius"  placeholder=""  name="baseName" th:value="${base.baseName}">
 							</div>
 						</div>
 						<div class="row cl">
 							<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>&nbsp;&nbsp;实训老师：</label>
 							<div class="formControls col-xs-8 col-sm-5">
 								<span class="select-box mr-5 radius col-sm-5">
-									<select class="select " size="1" name="demo1">
-										<option value="" selected>选择老师</option>
-										<option value="1">马云</option>
-										<option value="2">马化腾</option>
-										<option value="2">雷军</option>
+									<select class="select "  name="teacherId">
+										<option value="">选择老师</option>
+										<option th:selected="${base.teacher!=null}?${base.teacher.teacherId eq teacher.teacherId}" th:each="teacher:${teachers}" th:value ="${teacher.teacherId}" th:text="${teacher.teacherName}"></option>
 									</select>
 								</span>
 							</div>
@@ -74,40 +73,34 @@
 						<div class="row cl">
 							<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>&nbsp;&nbsp;基地人数：</label>
 							<div class="formControls col-xs-8 col-sm-5">
-								<input type="text" class="input-text radius"  placeholder="" id="" name="">
+								<input type="text" class="input-text radius"  placeholder=""  name="baseNum" th:value="${base.baseNum}">
 							</div>
 						</div>
 						<div class="row cl">
-							<label class="form-label col-xs-4 col-sm-2">基地描述：</label>
+							<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>&nbsp;&nbsp;基地描述：</label>
 							<div class="formControls col-xs-8 col-sm-5">
-								<input type="text" class="input-text radius"  placeholder="" id="" name="">
-							</div>
-						</div>
-						<div class="row cl">
-							<label class="form-label col-xs-4 col-sm-2">基地所属公司：</label>
-							<div class="formControls col-xs-8 col-sm-5">
-								<input type="text" class="input-text radius"  placeholder="" id="" name="">
+								<input type="text" class="input-text radius"  placeholder="" name="baseDescription" th:value="${base.baseDescription}">
 							</div>
 						</div>
 						<div class="row cl">
 							<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>&nbsp;&nbsp;报到地址：</label>
 							<div class="formControls col-xs-8 col-sm-5">
-								<input type="text" class="input-text radius"  placeholder="" id="" name="">
+								<input type="text" class="input-text radius"  placeholder="" name="baseAddress" th:value="${base.baseAddress}">
 							</div>
 						</div>
 						<div class="row cl">
 							<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>&nbsp;&nbsp;报到日期：</label>
 							<div class="formControls col-xs-8 col-sm-5">
-								<input type="date" class="input-text radius"  placeholder="" id="" name="">
+								<input type="datetime-local" class="input-text radius"  placeholder=""  name="baseReportDate" th:field="${base.baseReportDate}">
 							</div>
 						</div>
 						<div class="row cl"></div>
 
 						<div class="row cl">
 							<div class="col-xs-8 col-sm-5 col-xs-offset-1">
-								<button onClick="article_save_submit();" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+								<button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
 
-								<a class="btn btn-default radius" th:href="@{/baseManage}">&nbsp;&nbsp;取消&nbsp;&nbsp;</a>
+								<a class="btn btn-default radius" th:href="@{/company/baseManage}">&nbsp;&nbsp;取消&nbsp;&nbsp;</a>
 							</div>
 						</div>
 					</form>
@@ -118,15 +111,32 @@
 	</div>
 </section>
 
-
-
-
-
-
-
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript">
+	$(function () {
 
+		$("#editBaseForm").submit(function () {
+			if ($("#editBaseForm").valid()) {
+				var params = $('#editBaseForm').serializeArray();
+				$.ajax({
+					type: "POST",
+					data: params,
+					url: "/company/updateBase",
+					dataType: "json",
+					success: function (data) {
+						if (data) {
+							layer.msg("修改成功");
+						} else {
+							layer.msg("修改失败");
+						}
+						setTimeout('window.location.href="/company/baseManage"', 1000);
+					}
+				});
+			}
+			return false;//实现页面不刷新
+		});
+
+	});
 
 
 

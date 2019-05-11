@@ -1,6 +1,7 @@
 package com.teachingbase.service.impl;
 
 import com.teachingbase.dao.AdminMapper;
+import com.teachingbase.domain.Company;
 import com.teachingbase.domain.User;
 import com.teachingbase.service.AdminService;
 import org.apache.ibatis.annotations.Select;
@@ -62,5 +63,10 @@ public class AdminServiceImpl implements AdminService {
 
     public int addManager(User user){
         return adminMapper.addManager(user);
+    }
+
+    @Override
+    public List<Company> getCompanyBean() {
+        return adminMapper.getCompanyBean();
     }
 }

@@ -30,6 +30,7 @@
 
 </style>
 
+
 </head>
 <body>
 <!--_header 作为公共模版分离出去-->
@@ -50,62 +51,67 @@
 		</article>
 
 
-		<div class="panel panel-default">
-			<div class="panel-header"><span>用户信息</span>
-				<input class="btn radius btn-primary" onClick="modaldemo()" type="button" value="修改">
-			</div>
-			<div class="panel-body">
-					<ul class="inline ml-30 f-20">
-						<li class="ml-20">ID:1001</li>
-						<li class="ml-20">姓名:小川</li>
-						<li class="ml-20">角色:学生</li>
-						<li class="ml-20">学院:计科院</li>
-					</ul>
-			</div>
-			<table class="table table-border mt-20">
-				<tbody class="text-c">
+		<!--<div class="panel panel-default">-->
+			<!--<div class="panel-header"><span>用户信息</span>-->
+				<!--<input class="btn radius btn-primary" onClick="edit_modal()" type="button" value="修改">-->
+			<!--</div>-->
+			<!--<div class="panel-body">-->
+					<!--<ul class="inline ml-30 f-20">-->
+						<!--<li class="ml-20">ID:1001</li>-->
+						<!--<li class="ml-20">姓名:小川</li>-->
+						<!--<li class="ml-20">角色:学生</li>-->
+						<!--<li class="ml-20">学院:计科院</li>-->
+					<!--</ul>-->
+			<!--</div>-->
+			<!--<table class="table table-border mt-20">-->
+				<!--<tbody class="text-c">-->
 
-				<tr>
-					<td>基地编号</td>
-					<td>基地所属公司</td>
-					<td>基地名称</td>
-					<td>基地负责老师</td>
-					<td>报到地点</td>
-					<td>报道日期</td>
-				</tr>
-				<tr>
-					<td><a th:href="@{/baseDetails}" class="c-primary">2001</a></td>
-					<td>阿里巴巴</td>
-					<td>java实习</td>
-					<td>马云</td>
-					<td>杭州</td>
-					<td>2019-09-09</td>
-				</tr>
-				<tr><td colspan="6" style="color: red">
-					<h4>未报名校外实训</h4>
-				</td>
-				</tr>
-				</tbody>
-			</table>
-		</div>
+				<!--<tr>-->
+					<!--<td>基地编号</td>-->
+					<!--<td>基地所属公司</td>-->
+					<!--<td>基地名称</td>-->
+					<!--<td>基地负责老师</td>-->
+					<!--<td>报到地点</td>-->
+					<!--<td>报道日期</td>-->
+				<!--</tr>-->
+				<!--<tr>-->
+					<!--<td><a th:href="@{/baseDetails}" class="c-primary">2001</a></td>-->
+					<!--<td>阿里巴巴</td>-->
+					<!--<td>java实习</td>-->
+					<!--<td>马云</td>-->
+					<!--<td>杭州</td>-->
+					<!--<td>2019-09-09</td>-->
+				<!--</tr>-->
+				<!--<tr><td colspan="6" style="color: red">-->
+					<!--<h4>未报名校外实训</h4>-->
+				<!--</td>-->
+				<!--</tr>-->
+				<!--</tbody>-->
+			<!--</table>-->
+		<!--</div>-->
 	</div>
 </section>
-<div id="modal-demo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="edit_modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content radius">
 			<div class="modal-header">
 				<h3 class="modal-title">个人信息修改</h3>
 				<a class="close" data-dismiss="modal" aria-hidden="true" href="#;">×</a>
 			</div>
-			<div class="modal-body">
-				ID：<input type="text" placeholder="默认尺寸" class="input-text radius " disabled="true"><br>
-				姓名：<input type="text" placeholder="用户姓名" class="input-text radius " disabled="true"><br>
-				角色：<input type="text"  class="input-text radius" value="学生" disabled="true"><br>
-				学院：<input type="text"  class="input-text radius" value="计科院" disabled="true"><br>
-				手机号：<input type="text" placeholder="用户姓名" class="input-text radius " ><br>
-				邮箱：<input type="text" placeholder="用户姓名" class="input-text radius " ><br>
+			<form class="modal-body" id="editUserForm">
+				ID：<input type="text" class="input-text radius" disabled="disabled" th:value="${user.username}"><br>
+				姓名：<input type="text" class="input-text radius "  disabled="disabled" th:value="${user.name}"><br>
+				学院：<input type="text"  class="input-text radius" disabled="disabled" th:value="${user.roleId=='301'}?${user.college}:${user.company}"><br>
 
-			</div>
+				姓别：
+				<div class="check-box"><input type="radio" id="radio-1" name="sex" th:value="1" >
+						<label for="radio-1" class="f-16">男</label>&nbsp;&nbsp;&nbsp;
+					<input type="radio" id="radio-2" name="sex" th:value="2" class="size-L">
+						<label for="radio-2" class="f-16">女</label></div><br>
+				手机号：<input type="text" class="input-text radius" name="phone" th:value="${user.phone}" ><br>
+				邮箱：<input type="text" class="input-text radius" name="email" th:value="${user.email}"><br>
+
+			</form>
 			<div class="modal-footer">
 				<button class="btn btn-primary">保存</button>
 				<button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
@@ -119,8 +125,8 @@
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript">
 
-	function modaldemo(){
-		$("#modal-demo").modal("show")}
+	function edit_modal(){
+		$("#edit_modal").modal("show")}
 	$(function () {
 		setInterval("getNowFormatDate()",1);
 
@@ -143,6 +149,32 @@
 				+ seperator2 + date.getSeconds();
 		$("#currentTime").html(currentdate);
 	}
+
+	$(function () {
+		$("#editUserForm").validate({
+			rules: {
+				phone: {
+					minlength: 11,
+					maxlength: 11,
+					digits: true,//只能填整数
+				},
+				email: {
+					email:true
+				}
+			},
+			messages: {
+				phone: {
+					minlength: "请正确填写信息",
+					maxlength: "请正确填写信息",
+					digits: "请正确填写信息"
+				},
+				email: {
+					email: "请正确填写信息"
+				}
+
+			}
+		})
+	});
 </script>
 <!--/请在上方写此页面业务相关的脚本-->
 

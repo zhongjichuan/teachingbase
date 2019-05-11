@@ -3,6 +3,7 @@ package com.teachingbase.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
+import java.util.List;
 
 public class Teacher {
     private String teacherId;
@@ -11,13 +12,16 @@ public class Teacher {
     private String phone;
     private String sex;
     private String email;
+    private String teacherDescription;
     private Integer age;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date createTime;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date updateTime;
 
+    private List baseList;
     private Base base;
+
 
     @Override
     public String toString() {
@@ -25,14 +29,32 @@ public class Teacher {
                 "teacherId='" + teacherId + '\'' +
                 ", teacherName='" + teacherName + '\'' +
                 ", teacherPosition='" + teacherPosition + '\'' +
-                ", teacherPhone='" + phone + '\'' +
+                ", phone='" + phone + '\'' +
                 ", sex='" + sex + '\'' +
                 ", email='" + email + '\'' +
+                ", teacherDescription='" + teacherDescription + '\'' +
                 ", age=" + age +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
+                ", baseList=" + baseList +
                 ", base=" + base +
                 '}';
+    }
+
+    public String getTeacherDescription() {
+        return teacherDescription;
+    }
+
+    public void setTeacherDescription(String teacherDescription) {
+        this.teacherDescription = teacherDescription;
+    }
+
+    public List getBaseList() {
+        return baseList;
+    }
+
+    public void setBaseList(List baseList) {
+        this.baseList = baseList;
     }
 
     public String getTeacherId() {

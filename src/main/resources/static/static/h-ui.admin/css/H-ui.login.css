@@ -5,7 +5,7 @@
 * Created & Modified by guojunhui
 * Date modified 2015.6.5
 *
-* Copyright 2013-2015 北京颖杰联创科技有限公司 All rights reserved.
+* Copyright 2013-2017 北京颖杰联创科技有限公司 All rights reserved.
 * Licensed under MIT license.
 * http://opensource.org/licenses/MIT
 *
@@ -37,5 +37,5 @@ body{font-size:14px}
 
 .footer{ height:46px; line-height:46px; bottom:0; text-align:center; color:#fff; font-size:12px; background-color:#426374}
 
-#ie6-warning{background:#fff url(/jscss/demoimg/201006/warning.gif) no-repeat 3px center;position:absolute;top:0;left:0;font-size:12px;color:#333;width:97%;padding: 2px 15px 2px 23px;text-align:left}
+/*#ie6-warning{background:#fff url(/jscss/demoimg/201006/warning.gif) no-repeat 3px center;position:absolute;top:0;left:0;font-size:12px;color:#333;width:97%;padding: 2px 15px 2px 23px;text-align:left}*/
 #ie6-warning a {text-decoration:none}

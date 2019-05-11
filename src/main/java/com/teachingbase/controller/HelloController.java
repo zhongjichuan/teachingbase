@@ -23,11 +23,6 @@ public class HelloController {
     @Autowired
     private ResourceService resourceService;
 
-    @RequestMapping("/index")
-    public String index(Model model, HttpSession session) {
-
-        return "userCenter/index";
-    }
 
 
     @RequestMapping("/test")

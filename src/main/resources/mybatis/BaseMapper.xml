@@ -10,13 +10,16 @@
         <result property="baseDescription" column="base_description"></result>
         <result property="baseNum" column="base_num"></result>
         <result property="baseEnrolmentNum" column="base_enrolment_num"></result>
-        <result property="baseReportDate" column="base_report_data"></result>
+        <result property="baseReportDate" column="base_report_date"></result>
         <result property="baseAddress" column="base_address"></result>
         <result property="baseStatus" column="base_status"></result>
         <result property="baseCreateTime" column="base_createTime"></result>
         <result property="baseUpdateTime" column="base_updateTime"></result>
         <association property="teacher" column="base_id"
             select = "com.teachingbase.dao.TeacherMapper.getTeacherByBaseId">
+        </association>
+        <association property="company" column="base_id"
+            select = "com.teachingbase.dao.CompanyMapper.getCompanyByBaseId">
         </association>
     </resultMap>
 
@@ -28,7 +31,12 @@
     </select>
 
     <select id="getBaseListBySearchParams" resultMap="baseResultMap" parameterType="map">
-         select base.*,teacher.* from base,company,company_base,teacher
+         select base.* from base,company,company_base
+            <if test="teacherName!=null and teacherName!=''">
+                ,(select base_teacher.base_id as base_id from teacher,base_teacher
+                where teacher.teacher_id = base_teacher.teacher_id
+                and teacher.teacher_name like concat('%',#{teacherName},'%')) a
+            </if>
             where #{companyName}= company.company_name
             and company.company_id = company_base.company_id
             and company_base.base_id = base.base_id
@@ -39,8 +47,55 @@
                 and base.base_name like concat('%',#{baseName},'%')
             </if>
             <if test="teacherName!=null and teacherName!=''">
-                and teacher.teacher_name like concat('%',#{teacherName},'%')
+                and base.base_id = a.base_id
             </if>
     </select>
 
+    <select id="getBaseTeachersByCompanyName" resultType="teacher">
+        select teacher.* from company,company_teacher,teacher
+            where #{companyName}= company.company_name
+            and company.company_id = company_teacher.company_id
+            and company_teacher.teacher_id = teacher.teacher_id
+    </select>
+
+    <select id="getBaseByBaseId" resultMap="baseResultMap">
+        select * from base
+          where base.base_id = #{baseId}
+    </select>
+
+    <update id="updateBase" parameterType="base">
+        update base
+        set base_name=#{baseName},base_description=#{baseDescription},base_num=#{baseNum},
+            base_report_date=#{baseReportDate},base_address=#{baseAddress},base_updateTime = now()
+        where base_id = #{baseId}
+    </update>
+
+    <select id="getBaseListByCollegeName" resultMap="baseResultMap">
+        select base.* from base,college_class,college_base
+            where #{collegeName}= college_class.college_name
+            and college_class.college_id = college_base.college_id
+            and college_base.base_id = base.base_id
+    </select>
+
+
+    <select id="getBaseListBySearchParamsAndCollege" resultMap="baseResultMap" parameterType="map">
+        select base.* from base,college_class,college_base
+        <if test="companyName!=null and companyName!=''">
+            ,(select company_base.base_id as base_id from company,company_base
+            where company.company_id = company_base.company_id
+            and company.company_name like concat('%',#{companyName},'%')) a
+        </if>
+        where #{collegeName}= college_class.college_name
+        and college_class.college_id = college_base.college_id
+        and college_base.base_id = base.base_id
+        <if test="baseId!=null and baseId!=''">
+            and base.base_id like concat('%',#{baseId},'%')
+        </if>
+        <if test="baseName!=null and baseName!=''">
+            and base.base_name like concat('%',#{baseName},'%')
+        </if>
+        <if test="companyName!=null and companyName!=''">
+            and base.base_id = a.base_id
+        </if>
+    </select>
 </mapper>

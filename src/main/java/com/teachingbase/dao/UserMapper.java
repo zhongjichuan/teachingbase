@@ -1,5 +1,7 @@
 package com.teachingbase.dao;
 
+import com.teachingbase.domain.CollegeBase;
+import com.teachingbase.domain.Company;
 import com.teachingbase.domain.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -19,4 +21,7 @@ public interface UserMapper {
 
     @Update("update user set username = #{username},name=#{name},age=#{age},sex=#{sex},college=#{college},company=#{company},phone=#{phone},email=#{email},update_time=now() where username=#{username}")
     public int updateUser(User user);
+
+    @Select("select * from college_class,user where user.college = #{college} and college_class.college_name = user.college and user.username=#{username}")
+    public CollegeBase getCollegeByCurrentUser(User user);
 }

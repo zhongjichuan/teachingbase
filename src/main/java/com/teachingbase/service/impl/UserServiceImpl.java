@@ -1,6 +1,8 @@
 package com.teachingbase.service.impl;
 
 import com.teachingbase.dao.UserMapper;
+import com.teachingbase.domain.CollegeBase;
+import com.teachingbase.domain.Company;
 import com.teachingbase.domain.User;
 import com.teachingbase.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,11 @@ public class UserServiceImpl implements UserService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public CollegeBase getCollegeByCurrentUser(User user){
+        return userMapper.getCollegeByCurrentUser(user);
     }
 
 

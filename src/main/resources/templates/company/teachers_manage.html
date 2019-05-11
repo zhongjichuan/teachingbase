@@ -38,86 +38,32 @@
         <span class="c-999 en">&gt;</span><span class="c-666">实训教师管理</span></nav>
     <div class="Hui-article">
         <article class="cl pd-20">
-            <div class="panel panel-default">
+            <form id="seacherForm" class="panel panel-default">
                 <div class="panel-header">实训教师管理</div>
                 <div class="panel-body text-c">
-                    员工号：<input type="text" class="input-text radius mr-5" style="width:210px" name="">
-                    姓名：<input type="text" class="input-text radius mr-5" style="width:210px" name="">
-                    负责基地：<input type="text" class="input-text radius mr-5" style="width:210px" name="">
+                    员工号：<input type="text" class="input-text radius mr-5" style="width:210px" name="teacherId">
+                    姓名：<input type="text" class="input-text radius mr-5" style="width:210px" name="teacherName">
+                    职位：<input type="text" class="input-text radius mr-5" style="width:210px" name="teacherPosition">
                     <button type="submit" class="btn btn-success radius" name=""><i class="Hui-iconfont"></i> 查询</button>
                 </div>
-            </div>
+            </form>
             <div class="mt-20">
                 <div class="cl pd-5 bg-1 bk-gray mt-20 ">
 					<span class="l">
 						<a href="javascript:;" onclick="teacher_add()" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加教师</a>
 					</span>
-                    <span class="r">共有数据：<strong>4</strong> 条</span>
+                    <span class="r">共有数据：<strong id="dataLength">4</strong> 条</span>
                 </div>
                 <table class="table table-border table-bordered table-striped table-hover">
-                    <tbody class="text-c">
+                    <tbody class="text-c" id="tbody">
                     <tr>
                         <td>员工号</td>
                         <td>姓名</td>
                         <td>职位</td>
                         <td>电话</td>
-                        <td>负责基地</td>
-                        <td>状态</td>
+                        <td style="width: 40%">员工简述</td>
                         <td>操作</td>
                     </tr>
-                    <tr>
-                        <td><a th:href="@{#}" class="c-primary">1001</a></td>
-                        <td>马化腾</td>
-                        <td>java软件开发</td>
-                        <td>1101233</td>
-                        <td>Web开发实训</td>
-                        <td>在职</td>
-                        <td class="td-manage">
-                            <a title="编辑" href="javascript:;" onclick="teacher_edit(this,3001)" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
-                            <a style="text-decoration:none" class="ml-10" onClick="modifyPassword()" href="javascript:;" title="修改密码"><i class="Hui-iconfont">&#xe63f;</i></a>
-                            <a title="删除" href="javascript:;" onclick="teacher_del(this,'1')" class="ml-10" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a th:href="@{#}" class="c-primary">1001</a></td>
-                        <td>马化腾</td>
-                        <td>java软件开发</td>
-                        <td>1101233</td>
-                        <td>Web开发实训</td>
-                        <td>在职</td>
-                        <td class="td-manage">
-                            <a title="编辑" href="javascript:;" onclick="teacher_edit(this,3001)" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
-                            <a style="text-decoration:none" class="ml-10" onClick="modifyPassword()" href="javascript:;" title="修改密码"><i class="Hui-iconfont">&#xe63f;</i></a>
-                            <a title="删除" href="javascript:;" onclick="teacher_del(this,'1')" class="ml-10" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a th:href="@{#}" class="c-primary">1001</a></td>
-                        <td>马化腾</td>
-                        <td>java软件开发</td>
-                        <td>1101233</td>
-                        <td>Web开发实训</td>
-                        <td>在职</td>
-                        <td class="td-manage">
-                            <a title="编辑" href="javascript:;" onclick="teacher_edit(this,3001)" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
-                            <a style="text-decoration:none" class="ml-10" onClick="modifyPassword()" href="javascript:;" title="修改密码"><i class="Hui-iconfont">&#xe63f;</i></a>
-                            <a title="删除" href="javascript:;" onclick="teacher_del(this,'1')" class="ml-10" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a th:href="@{#}" class="c-primary">1001</a></td>
-                        <td>马化腾</td>
-                        <td>java软件开发</td>
-                        <td>1101233</td>
-                        <td>Web开发实训</td>
-                        <td>在职</td>
-                        <td class="td-manage">
-                            <a title="编辑" href="javascript:;" onclick="teacher_edit(this,3001)" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
-                            <a style="text-decoration:none" class="ml-10" onClick="modifyPassword()" href="javascript:;" title="修改密码"><i class="Hui-iconfont">&#xe63f;</i></a>
-                            <a title="删除" href="javascript:;" onclick="teacher_del(this,'1')" class="ml-10" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
-                        </td>
-                    </tr>
-
                     </tbody>
                 </table>
             </div>
@@ -125,7 +71,7 @@
     </div>
 </section>
 
-<!--增加辅导员modal-->
+<!--增加实训教师modal-->
 <div id="addTeacher" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="height: 650px;overflow-y :auto">
     <div class="modal-dialog">
         <div class="modal-content radius">
@@ -133,27 +79,32 @@
                 <h3 class="modal-title">添加实训教师</h3>
                 <a class="close" data-dismiss="modal" aria-hidden="true" href="#;">×</a>
             </div>
-            <div class="modal-body">
+            <form class="modal-body" id="addForm">
 
-                <div class="mb-10"><strong>员工号：</strong><input type="text "  class="input-text radius"></div>
-                <div class="mb-10"><strong class="mt-5">姓名：</strong><input type="text"  class="input-text radius "></div>
+                <div class="mb-10"><strong>员工号：</strong><input type="text" id="new_teacherId" class="input-text radius" disabled="disabled">
+                    <input type="hidden" name="teacherId" id="teacherId"></div>
+                <div class="mb-10"><span class="c-red">*</span>&nbsp;<strong class="mt-5">姓名：</strong><input type="text" name="teacherName" class="input-text radius "></div>
                 <div class="mb-10"><strong class="mt-5">性别：</strong>
                     <span class="select-box">
-							  <select class="select radius" size="1" name="demo1">
-								<option value="" selected>男</option>
-								<option value="1">女</option>
-							  </select>
+                      <select class="select radius" size="1" name="sex">
+                        <option value="1" selected>男</option>
+                        <option value="2">女</option>
+                      </select>
 					</span>
                 </div>
-                <div class="mb-10"><strong>职位：</strong><input type="text"  class="input-text radius" ></div>
-                <div class="mb-10"><strong>年龄：</strong><input type="text"  class="input-text radius" ></div>
-                <div class="mb-10"><strong>手机：</strong><input type="text"  class="input-text radius" ></div>
-                <div class="mb-10"><strong>邮箱：</strong><input type="email"  class="input-text radius" placeholder="@"></div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary">添加</button>
-                <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
-            </div>
+                <div class="mb-10"><span class="c-red">*</span>&nbsp;<strong>职位：</strong><input type="text" name="teacherPosition" class="input-text radius"></div>
+                <div class="mb-10"><span class="c-red">*</span>&nbsp;<strong>年龄：</strong><input type="text" name="age" class="input-text radius"></div>
+                <div class="mb-10"><strong>手机：</strong><input type="text" name="phone" class="input-text radius"></div>
+                <div class="mb-10"><strong>邮箱：</strong><input type="email" name="email" class="input-text radius" placeholder="@"></div>
+                <div class="mb-10"><span class="c-red">*</span>&nbsp;<strong>员工简述：</strong>
+                    <textarea class="textarea radius" placeholder="最多可以输入80个字" id="teacherDescription" name="teacherDescription" rows="5" maxlength=80></textarea>
+                    <label style="padding-left:93%"><span id="text-count2" value="" >0</span>/80</label>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary">添加</button>
+                    <button class="btn" data-dismiss="modal" aria-hidden="true" id="addCancel">取消</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -166,18 +117,33 @@
                 <h3 class="modal-title">修改教师信息</h3>
                 <a class="close" data-dismiss="modal" aria-hidden="true" href="#;">×</a>
             </div>
-            <div class="modal-body">
-                <div class="mb-10"><strong>员工号：</strong><input type="text "  class="input-text radius" value="3001"></div>
-                <div class="mb-10"><strong>姓名：</strong><input type="text"  class="input-text radius " value="马云"></div>
-                <div class="mb-10"><strong>职位：</strong><input type="text"  class="input-text radius" value="java开发工程师"></div>
-                <div class="mb-10"><strong>年龄：</strong><input type="text"  class="input-text radius" value="56"></div>
-                <div class="mb-10"><strong>手机：</strong><input type="text"  class="input-text radius" value="1231110"></div>
-                <div class="mb-10"><strong>邮箱：</strong><input type="email"  class="input-text radius" placeholder="@" value="dsfa@16652.com"></div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary">保存</button>
-                <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
-            </div>
+            <form class="modal-body" id="editForm">
+                <div class="mb-10"><strong>员工号：</strong>
+                    <input type="text "  class="input-text radius" style="background-color: #CDD0D4" disabled="disabled" id="edit_teacherId_disabled">
+                    <input type="hidden"  class="input-text radius" id="edit_teacherId" name="teacherId">
+                </div>
+                <div class="mb-10"><span class="c-red">*</span>&nbsp;<strong>姓名：</strong><input type="text" id="edit_teacherName" name="teacherName" class="input-text radius "></div>
+                <div class="mb-10"><span class="c-red">*</span>&nbsp;<strong>职位：</strong><input type="text" id="edit_teacherPosition" name="teacherPosition" class="input-text radius" ></div>
+                <div class="mb-10"><strong class="mt-5">性别：</strong>
+                    <span class="select-box">
+                      <select class="select radius"  name="sex" id="edit_sex">
+                        <option value="1">男</option>
+                        <option value="2">女</option>
+                      </select>
+					</span>
+                </div>
+                <div class="mb-10"><span class="c-red">*</span>&nbsp;<strong>年龄：</strong><input type="text" id="edit_age" name="age" class="input-text radius" ></div>
+                <div class="mb-10"><strong>手机：</strong><input type="text" id="edit_phone" class="input-text radius" name="phone" value="1231110"></div>
+                <div class="mb-10"><strong>邮箱：</strong><input type="email" id="edit_email" class="input-text radius" name="email"  placeholder="@"></div>
+                <div class="mb-10"><span class="c-red">*</span>&nbsp;<strong>员工简述：</strong>
+                    <textarea class="textarea radius" placeholder="最多可以输入80个字" id="edit_teacherDescription" name="teacherDescription" rows="5" maxlength=80></textarea>
+                    <label style="padding-left:93%"><span id="edit_text-count2" value="" >0</span>/80</label>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary">保存</button>
+                    <button class="btn" data-dismiss="modal" aria-hidden="true" id="updateCancel">取消</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -185,61 +151,354 @@
 <!--修改实训老师密码的modal-->
 <div id="modifyPassword" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content radius form-horizontal">
+        <form class="modal-content radius form-horizontal" id="modifyPasswordForm">
             <div class="modal-header">
                 <h3 class="modal-title">修改密码</h3>
                 <a class="close" data-dismiss="modal" aria-hidden="true" href="#;">×</a>
             </div>
             <div class="row cl mb-15 mt-15">
                 <label class="form-label col-xs-3"><span class="c-red">*</span>&nbsp;&nbsp;账户：</label>
-                <div class=" col-xs-8">
-                    <label class="form-label col-xs-2">马云</label>
+                <div class="formControls col-xs-8" >
+                    <label class="form-label" id = "label_user" style="float: left"></label>
+                    <input type="hidden" name="username" id="hidden_username">
                 </div>
             </div>
             <div class="row cl mb-15">
                 <label class="form-label col-xs-3"><span class="c-red">*</span>&nbsp;&nbsp;新密码：</label>
                 <div class="formControls col-xs-8">
-                    <input type="text" class="input-text radius" autocomplete="off" placeholder="新密码" name="telephone">
+                    <input type="text" class="input-text radius" autocomplete="off" placeholder="新密码" name="newPassword" id="newPassword">
                 </div>
             </div>
             <div class="row cl mb-15">
                 <label class="form-label col-xs-3"><span class="c-red">*</span>&nbsp;&nbsp;确认密码：</label>
                 <div class="formControls col-xs-8">
-                    <input type="text" class="input-text radius" autocomplete="off" placeholder="确认密码" name="telephone">
+                    <input type="text" class="input-text radius" autocomplete="off" placeholder="确认密码" name="newPassword2" id="newPassword2">
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary">保存</button>
-                <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+                <button class="btn btn-primary" type="submit" >保存</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true" id="modifyPassword_cancel">取消</button>
             </div>
-        </div>
+        </form>
     </div>
 </div>
-
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript">
+
+    $(function () {
+
+        getTeachers();
+        $('#teacherDescription').keyup(function() {
+            var len=this.value.length
+            $('#text-count2').text(len);
+
+        });
+        $('#edit_teacherDescription').keyup(function() {
+                    var len=this.value.length
+                    $('#edit_text-count2').text(len);
+
+                });
+
+        //条件查询表单提交
+        $("#seacherForm").submit(function () {
+            var searchParams = $('#seacherForm').serializeArray();
+            $(".singleData").empty();
+            $.ajax({
+                type: "POST",
+                data: searchParams,
+                url: "/company/getTeacherList",
+                dataType: "json",
+                success: function(data){
+                    console.log(data);
+                    showData(data);
+                }
+            });
+            return false;//实现页面不刷新
+        });
+
+        //增加辅导员表单提交
+        $("#addForm").submit(function () {
+            if ($("#addForm").valid()) {//如果表单全部验证通过
+                var counselorParams = $('#addForm').serializeArray();
+                $.ajax({
+                    type: "POST",
+                    data: counselorParams,
+                    url: "/company/saveTeacher",
+                    dataType: "text",
+                    success: function (data) {
+                        console.log(data);
+                        if (data == "true") {
+                            $("#addForm input").val("");
+                            //$("#addForm input").removeAttr("value")
+                            $("#sex").val(1);
+                            $("#teacherDescription").val("");
+                            $("#addCancel").click();
+                            layer.msg("添加成功", {icon: 1, time: 1000});
+                        } else {
+                            layer.msg("添加失败", {icon: 2, time: 1000});
+                        }
+                        getTeachers();
+                    },
+                    error: function () {
+                        layer.msg("添加失败！", {icon: 2, time: 1000});
+                    }
+                });
+            }
+            return false;//实现页面不刷新
+        });
+
+        //编辑表单提交
+        $("#editForm").submit(function () {
+            if ($("#editForm").valid()) {//如果表单全部验证通过
+                var teacher = $('#editForm').serializeArray();
+                $.ajax({
+                    type: "POST",
+                    data: teacher,
+                    url: "/company/editTeacher",
+                    dataType: "json",
+                    success: function(data){
+                        if (data){
+                            $("#updateCancel").click();
+                            layer.msg("保存成功",{icon:1,time:1200});
+                            getTeachers();
+                        } else {
+                            layer.msg("保存失败",{icon:2,time:1200});
+                        }
+                    },
+                    error:function () {
+                        layer.msg("保存失败！",{icon:2,time:1000});
+                    }
+                });
+            }
+            return false;//实现页面不刷新
+        });
+
+        //密码修改
+        $("#modifyPasswordForm").submit(function () {
+            if ($("#modifyPasswordForm").valid()) {//如果表单全部验证通过
+                var username=$("#hidden_username").val();
+                var password=$("#newPassword").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/company/modifyPassword?username="+username+"&&password="+password,
+                    dataType: "json",
+                    success: function(data){
+                        console.log(data);
+                        if (data){
+                            $("#modifyPassword_cancel").click();
+                            layer.msg("修改成功",{icon:1,time:1200});
+                        } else {
+                            layer.msg("修改失败",{icon:2,time:1200});
+                        }
+                        $("#newPassword").val("");
+                        $("#newPassword2").val("");
+                    },
+                    error:function () {
+                        layer.msg("保存失败！",{icon:2,time:1000});
+                    }
+                });
+            }
+            return false;//实现页面不刷新
+        });
+
+    });
+
+    /*查询教师，进行表格填充*/
+    function getTeachers() {
+        $.ajax({
+            type: "GET",
+            url: "/company/getTeacherList",
+            dataType: "json",
+            success: function(data){
+                console.log(data);
+                showData(data);
+            }
+        });
+    }
+
+    function showData(data){
+        $(".singleData").empty();
+        if (data[0]){
+            $.each(data,function (index,teacher) {
+                $("#tbody").append(" <tr class='singleData'>\n" +
+                    "                        <td><a th:href=\"@{#}\" class=\"c-primary\">"+teacher.teacherId+"</a></td>\n" +
+                    "                        <td>"+teacher.teacherName+"</td>\n" +
+                    "                        <td>"+teacher.teacherPosition+"</td>\n" +
+                    "                        <td>"+teacher.phone+"</td>\n" +
+                    "                        <td>"+teacher.teacherDescription+"</td>\n" +
+                    "                        <td class=\"td-manage\">\n" +
+                    "                            <a title=\"编辑\" href=\"javascript:;\" onclick='teacher_edit("+JSON.stringify(teacher)+")' style=\"text-decoration:none\"><i class=\"Hui-iconfont\">&#xe6df;</i></a>\n" +
+                    "                            <a style=\"text-decoration:none\" class=\"ml-10\" onClick=\"modifyPassword("+teacher.teacherId+",'"+teacher.teacherName+"')\" href=\"javascript:;\" title=\"修改密码\"><i class=\"Hui-iconfont\">&#xe63f;</i></a>\n" +
+                    "                            <a title=\"删除\" href=\"javascript:;\" onclick=\"teacher_del(this,"+teacher.teacherId+")\" class=\"ml-10\" style=\"text-decoration:none\"><i class=\"Hui-iconfont\">&#xe6e2;</i></a>\n" +
+                    "                        </td>\n" +
+                    "                    </tr>");
+            });
+            $("#dataLength").text(data.length);
+        } else {
+            $(".singleData").empty();
+            $("#tbody").append("<tr class='singleData'><td colspan='8' style='color: red'><h4>"+data[1]+"</h4></td></tr>");
+            $("#dataLength").text("0");
+        }
+    }
     /*实训教师-添加*/
     function teacher_add(){
-        //layer_show("增加教师","/addTeacher","","510");
         $("#addTeacher").modal();
+        $.get("/company/getMaxTeacherId",function(data){
+            console.log(data);
+            $("#new_teacherId").val(data+"(初始密码:123456)");
+            $("#teacherId").val(data);
+        });
     }
-    /*实训教师-编辑*/
-    function teacher_edit(){
+    /*实训教师-编辑----直接传输对象*/
+    function teacher_edit(teacherObject){
+        $("#edit_teacherId_disabled").val(teacherObject.teacherId);
+        $("#edit_teacherId").val(teacherObject.teacherId);
+        $("#edit_teacherName").val(teacherObject.teacherName);
+        $("#edit_teacherPosition").val(teacherObject.teacherPosition);
+        $("#edit_age").val(teacherObject.age);
+        $("#edit_sex").val(teacherObject.sex);
+        $("#edit_phone").val(teacherObject.phone);
+        $("#edit_email").val(teacherObject.email);
+        $("#edit_teacherDescription").val(teacherObject.teacherDescription);
+        var length =  teacherObject.teacherDescription.length;
+        $('#edit_text-count2').text(length);
         $("#editTeacher").modal();
     }
     /*实训教师-密码修改*/
-    function modifyPassword(){
+    function modifyPassword(teacherId,teacherName){
+        console.log(teacherId);
+        $("#hidden_username").val(teacherId);
+        $("#label_user").text(teacherName+"("+teacherId+")");
         $("#modifyPassword").modal();
     }
 
     /*实训教师-删除*/
-    function teacher_del(obj,id){
+    function teacher_del(obj,teacherId){
+        console.log("将要删除id"+teacherId);
         layer.confirm('确认要删除吗？',function(index){
-            $(obj).parents("tr").remove();
-            layer.msg('已删除!',{icon:1,time:1000});
+            $.post("/company/delTeacher/"+teacherId,function(data,status){
+                if (data){
+                    layer.msg('已删除!',{icon:1,time:1200});
+                    getTeachers();
+                } else {
+                    layer.msg('删除失败!',{icon:2,time:1200});
+                }
+            });
         });
     }
 
+
+
+
+</script>
+<script>
+    $(function () {
+        $("#addForm").validate({
+            rules:{
+                teacherName:{
+                    required: true
+                },
+                teacherDescription:{
+                    required: true,
+                    maxlength: 80
+                },
+                age:{
+                    required: true,
+                    digits: true//只能填整数
+                },
+                phone:{
+                    minlength: 11,
+                    maxlength: 11,
+                    digits: true//只能填整数
+                },
+                email:{
+                    email:true
+                },
+                teacherPosition:{
+                    required: true
+                }
+            },
+            messages:{
+                teacherName:{required:"请正确填写信息"},
+                teacherDescription:{required:"请正确填写信息"},
+                phone:{
+                    minlength: "请正确填写信息",
+                    maxlength: "请正确填写信息",
+                    digits: "请正确填写信息"//只能填整数
+                },
+                age:{
+                    required:"请正确填写信息",
+                    digits: "请正确填写信息"//只能填整数
+                },
+                email:{email:"请正确填写信息"},
+                teacherPosition:{
+                    required: "请正确填写信息"
+                }
+            }
+        });
+        $("#editForm").validate({
+            rules:{
+                teacherName:{
+                    required: true
+                },
+                college:{
+                    required: true
+                },
+                phone:{
+                    required: true,
+                    minlength: 11,
+                    maxlength: 11,
+                    digits: true//只能填整数
+                },
+                email:{
+                    email:true
+                }
+            },
+            messages:{
+                teacherName:{required:"请正确填写信息"},
+                college:{required:"请正确填写信息"},
+                phone:{
+                    required: "请正确填写信息",
+                    minlength: "请正确填写信息",
+                    maxlength: "请正确填写信息",
+                    digits: "请正确填写信息"//只能填整数
+                },
+                email:{email:"请正确填写信息"}
+            }
+        });
+        $("#modifyPasswordForm").validate({
+            rules:{
+                newPassword:{
+                    required: true,
+                    minlength: 6,
+                    maxlength: 6,
+                    digits: true//只能填整数
+                },
+                newPassword2:{
+                    required: true,
+                    minlength: 6,
+                    maxlength: 6,
+                    digits: true,//只能填整数
+                    equalTo: "#newPassword"
+                }
+            },
+            messages:{
+                newPassword: {
+                    required: "请填写新密码",
+                    minlength: "密码为6位",
+                    maxlength: "密码为6位",
+                    digits: "账号须为整数"
+                },
+                newPassword2: {
+                    required: "请填写确认密码",
+                    minlength: "密码为6位",
+                    maxlength: "密码为6位",
+                    digits: "账号须为整数",
+                    equalTo: "输入密码不一致"
+                }
+            }
+        });
+    });
 
 </script>
 <!--/请在上方写此页面业务相关的脚本-->

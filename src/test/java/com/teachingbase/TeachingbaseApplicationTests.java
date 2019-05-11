@@ -1,6 +1,7 @@
 package com.teachingbase;
 
 import com.teachingbase.dao.ResourceMapper;
+import com.teachingbase.dao.TeacherMapper;
 import com.teachingbase.domain.Base;
 import com.teachingbase.domain.Resource;
 import com.teachingbase.domain.Tree;
@@ -72,9 +73,19 @@ public class TeachingbaseApplicationTests {
         System.out.println(adminService.addCounselor(user));
     }
 
+    @Autowired
+    public TeacherService teacherService;
     @Test
     public void tets7(){
-        List<Base> list = baseService.getBaseListByCompanyName("阿里巴巴");
-        System.out.println(list);
+        teacherService.getTeacherListByCompany("阿里巴巴");
+//        System.out.println(list);
     }
+    @Autowired
+    public TeacherMapper teacherMapper;
+    @Test
+    public void tets8(){
+        int i = teacherMapper.countBaseTeacherByTeacherId("700003");
+        System.out.println(i);
+    }
+
 }

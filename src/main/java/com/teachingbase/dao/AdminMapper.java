@@ -1,5 +1,6 @@
 package com.teachingbase.dao;
 
+import com.teachingbase.domain.Company;
 import com.teachingbase.domain.User;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
@@ -35,10 +36,14 @@ public interface AdminMapper {
     @Select("select distinct company_name from company")
     public List<String> getCompanies();
 
+    @Select("select distinct * from company")
+    public List<Company> getCompanyBean();
+
     public List<User> getManagerListBySearchParams(Map params);
 
     @Select("select max(username) from user where role_id='401'")
     public String getMaxUsernameOfManager();
 
     public int addManager(User user);
+
 }

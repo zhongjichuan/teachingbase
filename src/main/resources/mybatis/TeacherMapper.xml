@@ -5,8 +5,39 @@
 <mapper namespace="com.teachingbase.dao.TeacherMapper">
 
     <select id="getTeacherByBaseId" resultType="teacher">
-        select teacher.* from teacher,base,base_teacher
+        select teacher.* from teacher,base_teacher
           where base_teacher.base_id = #{baseId}
           and base_teacher.teacher_id = teacher.teacher_id
     </select>
+
+    <select id="getTeacherListByParams" resultType="teacher"  parameterType="map">
+       select teacher.* from teacher,company_teacher,company
+          where company.company_name=#{companyName}
+          and company.company_id = company_teacher.company_id
+          and teacher.teacher_id = company_teacher.teacher_id
+          <if test="teacherId!=null and teacher!=''">
+              and teacher.teacher_id like concat('%',#{teacherId},'%')
+          </if>
+          <if test="teacherName!=null and teacherName!=''">
+              and teacher.teacher_name like concat('%',#{teacherName},'%')
+          </if>
+          <if test="teacherPosition!=null and teacherPosition!=''">
+              and teacher.teacher_position like concat('%',#{teacherPosition},'%')
+          </if>
+    </select>
+
+    <update id="updateTeacher" parameterType="teacher">
+        update teacher
+        set teacher_name = #{teacherName},teacher_position=#{teacherPosition},age=#{age},teacher_description=#{teacherDescription},update_time=now()
+        <if test="sex!=null and sex!=''">
+            ,sex=#{sex}
+        </if>
+        <if test="phone!=null and phone!=''">
+            ,phone=#{phone}
+        </if>
+        <if test="email!=null and email!=''">
+            ,email=#{email}
+        </if>
+        where teacher_id = #{teacherId}
+    </update>
 </mapper>

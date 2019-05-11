@@ -37,74 +37,66 @@
 <section class="Hui-article-box">
 	<nav class="breadcrumb"><i class="Hui-iconfont"></i> <a href="/index" class="maincolor">首页</a>
 		<span class="c-999 en">&gt;</span><span class="c-666">基地中心</span>
-		<span class="c-999 en">&gt;</span><span class="maincolor"><a class="c-666" href="/company/baseManage">基地管理</a></span>
-		<span class="c-999 en">&gt;</span><span class="c-666">创建基地</span>
+		<span class="c-999 en">&gt;</span><span class="c-666">基地管理</span>
+		<span class="c-999 en">&gt;</span><span class="c-666">编辑基地</span>
 	</nav>
 	<div class="Hui-article">
 		<article class="cl pd-20">
 			<div class="panel panel-default">
-				<div class="panel-header">创建基地</div>
+				<div class="panel-header">编辑基地</div>
 				<div class="panel-body text-c">
-					<form class="form form-horizontal" th:action="@{/company/saveBase}" id="addBaseForm">
+					<form class="form form-horizontal" action="/counselor/updateBase" id="editBaseForm">
 						<div class="row cl">
-							<label class="form-label col-xs-4 col-sm-2">&nbsp;&nbsp;基地编号：</label>
+							<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>&nbsp;&nbsp;基地编号：</label>
 							<div class="formControls col-xs-8 col-sm-5">
-								<input type="text" class="input-text radius"  placeholder="" th:value="${baseId}" disabled="disabled">
-								<input type="hidden"  name="baseId" th:value="${baseId}">
+								<input type="text" class="input-text radius"  placeholder="" name="" disabled="disabled" th:value="${base.baseId}">
+								<input type="hidden" class="input-text radius"  placeholder="" name="baseId" th:value="${base.baseId}">
 							</div>
 						</div>
 						<div class="row cl">
 							<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>&nbsp;&nbsp;基地名称：</label>
 							<div class="formControls col-xs-8 col-sm-5">
-								<input type="text" class="input-text radius"  placeholder=""  name="baseName">
+								<input type="text" class="input-text radius"  placeholder=""  name="baseName" th:value="${base.baseName}">
 							</div>
 						</div>
-						<div class="row cl">
-							<label class="form-label col-xs-4 col-sm-2">&nbsp;&nbsp;实训老师：</label>
-							<div class="formControls col-xs-8 col-sm-5">
-								<span class="select-box mr-5 radius col-sm-5">
-									<select class="select "  name="teacherId">
-										<option value="" selected>选择老师</option>
-										<option th:each="teacher:${teachers}" th:value ="${teacher.teacherId}" th:text="${teacher.teacherName}"></option>
-									</select>
-								</span>
-							</div>
-						</div>
+
 						<div class="row cl">
 							<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>&nbsp;&nbsp;基地人数：</label>
 							<div class="formControls col-xs-8 col-sm-5">
-								<input type="text" class="input-text radius"  placeholder="" name="baseNum">
+								<input type="text" class="input-text radius"   name="baseNum" th:value="${base.baseNum}" disabled="disabled">
 							</div>
 						</div>
 						<div class="row cl">
 							<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>&nbsp;&nbsp;基地描述：</label>
 							<div class="formControls col-xs-8 col-sm-5">
-								<input type="text" class="input-text radius"  placeholder="" name="baseDescription">
+								<textarea placeholder="请简述实训时间，人数，内容" name="baseDescription" class="textarea radius" th:text="${base.baseDescription}"></textarea>
 							</div>
 						</div>
 						<div class="row cl">
-							<label class="form-label col-xs-4 col-sm-2">基地所属公司：</label>
+							<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>&nbsp;&nbsp;实训公司：</label>
 							<div class="formControls col-xs-8 col-sm-5">
-								<input type="text" class="input-text radius" id="companyName" name="companyName" th:value="${companyName}" disabled="disabled">
+								<input type="text" class="input-text radius"  name="companyName" th:value="${company.companyName}" disabled="disabled">
 							</div>
 						</div>
 						<div class="row cl">
 							<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>&nbsp;&nbsp;报到地址：</label>
 							<div class="formControls col-xs-8 col-sm-5">
-								<input type="text" class="input-text radius"  placeholder="" name="baseAddress">
+								<input type="text" class="input-text radius"  placeholder="基地负责人填写" name="baseAddress" th:value="${base.baseAddress}" disabled="disabled">
 							</div>
 						</div>
 						<div class="row cl">
-							<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>&nbsp;&nbsp;报到时间：</label>
+							<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>&nbsp;&nbsp;报到日期：</label>
 							<div class="formControls col-xs-8 col-sm-5">
-								<input type="datetime-local" class="input-text radius"  placeholder="" name="baseReportDate">
+								<input type="datetime-local" class="input-text radius"  placeholder=""  name="baseReportDate" th:field="${base.baseReportDate}" disabled="disabled">
 							</div>
 						</div>
+						<div class="row cl"></div>
 
 						<div class="row cl">
 							<div class="col-xs-8 col-sm-5 col-xs-offset-1">
-								<button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 创建</button>
-								<a class="btn btn-default radius" th:href="@{/company/baseManage}">&nbsp;&nbsp;取消&nbsp;&nbsp;</a>
+								<button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+
+								<a class="btn btn-default radius" th:href="@{/counselor/baseManage}">&nbsp;&nbsp;取消&nbsp;&nbsp;</a>
 							</div>
 						</div>
 					</form>
@@ -117,68 +109,28 @@
 
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript">
-
 	$(function () {
 
-		$("#addBaseForm").submit(function () {
-			if ($("#addBaseForm").valid()) {
-				var params = $('#addBaseForm').serializeArray();
+		$("#editBaseForm").submit(function () {
+			if ($("#editBaseForm").valid()) {
+				var params = $('#editBaseForm').serializeArray();
 				$.ajax({
 					type: "POST",
 					data: params,
-					url: "/company/saveBase",
+					url: "/counselor/updateBase",
 					dataType: "json",
 					success: function (data) {
 						if (data) {
-							layer.msg("创建成功");
+							layer.msg("修改成功");
 						} else {
-							layer.msg("创建失败");
+							layer.msg("修改失败");
 						}
-						setTimeout('window.location.href="/company/baseManage"', 1000);
+						setTimeout('window.location.href="/counselor/baseManage"', 1000);
 					}
 				});
 			}
 			return false;//实现页面不刷新
 		});
-
-	});
-
-
-	$(function () {
-		$("#addBaseForm").validate({
-			rules:{
-				baseName:{
-					required: true
-				},
-				baseNum:{
-					required: true,
-					digits: true//只能填整数
-				},
-				baseDescription:{
-					required: true
-				},
-				baseAddress:{
-					required: true
-				}
-
-			},
-			messages:{
-				baseName:{
-					required: "请填写基地名称"
-				},
-				baseNum:{
-					required: "请填写基地所招收人数",
-					digits: "只能填整数"
-				},
-				baseDescription:{
-					required: "请填写基地描述"
-				},
-				baseAddress:{
-					required: "请填写报到地址"
-				}
-			}
-		});
-
 
 	});
 

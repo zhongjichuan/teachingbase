@@ -9,6 +9,7 @@ import org.apache.shiro.codec.Base64;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.filter.authc.LogoutFilter;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
@@ -36,6 +37,7 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         //LinkedHashMap为有序集合
         Map<String, String> filterMap = new LinkedHashMap<>();
+        LogoutFilter logoutFilter = new LogoutFilter();
         /*
          * Shiro内置过滤器，可以实现权限相关的拦截器
          *    常用的过滤器：
@@ -48,8 +50,15 @@ public class ShiroConfig {
         filterMap.put("/login","anon");
         filterMap.put("/index","authc");
         filterMap.put("/addTest","perms[student:add]");
-        filterMap.put("/logout","logout");
+        filterMap.put("/logout","logout");//退出成功后重定向的地址（/）源码可看
         filterMap.put("/error/**","anon");
+        filterMap.put("/**/**.css","anon");
+        filterMap.put("/**/**.js","anon");
+        filterMap.put("/**/**.jpg","anon");
+        filterMap.put("/**/**.png","anon");
+        filterMap.put("/**/**.woff","anon");
+        filterMap.put("/**/**.ico","anon");
+        filterMap.put("/**/**.ttf","anon");
         filterMap.put("/**","user");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);

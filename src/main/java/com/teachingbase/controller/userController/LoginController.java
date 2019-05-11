@@ -1,10 +1,8 @@
 package com.teachingbase.controller.userController;
 
-import com.teachingbase.domain.Resource;
-import com.teachingbase.domain.Tree;
 import com.teachingbase.domain.User;
-import com.teachingbase.service.ResourceService;
 import com.teachingbase.service.UserService;
+import com.teachingbase.util.SessionContextUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -17,23 +15,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @Controller
 public class LoginController {
     @Autowired
     private UserService userService;
 
+    /**
+     * 登录到首页
+     */
     @RequestMapping("/index")
-    public String index(Model model, HttpSession session) {
-
+    public String index(Model model) {
+        User user = SessionContextUtil.getCurrentUser();
+        model.addAttribute("user",user);
         return "userCenter/index";
     }
 
     @RequestMapping("/toLogin")
     public String toLogin(){
-
-        return "common/login";
+         return "common/login";
     }
 
     @RequestMapping("/login")

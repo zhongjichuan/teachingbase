@@ -1,6 +1,7 @@
 package com.teachingbase.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -10,6 +11,9 @@ public class Base {
     private String baseDescription;
     private String baseNum;
     private String baseEnrolmentNum;
+
+    @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm",timezone = "GMT+8")
     private Date baseReportDate;
     private String baseAddress;
     private String baseStatus;
@@ -19,6 +23,7 @@ public class Base {
     private Date baseUpdateTime;
 
     private Teacher teacher;
+    private Company company;
 
     @Override
     public String toString() {
@@ -35,6 +40,14 @@ public class Base {
                 ", baseUpdateTime=" + baseUpdateTime +
                 ", teacher=" + teacher +
                 '}';
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     public String getBaseId() {

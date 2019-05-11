@@ -36,7 +36,7 @@
 
 <section class="Hui-article-box">
 	<nav class="breadcrumb"><i class="Hui-iconfont"></i> <a href="/index" class="maincolor">首页</a>
-		<span class="c-999 en">&gt;</span><span class="c-666">基地中心</span>
+		<span class="c-999 en">&gt;</span><span class="c-666">学校中心</span>
 		<span class="c-999 en">&gt;</span><span class="maincolor"><a class="c-666" href="/company/baseManage">基地管理</a></span>
 		<span class="c-999 en">&gt;</span><span class="c-666">创建基地</span>
 	</nav>
@@ -45,7 +45,7 @@
 			<div class="panel panel-default">
 				<div class="panel-header">创建基地</div>
 				<div class="panel-body text-c">
-					<form class="form form-horizontal" th:action="@{/company/saveBase}" id="addBaseForm">
+					<form class="form form-horizontal" id="addBaseForm">
 						<div class="row cl">
 							<label class="form-label col-xs-4 col-sm-2">&nbsp;&nbsp;基地编号：</label>
 							<div class="formControls col-xs-8 col-sm-5">
@@ -60,51 +60,45 @@
 							</div>
 						</div>
 						<div class="row cl">
-							<label class="form-label col-xs-4 col-sm-2">&nbsp;&nbsp;实训老师：</label>
+							<label class="form-label col-xs-4 col-sm-2">&nbsp;&nbsp;基地人数：</label>
 							<div class="formControls col-xs-8 col-sm-5">
-								<span class="select-box mr-5 radius col-sm-5">
-									<select class="select "  name="teacherId">
-										<option value="" selected>选择老师</option>
-										<option th:each="teacher:${teachers}" th:value ="${teacher.teacherId}" th:text="${teacher.teacherName}"></option>
-									</select>
-								</span>
-							</div>
-						</div>
-						<div class="row cl">
-							<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>&nbsp;&nbsp;基地人数：</label>
-							<div class="formControls col-xs-8 col-sm-5">
-								<input type="text" class="input-text radius"  placeholder="" name="baseNum">
+								<input type="text" class="input-text radius"  placeholder="基地负责人填写" name="baseNum" disabled="disabled">
 							</div>
 						</div>
 						<div class="row cl">
 							<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>&nbsp;&nbsp;基地描述：</label>
 							<div class="formControls col-xs-8 col-sm-5">
-								<input type="text" class="input-text radius"  placeholder="" name="baseDescription">
+								<textarea placeholder="请简述实训时间，人数，内容" name="baseDescription" class="textarea radius"></textarea>
 							</div>
 						</div>
 						<div class="row cl">
-							<label class="form-label col-xs-4 col-sm-2">基地所属公司：</label>
+							<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>&nbsp;&nbsp;选择公司：</label>
 							<div class="formControls col-xs-8 col-sm-5">
-								<input type="text" class="input-text radius" id="companyName" name="companyName" th:value="${companyName}" disabled="disabled">
+								<span class="select-box mr-5 radius col-sm-5">
+									<select class="select "  name="companyId">
+										<option class="input-text radius mr-5" value="">选择公司</option>
+										<option th:each="company:${companies}" th:value ="${company.companyId}" th:text="${company.companyName}"></option>
+									</select>
+								</span>
 							</div>
 						</div>
 						<div class="row cl">
-							<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>&nbsp;&nbsp;报到地址：</label>
+							<label class="form-label col-xs-4 col-sm-2">&nbsp;&nbsp;报到地址：</label>
 							<div class="formControls col-xs-8 col-sm-5">
-								<input type="text" class="input-text radius"  placeholder="" name="baseAddress">
+								<input type="text" class="input-text radius"  placeholder="基地负责人填写" name="baseAddress" disabled="disabled">
 							</div>
 						</div>
 						<div class="row cl">
-							<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>&nbsp;&nbsp;报到时间：</label>
+							<label class="form-label col-xs-4 col-sm-2">&nbsp;&nbsp;报到时间：</label>
 							<div class="formControls col-xs-8 col-sm-5">
-								<input type="datetime-local" class="input-text radius"  placeholder="" name="baseReportDate">
+								<input type="datetime-local" class="input-text radius"  placeholder="基地负责人填写" name="baseReportDate" disabled="disabled">
 							</div>
 						</div>
 
 						<div class="row cl">
 							<div class="col-xs-8 col-sm-5 col-xs-offset-1">
 								<button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 创建</button>
-								<a class="btn btn-default radius" th:href="@{/company/baseManage}">&nbsp;&nbsp;取消&nbsp;&nbsp;</a>
+								<a class="btn btn-default radius" th:href="@{/counselor/baseManage}">&nbsp;&nbsp;取消&nbsp;&nbsp;</a>
 							</div>
 						</div>
 					</form>
@@ -126,7 +120,7 @@
 				$.ajax({
 					type: "POST",
 					data: params,
-					url: "/company/saveBase",
+					url: "/counselor/saveBase",
 					dataType: "json",
 					success: function (data) {
 						if (data) {
@@ -134,7 +128,7 @@
 						} else {
 							layer.msg("创建失败");
 						}
-						setTimeout('window.location.href="/company/baseManage"', 1000);
+						setTimeout('window.location.href="/counselor/baseManage"', 1000);
 					}
 				});
 			}
@@ -150,14 +144,10 @@
 				baseName:{
 					required: true
 				},
-				baseNum:{
-					required: true,
-					digits: true//只能填整数
-				},
 				baseDescription:{
 					required: true
 				},
-				baseAddress:{
+				company: {
 					required: true
 				}
 
@@ -166,15 +156,11 @@
 				baseName:{
 					required: "请填写基地名称"
 				},
-				baseNum:{
-					required: "请填写基地所招收人数",
-					digits: "只能填整数"
-				},
 				baseDescription:{
 					required: "请填写基地描述"
 				},
-				baseAddress:{
-					required: "请填写报到地址"
+				company: {
+					required:"请选择公司"
 				}
 			}
 		});

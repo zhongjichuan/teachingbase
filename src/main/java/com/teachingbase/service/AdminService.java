@@ -1,5 +1,6 @@
 package com.teachingbase.service;
 
+import com.teachingbase.domain.Company;
 import com.teachingbase.domain.User;
 import org.apache.ibatis.annotations.Select;
 
@@ -19,4 +20,5 @@ public interface AdminService {
     public List<User> getManagerListBySearchParams(Map params);
     public String getMaxUsernameOfManager();
     public int addManager(User user);
+    public List<Company> getCompanyBean();
 }
