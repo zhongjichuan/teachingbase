@@ -57,12 +57,21 @@ public interface BaseMapper {
     @Insert("insert into base(base_id,base_name,base_description,base_status,base_createTime,base_updateTime) " +
             "values(#{baseId},#{baseName},#{baseDescription},0,now(),now())")
     public int addBase(Base base);
+    @Insert("insert into base(base_id,base_name,base_description,base_num,base_address,base_report_date,base_status,base_createTime,base_updateTime) " +
+            "values(#{baseId},#{baseName},#{baseDescription},#{baseNum},#{baseAddress},#{baseReportDate},#{baseStatus},now(),now())")
+    public int addBaseByManager(Base base);
 
     @Insert("insert into company_base values(#{companyId},#{baseId})")
     public int saveBaseCompany(@Param("baseId") String baseId, @Param("companyId") String companyId);
 
     @Insert("insert into college_base values(#{collegeId},#{baseId})")
     public int saveBaseCollege(@Param("baseId") String baseId, @Param("collegeId") String collegeId);
+
+    /**
+    *辅导员创建基地
+     */
+    @Insert("insert into base_teacher values(#{baseId},'')")
+    public int saveBaseTeacherByCounselor(String baseId);
 
     @Update("update base set base.base_name = #{baseName},base.base_description=#{baseDescription},base_updateTime = now() where base_id=#{baseId}")
     public int updateBaseByCounselor(Base base);
@@ -79,4 +88,22 @@ public interface BaseMapper {
     @Delete("delete from base_teacher where base_teacher.base_id = #{baseId}")
     public int delTeacherBaseByBaseId(String baseId);
 
+
+    /**
+     * 学生相关操作
+     */
+    public List<Base> getBaseListByStudent(String username);
+
+    public List<Base> getBaseListByStudentAndParams(Map map);
+
+    @Update("update base set base_enrolment_num=base_enrolment_num+1 where base_id = #{baseId}")
+    public int updateBaseEnrollNumByIncrease(String baseId);
+
+    @Update("update base set base_enrolment_num=base_enrolment_num-1 where base_id = #{baseId}")
+    public int updateBaseEnrollNumByDecrease(String baseId);
+
+    public Base getBaseByStudentId(String studentId);
+
+    @Select("select base.* from base,base_teacher where base.base_id=base_teacher.base_id and base_teacher.teacher_id=#{teacherId}")
+    public List<Base> getBaseByTeacherId(String teacherId);
 }

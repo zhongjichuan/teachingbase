@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.teachingbase.dao.ClassStudentMapper">
+    <resultMap id="studentResultMap" type="user">
+        <id property="id" column="id"></id>
+        <result property="username" column="username"></result>
+        <result property="name" column="name"></result>
+        <association property="base" column="username"
+                     select = "com.teachingbase.dao.BaseMapper.getBaseByStudentId">
+        </association>
+        <association property="classStudent" column="username"
+                     select = "com.teachingbase.dao.ClassStudentMapper.getClassStudentByStudentId">
+        </association>
+        <association property="baseStudent" column="username"
+                     select = "com.teachingbase.dao.BaseStudentMapper.getBaseStudentByStudentId">
+        </association>
+    </resultMap>
+
+    <!--基地的学生们-->
+    <resultMap id="studentOfBaseResultMap" type="base">
+        <id property="baseId" column="baseId"></id>
+        <result property="baseName" column="baseName"></result>
+        <collection property="studentsOfBaseList" column="base_id" ofType="user">
+            <id column="username" property="username"></id>
+            <result column="name" property="name"></result>
+            <result column="phone" property="phone"></result>
+            <result column="email" property="email"></result>
+            <result column="college" property="college"></result>
+            <association property="classStudent" column="username" javaType="classStudent">
+                <result column="username" property="studentId"></result>
+                <result column="className" property="className"></result>
+            </association>
+            <association property="baseStudent" column="username" javaType="baseStudent">
+                <result column="username" property="studentId"></result>
+                <result column="reportStatus" property="reportStatus"></result>
+            </association>
+        </collection>
+    </resultMap>
+
+    <select id="getStudentsByCounselor" resultMap="studentResultMap">
+        select * from User where college=#{collegeName} and role_id = '301' order by username limit #{curr},#{limit}
+    </select>
+
+    <select id="getStudentsBySearchParams" parameterType="map" resultMap="studentResultMap">
+         select User.* from User
+         <if test="className!=null and className!=''">
+            ,class_student
+         </if>
+          <if test="reportStatus!=null and reportStatus!=''">
+            ,base_student
+         </if>
+         where college=#{collegeName} and role_id = '301'
+         <if test="username!=null and username!=''">
+             and username = #{username}
+         </if>
+         <if test="className!=null and className!=''">
+             and class_student.class_name=#{className} and class_student.student_id = user.username
+         </if>
+         <if test="reportStatus!=null and reportStatus!=''">
+             and base_student.student_id=user.username and base_student.report_status=#{reportStatus}
+         </if>
+         order by username limit #{curr},#{limit}
+    </select>
+
+    <select id="getCountStudentByParams" parameterType="map" resultType="int">
+         select count(1) from user
+         <if test="className!=null and className!=''">
+            ,class_student
+         </if>
+          <if test="reportStatus!=null and reportStatus!=''">
+            ,base_student
+         </if>
+         where college=#{collegeName} and role_id = '301'
+         <if test="username!=null and username!=''">
+             and username = #{username}
+         </if>
+         <if test="className!=null and className!=''">
+             and class_student.class_name=#{className} and class_student.student_id = user.username
+         </if>
+         <if test="reportStatus!=null and reportStatus!=''">
+             and base_student.student_id=user.username and base_student.report_status=#{reportStatus}
+         </if>
+    </select>
+
+    <select id="getCountStudent" resultType="int">
+        select count(1) from User where college=#{collegeName} and role_id = '301'
+    </select>
+
+    <select id="getStudentOfBaseByBaseId" resultMap="studentOfBaseResultMap">
+      select base.base_id baseId,base.base_name baseName,user.username username,user.name name,user.phone phone,user.email email,
+      user.college college,class_student.class_name className,base_student.report_status reportStatus
+        from user,base_student,class_student,base
+        where user.username = base_student.student_id and class_student.student_id=user.username
+        and base.base_id=#{baseId} and base.base_id=base_student.base_id order by username limit 0,10
+    </select>
+    <select id="getStudentOfBaseByBaseIdAndPage" resultMap="studentOfBaseResultMap">
+      select base.base_id baseId,base.base_name baseName,user.username username,user.name name,user.phone phone,user.email email,
+      user.college college,class_student.class_name className,base_student.report_status reportStatus
+        from user,base_student,class_student,base
+        where user.username = base_student.student_id and class_student.student_id=user.username
+        and base.base_id=#{baseId} and base.base_id=base_student.base_id
+        order by username limit #{curr},#{limit}
+    </select>
+
+
+</mapper>

@@ -48,8 +48,6 @@ public class ShiroConfig {
          *       role: 该资源必须得到角色权限才可以访问
          */
         filterMap.put("/login","anon");
-        filterMap.put("/index","authc");
-        filterMap.put("/addTest","perms[student:add]");
         filterMap.put("/logout","logout");//退出成功后重定向的地址（/）源码可看
         filterMap.put("/error/**","anon");
         filterMap.put("/**/**.css","anon");

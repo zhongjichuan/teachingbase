@@ -1,0 +1,141 @@
+﻿<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<link rel="Bookmark" href="/favicon.ico" >
+<link rel="Shortcut Icon" href="/favicon.ico" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="/lib/html5.js"></script>
+<script type="text/javascript" src="/lib/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="/static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css" />
+
+<link rel="stylesheet" type="text/css" href="/static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/style.css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script><![endif]-->
+<!--/meta 作为公共模版分离出去-->
+<title>基地报名</title>
+
+	<link rel="stylesheet" href="/webjars/layui/2.4.5/css/layui.css">
+	<script src="/webjars/layui/2.4.5/layui.js"></script>
+
+</head>
+<body>
+<!--_header 作为公共模版分离出去-->
+<div th:replace="common/header::header"></div>
+<!--_menu 作为公共模版分离出去-->
+<div th:replace="common/menu::menu"></div>
+
+<section class="Hui-article-box">
+	<nav class="breadcrumb"><i class="Hui-iconfont"></i> <a href="/index" class="maincolor">首页</a>
+		<span class="c-999 en">&gt;</span><span class="c-666">学生考勤</span></nav>
+	<div class="Hui-article">
+		<article class="cl pd-20">
+			<div class="panel panel-default">
+				<div class="panel-header" th:text="${base.baseName}"></div>
+				<div class="panel-body">
+
+						<table class="table table-border table-bordered table-striped table-hover">
+							<tbody class="text-c" id="tbody">
+							<tr id="title">
+								<td>学号</td>
+								<td>姓名</td>
+								<td>班级</td>
+								<td>手机号</td>
+								<td>邮箱</td>
+								<td>学院</td>
+								<td>报到状态</td>
+							</tr>
+							<tr th:each="student:${base.studentsOfBaseList}" class="myData">
+								<td><a th:href="@{/studentDetails}" class="c-primary">[[${student.username}]]</a></td>
+								<td th:text="${student.name}"></td>
+								<td th:text="${student.classStudent.className}"></td>
+								<td th:text="${student.phone}"></td>
+								<td th:text="${student.email}"></td>
+								<td th:text="${student.college}"></td>
+								<td th:utext="${student.baseStudent.getReportStatus()==0}? '<span class=\'c-error\'>未报到</span>': '已报到'"></td>
+							</tr>
+							<tr id="noData">
+								<td colspan='7' style='color: red'>
+									<span th:text="${base.studentsOfBaseList==null}?'暂无学生报名'" ></span>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+						<div class="row cl">
+							<span id="demo7"></span>
+							<a href="#" class="c-primary ml-15"><i class="Hui-iconfont">&#xe640;</i>下载最新考勤表<u>(web开发实训基地2_20190602.xls)</u></a>
+							<a class="btn btn-default radius f-r mt-10 mr-15" onclick="javascript:history.back(-1)">&nbsp;返回上一页&nbsp;</a>
+						</div>
+
+				</div>
+			</div>
+
+		</article>
+	</div>
+<input type="hidden" th:value="${count}" id="studentCount">
+<input type="hidden" th:value="${base.baseId}" id="baseId">
+</section>
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+	$(function () {
+		var count = $("#studentCount").val();
+		var baseId = $("#baseId").val();
+		layui.use(['laypage', 'layer'], function(){
+			var laypage = layui.laypage,layer = layui.layer;
+
+			//完整功能
+			laypage.render({
+				elem: 'demo7',
+				count: count,
+				layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh'],
+				limits:[2,5,10, 20, 30],
+				jump: function(obj, first){//切换分页时调用
+					if(!first){
+						$.ajax({
+							type: "post",
+							data:{'curr':obj.curr,'limit':obj.limit,'baseId':baseId},
+							url: "/counselor/enrolledStudents",
+							dataType: "json",
+							success: function (data) {
+								console.log(data)
+								showdata(data.studentsOfBaseList)
+							}
+						});
+					}
+				}
+			});
+		})
+
+		function showdata(data) {
+			$(".myData").remove();
+			$.each(data,function (index,student) {
+				var reportStatus = student.baseStudent.getReportStatus==0?"<span class='c-error'>未报到</span>":"已报到";
+				$("#noData").before("<tr class='myData'>\n" +
+						"<td><a th:href=\"@{/studentDetails}\" class=\"c-primary\">"+student.username+"</a></td>\n" +
+						"<td>"+student.name+"</td>\n" +
+						"<td>"+student.classStudent.className+"</td>\n" +
+						"<td>"+student.phone+"</td>\n" +
+						"<td>"+student.email+"</td>\n" +
+						"<td>"+student.college+"</td>\n" +
+						"<td>"+student.username+"</td>\n" +
+						"</tr>");
+			})
+		}
+	});
+
+
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

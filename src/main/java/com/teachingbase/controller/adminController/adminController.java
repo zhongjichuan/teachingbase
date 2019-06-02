@@ -209,4 +209,18 @@ public class adminController {
         return treeList;
     }
 
+    @RequestMapping("/updateNode")
+    @ResponseBody
+    public boolean updateNode(String id,String name){
+        boolean result = resourceService.updateNode(id,name);
+        return result;
+    }
+
+    @RequestMapping("/updateResourceToActive")
+    @ResponseBody
+    public boolean updateResourceToActive(String id,String activeFlag){
+        boolean result = resourceService.updateResourceToActive(id,activeFlag);
+        return result;
+    }
+
 }

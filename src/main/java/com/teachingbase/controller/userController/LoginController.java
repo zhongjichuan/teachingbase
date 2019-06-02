@@ -1,6 +1,8 @@
 package com.teachingbase.controller.userController;
 
+import com.teachingbase.domain.Base;
 import com.teachingbase.domain.User;
+import com.teachingbase.service.BaseService;
 import com.teachingbase.service.UserService;
 import com.teachingbase.util.SessionContextUtil;
 import org.apache.shiro.SecurityUtils;
@@ -20,6 +22,8 @@ import javax.servlet.http.HttpSession;
 public class LoginController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private BaseService baseService;
 
     /**
      * 登录到首页
@@ -27,7 +31,13 @@ public class LoginController {
     @RequestMapping("/index")
     public String index(Model model) {
         User user = SessionContextUtil.getCurrentUser();
+
+        if (SessionContextUtil.isHasRole("student")){
+            Base base = baseService.getBaseByStudentId(user.getUsername());
+            model.addAttribute("base",base);
+        }
         model.addAttribute("user",user);
+
         return "userCenter/index";
     }
 
@@ -49,7 +59,6 @@ public class LoginController {
             //没有报错则身份验证通过
             User currentUser = (User) subject.getPrincipal();
             SecurityUtils.getSubject().getSession().setAttribute("currentUser", currentUser); //把当前用户信息存到session中
-
         }catch (UnknownAccountException e){
             model.addAttribute("errorMsg","用户账号不存在");
             return "common/login";

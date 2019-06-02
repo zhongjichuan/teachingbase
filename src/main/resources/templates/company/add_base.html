@@ -70,6 +70,17 @@
 								</span>
 							</div>
 						</div>
+                        <div class="row cl">
+							<label class="form-label col-xs-4 col-sm-2">&nbsp;&nbsp;选择学院：</label>
+							<div class="formControls col-xs-8 col-sm-5">
+								<span class="select-box mr-5 radius col-sm-5">
+									<select class="select "  name="collegeId">
+										<option value="" selected>选择学院</option>
+										<option th:each="college:${collegeList}" th:value ="${college.collegeId}" th:text="${college.collegeName}"></option>
+									</select>
+								</span>
+							</div>
+						</div>
 						<div class="row cl">
 							<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>&nbsp;&nbsp;基地人数：</label>
 							<div class="formControls col-xs-8 col-sm-5">
@@ -100,7 +111,14 @@
 								<input type="datetime-local" class="input-text radius"  placeholder="" name="baseReportDate">
 							</div>
 						</div>
-
+						<div class="row cl">
+							<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>&nbsp;&nbsp;是否启用：</label>
+							<div class="formControls col-xs-8 col-sm-5">
+								<div class="switch f-l" data-on="success" data-off="danger" data-on-label="启用" data-off-label="停用">
+									<input type="checkbox" checked name="baseStatus" value="1"/>
+								</div>
+							</div>
+						</div>
 						<div class="row cl">
 							<div class="col-xs-8 col-sm-5 col-xs-offset-1">
 								<button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 创建</button>
@@ -159,8 +177,13 @@
 				},
 				baseAddress:{
 					required: true
+				},
+				collegeId:{
+					required: true
+				},
+				baseReportDate:{
+					required: true
 				}
-
 			},
 			messages:{
 				baseName:{
@@ -175,11 +198,15 @@
 				},
 				baseAddress:{
 					required: "请填写报到地址"
+				},
+				collegeId:{
+					required: "请选择学院"
+				},
+				baseReportDate:{
+					required: "请选择日期"
 				}
 			}
 		});
-
-
 	});
 
 

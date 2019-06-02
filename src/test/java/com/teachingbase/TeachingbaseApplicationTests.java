@@ -1,18 +1,21 @@
 package com.teachingbase;
 
+import com.teachingbase.dao.BaseMapper;
+import com.teachingbase.dao.ClassStudentMapper;
 import com.teachingbase.dao.ResourceMapper;
 import com.teachingbase.dao.TeacherMapper;
-import com.teachingbase.domain.Base;
-import com.teachingbase.domain.Resource;
-import com.teachingbase.domain.Tree;
-import com.teachingbase.domain.User;
+import com.teachingbase.domain.*;
 import com.teachingbase.service.*;
+import com.teachingbase.util.ExcelUtil;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +37,8 @@ public class TeachingbaseApplicationTests {
     AdminService adminService;
     @Autowired
     public BaseService baseService;
+    @Autowired
+    public ClassStudentMapper classStudentMapper;
 
     @Test
     public void test1() {
@@ -87,5 +92,49 @@ public class TeachingbaseApplicationTests {
         int i = teacherMapper.countBaseTeacherByTeacherId("700003");
         System.out.println(i);
     }
+
+ @Test
+    public void test9(){
+     Base b  = classStudentMapper.getStudentOfBaseByBaseId("602");
+     System.out.println(b);
+ }
+
+ @Autowired
+ public BaseMapper baseMapper;
+ @Test
+    public void test10(){
+     baseMapper.delTeacherBaseByBaseId("603");
+ }
+
+
+    @Test
+    public void test11(){
+        String[] title = {"1","2","3","4"};
+        List list = new ArrayList();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        HSSFWorkbook workbook = ExcelUtil.generateExcel(title, list, "Excel_d11_16","某某老师");
+        try {
+            OutputStream out = new FileOutputStream("E://Excel.xls");
+            workbook.write(out);
+            out.close();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    @Autowired
+    public BaseFileService baseFileService;
+    @Test
+    public void Test12(){
+        BaseFile baseFile = new BaseFile();
+        baseFile.setBaseId("601");
+        baseFile.setFilePath("Excel_20190521.xls");
+        //baseFileService.addBaseFile(baseFile);
+
+    }
+
 
 }

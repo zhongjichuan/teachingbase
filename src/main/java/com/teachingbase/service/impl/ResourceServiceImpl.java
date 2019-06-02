@@ -45,20 +45,29 @@ public class ResourceServiceImpl implements ResourceService {
             tree.setUrl(resource.getUrl());
             tree.setName(resource.getDescription());
             tree.setIconUrl(resource.getIconUrl());
+            tree.setIsActive(resource.getIsActive());
             treeList.add(tree);
         }
         return buildTree(treeList);
+    }
+
+    @Override
+    public boolean updateNode(String id, String name) {
+        return resourceMapper.updateNode(id,name)==1?true:false;
+    }
+
+    @Override
+    public boolean updateResourceToActive(String id, String activeFlag) {
+        return resourceMapper.updateResourceToActive(id,activeFlag)==1?true:false;
     }
 
     /**
     创建菜单资源tree,对父节点子节点进行归属。
      */
     private List<Tree<Resource>> buildTree(List<Tree<Resource>> treeList){
-
         if (treeList == null) {
             return null;
         }
-
         List<Tree<Resource>> tree = new ArrayList<>();
         for(Tree children : treeList){
             String pid = children.getParentId();

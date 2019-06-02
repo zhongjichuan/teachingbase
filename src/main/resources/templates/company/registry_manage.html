@@ -7,26 +7,25 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-<link rel="Bookmark" href="favicon.ico" >
-<link rel="Shortcut Icon" href="favicon.ico" />
+<link rel="Bookmark" href="/favicon.ico" >
+<link rel="Shortcut Icon" href="/favicon.ico" />
 <!--[if lt IE 9]>
-<script type="text/javascript" src="lib/html5.js"></script>
-<script type="text/javascript" src="lib/respond.min.js"></script>
+<script type="text/javascript" src="/lib/html5.js"></script>
+<script type="text/javascript" src="/lib/respond.min.js"></script>
 <![endif]-->
-<link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
-<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
-<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="/static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css" />
 
-<link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
-<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+<link rel="stylesheet" type="text/css" href="/static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/style.css" />
 <!--[if IE 6]>
 <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script><![endif]-->
 <!--/meta 作为公共模版分离出去-->
 <title>基地报名</title>
-
-	<link rel="stylesheet" href="webjars/layui/2.4.5/css/layui.css">
-	<script src="webjars/layui/2.4.5/layui.js"></script>
+	<link rel="stylesheet" href="/webjars/layui/2.4.5/css/layui.css">
+	<script src="/webjars/layui/2.4.5/layui.js"></script>
 
 </head>
 <body>
@@ -36,147 +35,164 @@
 <div th:replace="common/menu::menu"></div>
 
 <section class="Hui-article-box">
-	<nav class="breadcrumb"><i class="Hui-iconfont"></i> <a href="/" class="maincolor">首页</a>
-		<span class="c-999 en">&gt;</span><span class="c-666">学生报到管理</span></nav>
+	<nav class="breadcrumb"><i class="Hui-iconfont"></i> <a href="/index" class="maincolor">首页</a>
+		<span class="c-999 en">&gt;</span><span class="c-666">实训管理</span>
+		<span class="c-999 en">&gt;</span><span class="c-666">学生考勤管理</span></nav>
 	<div class="Hui-article">
 		<article class="cl pd-20">
 			<div class="panel panel-default">
-				<div class="panel-header">学生报到管理</div>
+				<div class="panel-header" th:text="${base.baseName}"></div>
 				<div class="panel-body text-c">
 
-				<table class="table table-border table-bordered table-striped table-hover">
-					<tbody class="text-c">
-					<tr>
-						<td>学号</td>
-						<td>姓名</td>
-						<td>班级</td>
-						<td>基地编号</td>
-						<td>基地名称</td>
-						<td>报到日期</td>
-						<td>操作</td>
-					</tr>
-					<tr>
-						<td><a th:href="@{/studentDetails}" class="c-primary">1001</a></td>
-						<td>马化腾</td>
-						<td>软件工程152</td>
-						<td><a th:href="@{/baseDetails}" class="c-primary">2001</a></td>
-						<td>javaweb实训基地</td>
-						<td>2019-09-12</td>
-						<td>
-						  <select class="select radius" size="1" name="demo1">
-							<option value="" selected>已报到</option>
-							<option value="1">未报到</option>
-							<option value="2">迟到</option>
-						  </select>
-						</td>
-					</tr>
-					<tr>
-						<td><a th:href="@{/studentDetails}" class="c-primary">1001</a></td>
-						<td>马化腾</td>
-						<td>软件工程152</td>
-						<td><a th:href="@{/baseDetails}" class="c-primary">2001</a></td>
-						<td>javaweb实训基地</td>
-						<td>2019-09-12</td>
-						<td>
-						  <select class="select radius" size="1" name="demo1">
-							<option value="" selected>已报到</option>
-							<option value="1">未报到</option>
-							<option value="2">迟到</option>
-						  </select>
-						</td>
-					</tr>
-					<tr>
-						<td><a th:href="@{/studentDetails}" class="c-primary">1001</a></td>
-						<td>马化腾</td>
-						<td>软件工程152</td>
-						<td><a th:href="@{/baseDetails}" class="c-primary">2001</a></td>
-						<td>javaweb实训基地</td>
-						<td>2019-09-12</td>
-						<td>
-						  <select class="select radius" size="1" name="demo1">
-							<option value="" selected>已报到</option>
-							<option value="1">未报到</option>
-							<option value="2">迟到</option>
-						  </select>
-						</td>
-					</tr>
-					<tr>
-						<td><a th:href="@{/studentDetails}" class="c-primary">1001</a></td>
-						<td>马化腾</td>
-						<td>软件工程152</td>
-						<td><a th:href="@{/baseDetails}" class="c-primary">2001</a></td>
-						<td>javaweb实训基地</td>
-						<td>2019-09-12</td>
-						<td>
-						  <select class="select radius" size="1" name="demo1">
-							<option value="" selected>已报到</option>
-							<option value="1">未报到</option>
-							<option value="2">迟到</option>
-						  </select>
-						</td>
-					</tr>
-					<tr>
-						<td><a th:href="@{/studentDetails}" class="c-primary">1001</a></td>
-						<td>马化腾</td>
-						<td>软件工程152</td>
-						<td><a th:href="@{/baseDetails}" class="c-primary">2001</a></td>
-						<td>javaweb实训基地</td>
-						<td>2019-09-12</td>
-						<td>
-						  <select class="select radius" size="1" name="demo1">
-							<option value="" selected>已报到</option>
-							<option value="1">未报到</option>
-							<option value="2">迟到</option>
-						  </select>
-						</td>
-					</tr>
-					<tr>
-						<td><a th:href="@{/studentDetails}" class="c-primary">1001</a></td>
-						<td>马化腾</td>
-						<td>软件工程152</td>
-						<td><a th:href="@{/baseDetails}" class="c-primary">2001</a></td>
-						<td>javaweb实训基地</td>
-						<td>2019-09-12</td>
-						<td>
-						  <select class="select radius" size="1">
-							<option value="" selected>未报到</option>
-							<option value="1">已报到</option>
-							<option value="2">迟到</option>
-						  </select>
-						</td>
-					</tr>
-					</tbody>
-				</table>
+
+					<table class="table table-border table-bordered table-striped table-hover">
+						<tbody class="text-c" id="tbody">
+						<tr id="title">
+							<td>学号</td>
+							<td>姓名</td>
+							<td>班级</td>
+							<td>手机号</td>
+							<td>邮箱</td>
+							<td>学院</td>
+							<td>报到管理</td>
+						</tr>
+						<tr th:each="student:${base.studentsOfBaseList}" class="myData">
+							<td><a th:href="@{/studentDetails}" class="c-primary">[[${student.username}]]</a></td>
+							<td th:text="${student.name}"></td>
+							<td th:text="${student.classStudent.className}"></td>
+							<td th:text="${student.phone}"></td>
+							<td th:text="${student.email}"></td>
+							<td th:text="${student.college}"></td>
+							<td>
+								<select class="select radius" name="reportStatus" th:onchange="'javascript:changeStatus(this,'+${student.username}+','+${student.baseStudent.reportStatus}+');'">
+									<option value="0" th:selected="${student.baseStudent.reportStatus==0}" >未报到</option>
+									<option value="1" th:selected="${student.baseStudent.reportStatus==1}">已报到</option>
+								</select>
+							</td>
+						</tr>
+						<tr id="noData">
+							<td colspan='7' style='color: red'>
+								<span th:text="${base.studentsOfBaseList==null}?'暂无学生报名'" ></span>
+							</td>
+						</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 			<div class="row cl">
 				<span id="demo7"></span>
+				<a th:if="${base.studentsOfBaseList!=null}" th:href="@{/teacher/loadExcel(baseId=${base.baseId})}" class="c-primary mr-15 ml-15"><i class="Hui-iconfont">&#xe640;</i>考勤模板下载</a>
+				<a th:href="@{/teacher/loadLasteExcel(baseId=${base.baseId})}" class="c-primary" th:if="${baseFile!=null}"><i class="Hui-iconfont">&#xe640;</i>下载最新考勤表(<u th:text="${baseFile.filePath}"></u>)</a>
 				<a class="btn btn-default radius f-r mt-10 mr-15" onclick="javascript:history.back(-1)">&nbsp;返回上一页&nbsp;</a>
 			</div>
+			<form method="POST" enctype="multipart/form-data" action="/teacher/uploadExcel" id="uploadForm">
+			<span class="btn-upload form-group">
+			  <input type="file" name="file" class="radius">
+
+			  <!--<input class="input-text upload-url radius" type="text" name="uploadfile-1" id="uploadfile-1" readonly><a href="#" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe642;&nbsp;</i>浏览文件</a>-->
+				<label><span style="color: red">&nbsp;*&nbsp;请老师尽快上传最新考勤表</span></label><br>
+			</span>
+				<input type="submit" value="上传" class="btn btn-primary radius ml-15">
+				<input type="hidden" th:value="${base.baseId}" id="baseId" name="baseId">
+			</form>
 
 		</article>
 	</div>
-
+	<input type="hidden" th:value="${count}" id="studentCount">
 </section>
 
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript">
+	$(function () {
 
-	layui.use(['laypage', 'layer'], function(){
-		var laypage = layui.laypage,layer = layui.layer;
 
-		//完整功能
-		laypage.render({
-			elem: 'demo7',
-			count: 100,
-			layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip'],
-			jump: function(obj){
-				console.log(obj)
+		var selectArry = $("select");
+		for (var i = 0; i <selectArry.length; i++){
+			if(selectArry[i].value=="0"){
+				selectArry[i].style.color="red";
 			}
-		});
-	})
+		}
+		var count = $("#studentCount").val();
+		var baseId = $("#baseId").val();
+		layui.use(['laypage', 'layer'], function(){
+			var laypage = layui.laypage,layer = layui.layer;
 
+			//完整功能
+			laypage.render({
+				elem: 'demo7',
+				count: count,
+				layout: ['count', 'prev', 'page', 'next', 'limit'],
+				limits:[2,5,10, 20, 30],
+				jump: function(obj, first){//切换分页时调用
+					if(!first){
+						$.ajax({
+							type: "post",
+							data:{'curr':obj.curr,'limit':obj.limit,'baseId':baseId},
+							url: "/teacher/enrolledStudents",
+							dataType: "json",
+							success: function (data) {
+								console.log(data)
+								showdata(data.studentsOfBaseList);
+								var selectArry = $("select");
+								for (var i = 0; i <selectArry.length; i++){
+									if(selectArry[i].value=="0"){
+										selectArry[i].style.color="red";
+									}
+								}
+							}
+						});
+					}
+				}
+			});
+		})
 
+		function showdata(data) {
+			$(".myData").remove();
+			var reportStatus = "";
+			$.each(data,function (index,student) {
+				var change = "onchange=changeStatus(this,"+student.username+","+student.baseStudent.reportStatus+")";
+				if(student.baseStudent.reportStatus=="0"){
+					reportStatus = "<select class=\"select radius\" "+change+" >\n" +
+									"<option value=\"0\" selected>未报到</option>\n" +
+									"<option value=\"1\">已报到</option>\n" +
+									"</select>";
+				}else {
+					reportStatus = "<select class=\"select radius\" "+change+" >\n" +
+									"<option value=\"0\">未报到</option>\n" +
+									"<option value=\"1\" selected>已报到</option>\n" +
+									"</select>";
+				}
+				$("#noData").before("<tr class='myData'>\n" +
+						"<td>"+student.username+"</td>\n" +
+						"<td>"+student.name+"</td>\n" +
+						"<td>"+student.classStudent.className+"</td>\n" +
+						"<td>"+student.phone+"</td>\n" +
+						"<td>"+student.email+"</td>\n" +
+						"<td>"+student.college+"</td>\n" +
+						"<td>"+reportStatus+"</td>\n" +
+						"</tr>");
+			})
+		}
+	});
+	function changeStatus(obj,studentId,reportStatus) {
+		if (reportStatus=="1"){
+			reportStatus = "0"
+		}else {
+			reportStatus = "1"
+		}
+		$.ajax({
+			data:{'studentId':studentId,'reportStatus':reportStatus},
+			url:'/teacher/updateReportStatus',
+			dataType:"json",
+			success: function (data) {
+				if(data){
+					window.location.reload();
+				}else {
+					layer.msg("修改失败。")
+				}
+			}
+		})
+	}
 </script>
 <!--/请在上方写此页面业务相关的脚本-->
 </body>

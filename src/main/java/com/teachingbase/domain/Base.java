@@ -1,10 +1,13 @@
 package com.teachingbase.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
+@JsonIgnoreProperties(value = "handler")
 public class Base {
     private String baseId;
     private String baseName;
@@ -25,6 +28,10 @@ public class Base {
     private Teacher teacher;
     private Company company;
 
+    private List<BaseStudent> baseStudentList;
+
+    private List<User> studentsOfBaseList;//基地中的学生们
+
     @Override
     public String toString() {
         return "Base{" +
@@ -39,7 +46,26 @@ public class Base {
                 ", baseCreateTime=" + baseCreateTime +
                 ", baseUpdateTime=" + baseUpdateTime +
                 ", teacher=" + teacher +
+                ", company=" + company +
+                ", baseStudentList=" + baseStudentList +
+                ", studentsOfBaseList=" + studentsOfBaseList +
                 '}';
+    }
+
+    public List<User> getStudentsOfBaseList() {
+        return studentsOfBaseList;
+    }
+
+    public void setStudentsOfBaseList(List<User> studentsOfBaseList) {
+        this.studentsOfBaseList = studentsOfBaseList;
+    }
+
+    public List<BaseStudent> getBaseStudentList() {
+        return baseStudentList;
+    }
+
+    public void setBaseStudentList(List<BaseStudent> baseStudentList) {
+        this.baseStudentList = baseStudentList;
     }
 
     public Company getCompany() {

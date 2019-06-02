@@ -31,8 +31,9 @@
                         <li>
                             <shiro:hasRole name="student">学生</shiro:hasRole>
                             <shiro:hasRole name="admin">管理员</shiro:hasRole>
-                            <shiro:hasRole name="counsellor">辅导员</shiro:hasRole>
+                            <shiro:hasRole name="counselor">辅导员</shiro:hasRole>
                             <shiro:hasRole name="manager">基地负责人</shiro:hasRole>
+                            <shiro:hasRole name="teacher">实训教师</shiro:hasRole>
                         </li>
                         <li class="dropDown dropDown_hover"> <a href="#" class="dropDown_A" ><shiro:principal  property="name"/><i class="Hui-iconfont">&#xe6d5;</i></a>
                             <ul class="dropDown-menu menu radius box-shadow">

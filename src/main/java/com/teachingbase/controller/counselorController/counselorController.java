@@ -3,12 +3,11 @@ package com.teachingbase.controller.counselorController;
 import com.teachingbase.domain.Base;
 import com.teachingbase.domain.CollegeBase;
 import com.teachingbase.domain.Company;
-import com.teachingbase.service.AdminService;
-import com.teachingbase.service.BaseService;
-import com.teachingbase.service.CompanyService;
-import com.teachingbase.service.UserService;
+import com.teachingbase.domain.User;
+import com.teachingbase.service.*;
 import com.teachingbase.util.SessionContextUtil;
 import org.apache.ibatis.annotations.Param;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 @RequestMapping("/counselor")
+@RequiresRoles("counselor")
 @Controller
 public class counselorController {
 
@@ -34,6 +34,12 @@ public class counselorController {
     public UserService userService;
     @Autowired
     public CompanyService companyService;
+
+    @Autowired
+    public ClassStudentService classStudentService;
+
+    @Autowired
+    public BaseStudentService baseStudentService;
 
 
     @RequestMapping("/baseManage")
@@ -92,7 +98,6 @@ public class counselorController {
     @ResponseBody
     @RequestMapping("/saveBase")
     public boolean saveBase(Base base,String companyId){
-        System.out.println(base+"========");
         CollegeBase collegeBase = userService.getCollegeByCurrentUser(SessionContextUtil.getCurrentUser());
         boolean b = baseService.addBase(base, companyId, collegeBase.getCollegeId());
         return b;
@@ -120,6 +125,100 @@ public class counselorController {
         Base base = baseService.getBaseByBaseId(baseId);
         boolean b = baseService.delBaseByBaseId(base);
         return b;
+    }
+
+    /**
+     * 辅导员学生管理
+     */
+
+    @RequestMapping("/studentManage")
+    public String studentManage(Model model) {
+        String college = SessionContextUtil.getCurrentUser().getCollege();
+        List<String> classList = classStudentService.getClassNameByCollegeName(college);
+        model.addAttribute("classList",classList);
+        return "counselor/student_manage";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getStudentList",method = RequestMethod.POST)
+    public Map getStudentList(int curr, int limit) {
+        curr=(curr-1)*limit;//根据当前页算出起始数据是第几条
+        String collegeName = SessionContextUtil.getCurrentUser().getCollege();
+        Map map = new HashMap();
+        map.put("collegeName",collegeName);
+        map.put("curr",curr);
+        map.put("limit",limit);
+        List studentList = classStudentService.getStudentsByCounselor(map);
+        if (studentList == null||studentList.size()<=0){
+            studentList.add(false);//用于前台判断list中是否有数据
+            studentList.add("暂无数据");
+        }
+        int countStudent = classStudentService.getCountStudent(collegeName);
+        Map resultMap = new HashMap();
+        resultMap.put("studentList",studentList);
+        resultMap.put("countStudent",countStudent);
+        return resultMap;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getStudentListBySearchParams",method = RequestMethod.POST)
+    public Map getStudentListBySearchParams(int curr, int limit,String className,String username,String reportStatus) {
+        curr=(curr-1)*limit;//根据当前页算出起始数据是第几条
+        String collegeName = SessionContextUtil.getCurrentUser().getCollege();
+        Map map = new HashMap();
+        map.put("collegeName",collegeName);
+        map.put("curr",curr);
+        map.put("limit",limit);
+        map.put("className",className);
+        map.put("username",username);
+        map.put("reportStatus",reportStatus);
+        List studentList = classStudentService.getStudentsBySearchParams(map);
+        if (studentList == null||studentList.size()<=0){
+            studentList.add(false);//用于前台判断list中是否有数据
+            studentList.add("暂无数据");
+        }
+        int countStudent = classStudentService.getCountStudentByParams(map);
+        Map resultMap = new HashMap();
+        resultMap.put("studentList",studentList);
+        resultMap.put("countStudent",countStudent);
+        return resultMap;
+    }
+
+
+    @RequestMapping("/enrolledStudents/{baseId}")
+    public String enrolledStudent(@PathVariable("baseId")String baseId,Model model){
+        Base base = classStudentService.getStudentOfBaseByBaseId(baseId);
+        int count = baseStudentService.getCountStudentOfBase(baseId);
+        if (base == null){
+            base = baseService.getBaseByBaseId(baseId);
+        }
+        model.addAttribute("base",base);
+        model.addAttribute("count",count);
+        return "counselor/enrolledStudents";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/enrolledStudents",method = RequestMethod.POST)
+    public Base enrolledStudentPost(String baseId,int curr,int limit,Model model){
+        Map map = new HashMap();
+        curr = (curr-1)*limit;
+        map.put("baseId",baseId);
+        map.put("curr",curr);
+        map.put("limit",limit);
+        Base base = classStudentService.getStudentOfBaseByBaseIdAndPage(map);
+        int count = baseStudentService.getCountStudentOfBase(baseId);
+        if (base == null){
+            base = baseService.getBaseByBaseId(baseId);
+        }
+        model.addAttribute("count",count);
+        return base;
+    }
+
+    @RequestMapping("/baseDetails/{baseId}")
+    public String getBaseDetails(@PathVariable("baseId")String baseId,Model model){
+        Base base = baseService.getBaseByBaseId(baseId);
+        model.addAttribute("base",base);
+        return "company/base_details";
     }
 
 }

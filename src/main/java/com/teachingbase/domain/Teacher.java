@@ -2,10 +2,11 @@ package com.teachingbase.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Teacher {
+public class Teacher implements Serializable {
     private String teacherId;
     private String teacherName;
     private String teacherPosition;

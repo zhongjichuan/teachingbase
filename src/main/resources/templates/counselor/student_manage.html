@@ -7,26 +7,26 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-<link rel="Bookmark" href="favicon.ico" >
-<link rel="Shortcut Icon" href="favicon.ico" />
+<link rel="Bookmark" href="/favicon.ico" >
+<link rel="Shortcut Icon" href="/favicon.ico" />
 <!--[if lt IE 9]>
-<script type="text/javascript" src="lib/html5.js"></script>
-<script type="text/javascript" src="lib/respond.min.js"></script>
+<script type="text/javascript" src="/lib/html5.js"></script>
+<script type="text/javascript" src="/lib/respond.min.js"></script>
 <![endif]-->
-<link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
-<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
-<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="/static/h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css" />
 
-<link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
-<link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+<link rel="stylesheet" type="text/css" href="/static/h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/style.css" />
 <!--[if IE 6]>
 <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
 <script>DD_belatedPNG.fix('*');</script><![endif]-->
 <!--/meta 作为公共模版分离出去-->
 <title>基地报名</title>
 
-	<link rel="stylesheet" href="webjars/layui/2.4.5/css/layui.css">
-	<script src="webjars/layui/2.4.5/layui.js"></script>
+	<link rel="stylesheet" href="/webjars/layui/2.4.5/css/layui.css">
+	<script src="/webjars/layui/2.4.5/layui.js"></script>
 
 </head>
 <body>
@@ -43,79 +43,44 @@
 		<article class="cl pd-20">
 			<div class="panel panel-default">
 				<div class="panel-header">学生管理</div>
-				<div class="panel-body text-c">
+				<form class="panel-body text-c" id="form">
 						班级：
 						<span class="select-box mr-5 radius" style="width:210px">
-						  <select class="select " size="1" name="demo1">
-							   <option value="" selected>全部班级</option>
-							<option value="1">软件工程151</option>
-							<option value="2">软件工程152</option>
-							<option value="3">物联网151</option>
-							<option value="3">物联网152</option>
+						  <select class="select" name="className" id="className">
+							<option value="" selected>全部班级</option>
+							<option th:each="class:${classList}" th:value="${class}" th:text="${class}"></option>
 						  </select>
 						</span>
-						学号：<input type="text" class="input-text radius mr-5" style="width:210px" name="">
+						学号：<input type="text" class="input-text radius mr-5" style="width:210px" name="username" id="username">
 						报名状态：<span class="select-box mr-5 radius" style="width:210px">
-						  <select class="select " size="1" name="demo1">
+						  <select class="select " size="1" name="reportStatus" id="reportStatus">
 							  <option value="" selected>全部</option>
-							<option value="1">已报名</option>
-							<option value="2">未报名</option>
+							<option value="1">已报到</option>
+							<option value="0">未报到</option>
 						  </select>
 						</span>
+						<input type="hidden" name="curr" value="1">
+						<input type="hidden" name="limit" value="10">
 						<button type="submit" class="btn btn-success radius" name=""><i class="Hui-iconfont"></i> 查询</button>
-				</div>
+				</form>
 			</div>
-			<div class="mt-20">				<table class="table table-border table-bordered table-striped table-hover">
-					<tbody class="text-c">
+			<div class="mt-20">
+				<table class="table table-border table-bordered table-striped table-hover">
+					<tbody class="text-c" id="tbody">
 					<tr>
 						<td>学号</td>
 						<td>姓名</td>
 						<td>班级</td>
+						<td>基地名称</td>
 						<td>基地所属公司</td>
-						<td>基地编号</td>
 						<td>报到日期</td>
 						<td>报到状态</td>
-					</tr>
-					<tr>
-						<td><a th:href="@{/studentDetails}" class="c-primary">1001</a></td>
-						<td>马化腾</td>
-						<td>软件工程152</td>
-						<td>阿里巴巴</td>
-						<td><a th:href="@{/baseDetails}" class="c-primary">2001</a></td>
-						<td>2019-09-12</td>
-						<td>未报到</td>
-					</tr>
-					<tr>
-						<td><a th:href="@{/studentDetails}" class="c-primary">1002</a></td>
-						<td>李彦宏</td>
-						<td>软件工程151</td>
-						<td>腾讯</td>
-						<td><a th:href="@{/baseDetails}" class="c-primary">2002</a></td>
-						<td>2019-09-12</td>
-						<td>未报到</td>
-					</tr>
-					<tr>
-						<td><a th:href="@{/studentDetails}" class="c-primary">1001</a></td>
-						<td>马化腾</td>
-						<td>软件工程152</td>
-						<td><span class="c-error">未报名</span></td>
-						<td><a th:href="@{/baseDetails}" class="c-primary">2001</a></td>
-						<td>2019-09-12</td>
-						<td>已报到</td>
-					</tr>
-					<tr>
-						<td><a th:href="@{/studentDetails}" class="c-primary">1001</a></td>
-						<td>马化腾</td>
-						<td>软件工程152</td>
-						<td><span class="c-error">未报名</span></td>
-						<td><a th:href="@{/baseDetails}" class="c-primary">2001</a></td>
-						<td>2019-09-12</td>
-						<td><span class="c-error">迟到</span></td>
 					</tr>
 					</tbody>
 				</table>
 
 				<div id="demo7"></div>
+				<div id="demo1"></div>
 			</div>
 		</article>
 	</div>
@@ -125,17 +90,136 @@
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript">
 
-	layui.use(['laypage', 'layer'], function(){
-		var laypage = layui.laypage,layer = layui.layer;
+	$(function () {
+		//getBases();
 
-		//完整功能
-		laypage.render({
-			elem: 'demo7',
-			count: 100,
-			layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip'],
-			jump: function(obj){//切换分页时调用
-				console.log(obj)
+		//条件查询表单提交
+
+	});
+
+
+	/*查询，进行表格填充*/
+	function getBases() {
+		$.ajax({
+			type: "GET",
+			url: "/counselor/getStudentList",
+			dataType: "json",
+			success: function(data){
+				console.log(data);
+				showData(data);
 			}
+		});
+	}
+
+	function showData(data){
+		$(".singleData").remove();
+		if (data[0]){
+			$.each(data,function (index,student) {
+				var baseName = "";
+				var baseReportDate = "";
+				var companyName = "";
+				var reportStatus = "";
+				if (student.base) {
+					baseName = "<a th:href=\"@{/baseDetails}\" class=\"c-primary\">"+student.base.baseName+"</a>";
+					baseReportDate = student.base.baseReportDate;
+					companyName = student.base.company.companyName;
+					reportStatus = student.baseStudent.reportStatus==1?"已报到":"<span class=\"c-error\">未报到</span>";
+				}else {
+					baseName = "<span class=\"c-error\">未报名</span>";
+					baseReportDate = "---------";
+					companyName = "---------";
+					reportStatus = "---------";
+				}
+				$("#tbody").append("<tr class='singleData'>\n" +
+						"\t\t\t\t\t\t<td><a th:href=\"@{/studentDetails}\" class=\"c-primary\">"+student.username+"</a></td>\n" +
+						"\t\t\t\t\t\t<td>"+student.name+"</td>\n" +
+						"\t\t\t\t\t\t<td>"+student.classStudent.className+"</td>\n" +
+						"\t\t\t\t\t\t<td>"+baseName+"</td>\n" +
+						"\t\t\t\t\t\t<td>"+companyName+"</td>\n" +
+						"\t\t\t\t\t\t<td>"+baseReportDate+"</td>\n" +
+						"\t\t\t\t\t\t<td>"+reportStatus+"</td>\n" +
+						"\t\t\t\t\t</tr>");
+			});
+		} else {
+			$(".singleData").empty();
+			$("#tbody").append("<tr class='singleData'><td colspan='8' style='color: red'><h4>"+data[1]+"</h4></td></tr>");
+		}
+	}
+</script>
+<script type="text/javascript">
+
+	layui.use(['laypage'], function(){
+		var laypage = layui.laypage;
+		var laypage1 = layui.laypage;
+
+		$.ajax({
+			type: "post",
+			data:{'curr':1,'limit':10},//默认值
+			url: "/counselor/getStudentList",
+			dataType: "json",
+			success: function(data){
+				showData(data.studentList);
+				laypage.render({
+					elem: 'demo7',//注意，这里的 test1 是 ID，不用加 # 号
+					count: data.countStudent,//数据总数，从服务端得到
+					layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh'],
+					limits:[2, 5,10, 20, 30],
+					jump: function(obj, first){//切换分页时调用
+						if(!first){
+							$.ajax({
+								type: "post",
+								data:{'curr':obj.curr,'limit':obj.limit},
+								url: "/counselor/getStudentList",
+								dataType: "json",
+								success: function (data) {
+									showData(data.studentList);
+								}
+							});
+						}
+					}
+				});
+			}
+		});
+
+		$("#form").submit(function () {
+			var searchParams = $('#form').serializeArray();
+			$(".singleData").empty();
+			$.ajax({
+				type: "POST",
+				data: searchParams,
+				url: "/counselor/getStudentListBySearchParams",
+				dataType: "json",
+				success: function(data){
+					//console.log(data)
+					showData(data.studentList);
+					var className = $("#className").val();
+					var username = $("#username").val();
+					var reportStatus = $("#reportStatus").val();
+					laypage1.render({
+						elem: 'demo7',//注意，这里的 test1 是 ID，不用加 # 号
+						count: data.countStudent,//数据总数，从服务端得到
+						layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh'],
+						limits:[2, 10, 20, 30, 40, 50],
+						jump: function(obj, first){//切换分页时调用
+							console.log(obj)
+							//首次不执行
+							if(!first){
+								$.ajax({
+									type: "post",
+									data:{'curr':obj.curr,'limit':obj.limit,'className':className,'username':username,'reportStatus':reportStatus},
+									url: "/counselor/getStudentListBySearchParams",
+									dataType: "json",
+									success: function (data) {
+										showData(data.studentList);
+									}
+								});
+							}
+
+						}
+					});
+				}
+			});
+			return false;//实现页面不刷新
 		});
 	})
 

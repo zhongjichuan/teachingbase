@@ -48,8 +48,8 @@
                     <div >
                         <ul id="treeDemo" class="ztree"></ul>
                     </div>
-
                 </div>
+                <span style="color:red;">* &nbsp;目前仅支持修改菜单名，禁用/启用菜单。</span>
             </div>
 
         </article>
@@ -62,64 +62,28 @@
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript">
 $(function () {
-    // var zNodes =[
-    //     { name:"父节点1 - 展开11111", open:true,
-    //         children: [
-    //             { name:"父节点11 - 折叠",
-    //                 children: [
-    //                     { name:"叶子节点111"},
-    //                     { name:"叶子节点112"},
-    //                     { name:"叶子节点113"},
-    //                     { name:"叶子节点114"}
-    //                 ]},
-    //             { name:"父节点12 - 折叠",
-    //                 children: [
-    //                     { name:"叶子节点121"},
-    //                     { name:"叶子节点122"},
-    //                     { name:"叶子节点123"},
-    //                     { name:"叶子节点124"}
-    //                 ]},
-    //             { name:"父节点13 - 没有子节点", isParent:true}
-    //         ]},
-    //     { name:"父节点2 - 折叠",
-    //         children: [
-    //             { name:"父节点21 - 展开", open:true,
-    //                 children: [
-    //                     { name:"叶子节点211"},
-    //                     { name:"叶子节点212"},
-    //                     { name:"叶子节点213"},
-    //                     { name:"叶子节点214"}
-    //                 ]},
-    //             { name:"父节点22 - 折叠",
-    //                 children: [
-    //                     { name:"叶子节点221"},
-    //                     { name:"叶子节点222"},
-    //                     { name:"叶子节点223"},
-    //                     { name:"叶子节点224"}
-    //                 ]},
-    //             { name:"父节点23 - 折叠",
-    //                 children: [
-    //                     { name:"叶子节点231"},
-    //                     { name:"叶子节点232"},
-    //                     { name:"叶子节点233"},
-    //                     { name:"叶子节点234"}
-    //                 ]}
-    //         ]},
-    //     { name:"父节点3 - 没有子节点", isParent:true}
-    //
-    // ];
-
     var setting={
         async: { // 属性配置
             enable: true,
             url:"/admin/getNodes",
-            //autoParam:["parentId"],
-            // otherParam:{"otherParam":"zTreeAsyncTest"},
             type: 'get'
+        },
+        edit: {
+            drag: {
+                isCopy: false,
+                isMove: true
+            },
+            enable: true,
+            showRemoveBtn: showRemoveBtn,
+            showRenameBtn: showRenameBtn,
+            removeTitle:"禁用/启用",
+            renameTitle:"重命名"
         },
         view: { showLine: false },//不是最后一个node，其他node不显示name,需要设置？
         callback: {
-            onAsyncSuccess:onAsyncSuccess
+            onAsyncSuccess:onAsyncSuccess,
+            beforeRename: beforeRename,
+            beforeRemove: beforeRemove
         }
     };
     var zTreeObj = $.fn.zTree.init($("#treeDemo"), setting);
@@ -127,6 +91,101 @@ $(function () {
     //异步加载成功回调函数
     function onAsyncSuccess(event, treeId, treeNode, msg) {
         zTreeObj.expandAll(true);//展开所有结点
+    }
+
+    //是否进行删除节点
+    function beforeRemove(treeId, treeNode) {
+        var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        zTree.selectNode(treeNode);
+        if (treeNode.isActive=="1"){
+            layer.confirm("确认停用 菜单 --" + treeNode.name + "-- 吗？", function(index){
+                $.ajax({
+                    url:"/admin/updateResourceToActive",
+                    type:"post",
+                    data:{
+                        "id":treeNode.id,
+                        "activeFlag":"0"
+                    },
+                    dataType:"json",
+                    success:function(data,state) {
+                        if (data){
+                            layer.msg("修改成功");
+                        } else{
+                            layer.msg("修改失败");
+                        }
+                    },
+                    error:function () {
+                        alert("系统异常，删除失败。");
+                    }
+                });
+                layer.close(index);
+                setTimeout('window.location.href="/admin/tree"', 1000);
+            },function () {
+                window.location.href="/admin/tree";
+            });
+        }else{
+            layer.confirm("确认启用 菜单 -- " + treeNode.name + "-- 吗？", function(index){
+                $.ajax({
+                    url:"/admin/updateResourceToActive",
+                    type:"post",
+                    data:{
+                        "id":treeNode.id,
+                        "activeFlag":"1"
+                    },
+                    dataType:"json",
+                    success:function(data,state) {
+                        if (data){
+                            layer.msg("修改成功");
+                        } else{
+                            layer.msg("修改失败");
+                        }
+                    },
+                    error:function () {
+                        alert("系统异常，删除失败。");
+                    }
+                });
+                layer.close(index);
+                setTimeout('window.location.href="/admin/tree"', 1000);
+            },function () {
+                window.location.href="/admin/tree";
+            });
+        }
+    }
+    //判断修改后的节点是否为空，为空取消，否则提交
+    function beforeRename(treeId, treeNode, newName, isCancel) {
+        if (newName.length == 0) {
+            var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+            zTree.cancelEditName();
+            alert("节点名称不能为空.");
+            return false;
+        }else{
+            $.ajax({
+                url:"/admin/updateNode",
+                type:"post",
+                data:{
+                    "id":treeNode.id,
+                    "name":newName
+                },
+                dataType:"json",
+                success:function(data) {
+                    console.log("updateName  data=",data);
+                    if (data){
+                        layer.msg("修改成功");
+                    } else{
+                        layer.msg("修改失败");
+                    }
+                },
+                error: function () {
+                    alert("系统异常，修改失败");
+                }
+            });
+        }
+    }
+    function showRemoveBtn(treeId, treeNode) {
+        return treeNode;
+    }
+    function showRenameBtn(treeId, treeNode) {
+        return treeNode;
     }
 })
 

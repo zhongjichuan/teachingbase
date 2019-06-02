@@ -15,12 +15,33 @@
         <result property="baseStatus" column="base_status"></result>
         <result property="baseCreateTime" column="base_createTime"></result>
         <result property="baseUpdateTime" column="base_updateTime"></result>
+        <association property="teacher" column="base_id" fetchType="lazy"
+            select = "com.teachingbase.dao.TeacherMapper.getTeacherByBaseId">
+        </association>
+        <association property="company" column="base_id"
+            select = "com.teachingbase.dao.CompanyMapper.getCompanyByBaseId">
+        </association>
+    </resultMap>
+    <resultMap id="baseResultMap2" type="base">
+        <id property="baseId" column="base_id"></id>
+        <result property="baseName" column="base_name"></result>
+        <result property="baseDescription" column="base_description"></result>
+        <result property="baseNum" column="base_num"></result>
+        <result property="baseEnrolmentNum" column="base_enrolment_num"></result>
+        <result property="baseReportDate" column="base_report_date"></result>
+        <result property="baseAddress" column="base_address"></result>
+        <result property="baseStatus" column="base_status"></result>
+        <result property="baseCreateTime" column="base_createTime"></result>
+        <result property="baseUpdateTime" column="base_updateTime"></result>
         <association property="teacher" column="base_id"
             select = "com.teachingbase.dao.TeacherMapper.getTeacherByBaseId">
         </association>
         <association property="company" column="base_id"
             select = "com.teachingbase.dao.CompanyMapper.getCompanyByBaseId">
         </association>
+        <collection property="baseStudentList" column="base_id"
+            select = "com.teachingbase.dao.BaseStudentMapper.getBaseStudentByBaseId">
+        </collection>
     </resultMap>
 
     <select id="getBaseListByCompanyName" resultMap="baseResultMap">
@@ -66,7 +87,7 @@
     <update id="updateBase" parameterType="base">
         update base
         set base_name=#{baseName},base_description=#{baseDescription},base_num=#{baseNum},
-            base_report_date=#{baseReportDate},base_address=#{baseAddress},base_updateTime = now()
+            base_report_date=#{baseReportDate},base_address=#{baseAddress},base_status=#{baseStatus},base_updateTime = now()
         where base_id = #{baseId}
     </update>
 
@@ -97,5 +118,43 @@
         <if test="companyName!=null and companyName!=''">
             and base.base_id = a.base_id
         </if>
+    </select>
+
+    <!--学生相关操作-->
+    <select id="getBaseListByStudent" resultMap="baseResultMap2">
+      SELECT base.* from base,college_base,user,college_class
+      where user.college=college_class.college_name
+      and college_class.college_id=college_base.college_id and college_base.base_id= base.base_id
+      and user.username=#{username} and base_status=1
+    </select>
+
+    <select id="getBaseListByStudentAndParams" resultMap="baseResultMap2">
+      SELECT base.* from base,college_base,user,college_class
+        <if test="companyName!=null and companyName!=''">
+            ,company,company_base
+        </if>
+        <if test="teacherName!=null and teacherName!=''">
+            ,teacher,base_teacher
+        </if>
+        where user.college=college_class.college_name
+        and college_class.college_id=college_base.college_id and college_base.base_id= base.base_id
+        and user.username=#{username} and base_status=1
+        <if test="baseId!=null and baseId!=''">
+            and base.base_id like concat('%',#{baseId},'%')
+        </if>
+        <if test="companyName!=null and companyName!=''">
+            and company.company_name like concat('%',#{companyName},'%')
+            and company.company_id=company_base.company_id
+            and company_base.base_id=base.base_id
+        </if>
+        <if test="teacherName!=null and teacherName!=''">
+            and teacher.teacher_name like concat('%',#{teacherName},'%')
+            and teacher.teacher_id=base_teacher.teacher_id
+            and base_teacher.base_id= base.base_id
+        </if>
+    </select>
+
+    <select id="getBaseByStudentId" resultMap="baseResultMap">
+        select base.* from base,base_student where base_student.student_id=#{studentId} and base_student.base_id = base.base_id
     </select>
 </mapper>

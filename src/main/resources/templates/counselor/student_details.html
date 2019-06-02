@@ -12,15 +12,15 @@
     <link rel="bookmark" th:href="@{/favicon.ico}"/>
     <link rel="Shortcut Icon" th:href="@{/favicon.ico}" />
     <!--[if lt IE 9]>
-    <script type="text/javascript" src="lib/html5.js"></script>
-    <script type="text/javascript" src="lib/respond.min.js"></script>
+    <script type="text/javascript" src="/lib/html5.js"></script>
+    <script type="text/javascript" src="/lib/respond.min.js"></script>
     <![endif]-->
-    <link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
-    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
-    <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css" />
 
-    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
-    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/style.css" />
     <!--[if IE 6]>
     <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
     <script>DD_belatedPNG.fix('*');</script><![endif]-->
@@ -45,37 +45,37 @@
                 <div class="panel-body text-c form-horizontal">
 
                     <div class="row cl mt-10">
-                        <label class="form-label col-xs-4 col-sm-2 ">学号：</label>
-                        <label class=" col-sm-5 text-l">1001</label>
+                        <label class="form-label col-xs-4 col-sm-2 ">工号：</label>
+                        <label class=" col-sm-5 text-l" th:text="${user.username}"></label>
                     </div>
                     <div class="row cl mt-10">
                         <label class="form-label col-xs-4 col-sm-2 ">姓名：</label>
-                        <label class=" col-sm-5 text-l">王思聪</label>
+                        <label class=" col-sm-5 text-l" th:text="${user.name}"></label>
                     </div>
                     <div class="row cl mt-10">
                         <label class="form-label col-xs-4 col-sm-2 ">性别：</label>
-                        <label class=" col-sm-5 text-l">男</label>
+                        <label class=" col-sm-5 text-l" th:text="${user.sex=='1'}?'男':'女'"></label>
                     </div>
                     <div class="row cl mt-10">
-                        <label class="form-label col-xs-4 col-sm-2 ">学院：</label>
-                        <label class=" col-sm-5 text-l">计算机科学与技术学院</label>
-                    </div>
-                    <div class="row cl mt-10">
-                        <label class="form-label col-xs-4 col-sm-2 ">班级：</label>
-                        <label class=" col-sm-5 text-l">软件工程152</label>
+                        <label class="form-label col-xs-4 col-sm-2">学院：</label>
+                        <label class=" col-sm-5 text-l" th:text="${user.college}"></label>
                     </div>
                     <div class="row cl mt-10">
                         <label class="form-label col-xs-4 col-sm-2 ">手机号</label>
-                        <label class=" col-sm-5 text-l">119120456</label>
+                        <label class=" col-sm-5 text-l" th:text="${user.phone}"></label>
                     </div>
                     <div class="row cl mt-10">
                         <label class="form-label col-xs-4 col-sm-2 ">年龄：</label>
-                        <label class=" col-sm-5 text-l">18</label>
+                        <label class=" col-sm-5 text-l" th:text="${user.age}"></label>
                     </div>
 
                     <div class="row cl mt-10">
-                        <label class="form-label col-xs-4 col-sm-2 ">报到状态：</label>
-                        <label class=" col-sm-5 text-l">已报到</label>
+                        <label class="form-label col-xs-4 col-sm-2 ">创建时间：</label>
+                        <label class=" col-sm-5 text-l" th:text="${#calendars.format(user.createTime,'yyyy-MM-dd hh:mm:ss')}"></label>
+                    </div>
+                    <div class="row cl mt-10">
+                        <label class="form-label col-xs-4 col-sm-2 ">上次更新时间：</label>
+                        <label class=" col-sm-5 text-l" th:text="${#calendars.format(user.updateTime,'yyyy-MM-dd hh:mm:ss')}"></label>
                     </div>
 
                     <div class="row cl mt-10">

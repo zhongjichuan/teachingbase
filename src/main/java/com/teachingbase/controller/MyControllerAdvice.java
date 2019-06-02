@@ -3,6 +3,7 @@ package com.teachingbase.controller;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @ControllerAdvice
 public class MyControllerAdvice {
@@ -15,7 +16,11 @@ public class MyControllerAdvice {
      */
     @ExceptionHandler(value = UnauthorizedException.class)
     public String auth(){
-        return "redirect:/unauthorizedUrl";
+        return "error/unauthorized";
     }
 
+    @ExceptionHandler(value = Exception.class)
+    public String exception(){
+        return "error/500";
+    }
 }

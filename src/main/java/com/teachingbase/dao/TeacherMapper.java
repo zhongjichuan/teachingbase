@@ -21,8 +21,9 @@ public interface TeacherMapper {
 
     public List<Teacher> getTeacherListByParams(Map map);
 
-    @Select("select MAX(teacher.teacher_id) from teacher,company_teacher,company where company.company_name=#{companyName} and company.company_id = company_teacher.company_id and company_teacher.teacher_id = teacher.teacher_id")
-    public int getMaxTeacherIdByCompanyName(String companyName);
+    @Select("select MAX(teacher.teacher_id) from teacher")
+    public int getMaxTeacherId();
+
 
     @Insert("insert into teacher(teacher_id,teacher_name,teacher_position,phone,sex,teacher_description,email,age,create_time,update_time) " +
             "values(#{teacherId},#{teacherName},#{teacherPosition},#{phone},#{sex},#{teacherDescription},#{email},#{age},now(),now())")
@@ -31,7 +32,7 @@ public interface TeacherMapper {
     @Insert("insert into company_teacher values(#{companyId},#{teacherId})")
     public int addCompanyTeacher(@Param("companyId") String companyId, @Param("teacherId")String teacherId);
 
-    @Insert("insert into user(username,name) values(#{username},#{name})")
+    @Insert("insert into user(username,name,role_id) values(#{username},#{name},'501')")
     public int addTeacherOfUserTable(User user);
 
     public Teacher getTeacherByTeacherId(String teacherId);
@@ -55,4 +56,7 @@ public interface TeacherMapper {
 
     @Select("select count(1) from base_teacher where teacher_id = #{teacherId}")
     public int countBaseTeacherByTeacherId(String teacherId);
+
+    @Select("select * from teacher where teacher_id = #{teacher}")
+    public Teacher getTeacherDetailsByTeacherId(String teacherId);
 }

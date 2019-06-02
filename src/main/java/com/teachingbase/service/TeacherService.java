@@ -10,11 +10,13 @@ public interface TeacherService {
 
     public List<Teacher> getTeacherListByParams(Map map);
 
-    public int getMaxTeacherIdByCompanyName(String companyName);
+    public int getMaxTeacherId();
 
     public boolean addTeacher(Teacher teacher);
 
     public boolean updateTeacher(Teacher teacher);
 
     public boolean delTeacher(String teacherId);
+
+    public Teacher getTeacherDetailsByTeacherId(String teacherId);
 }

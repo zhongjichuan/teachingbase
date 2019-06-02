@@ -1,13 +1,8 @@
 package com.teachingbase.controller.companyController;
 
 
-import com.teachingbase.domain.Base;
-import com.teachingbase.domain.Company;
-import com.teachingbase.domain.Teacher;
-import com.teachingbase.domain.User;
-import com.teachingbase.service.BaseService;
-import com.teachingbase.service.TeacherService;
-import com.teachingbase.service.UserService;
+import com.teachingbase.domain.*;
+import com.teachingbase.service.*;
 import com.teachingbase.util.SessionContextUtil;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//@RequiresRoles("manager")
+@RequiresRoles("manager")
 @RequestMapping("/company")
 @Controller
 public class companyController {
@@ -33,6 +28,10 @@ public class companyController {
     public TeacherService teacherService;
     @Autowired
     public UserService userService;
+    @Autowired
+    public CollegeService collegeService;
+    @Autowired
+    public CompanyService companyService;
 
     @RequestMapping("/baseManage")
     public String baseManage() {
@@ -67,6 +66,11 @@ public class companyController {
         return list;
     }
 
+    /**
+     * 跳转到添加基地页面
+     * @param model
+     * @return
+     */
     @RequestMapping("/addBase")
     public String addBase(Model model) {
         String companyName = SessionContextUtil.getCurrentUser().getCompany();
@@ -74,8 +78,11 @@ public class companyController {
         String baseIdMax = baseService.getMaxBaseId();
         int i = Integer.parseInt(baseIdMax);
         int baseId = i + 1;
+        List<College> collegeList = collegeService.getCollegeList();
+
         model.addAttribute("companyName",companyName);
         model.addAttribute("teachers",teachers);
+        model.addAttribute("collegeList",collegeList);
         model.addAttribute("baseId",baseId);
         return "company/add_base";
     }
@@ -85,14 +92,14 @@ public class companyController {
      * @return
      * @throws ParseException
      */
-//    @ResponseBody
-//    @RequestMapping("/saveBase")
-//    public boolean saveBase(Base base,String teacherId) throws ParseException {
-//        System.out.println(base+"========"+teacherId);
-//        boolean result = baseService.addBase(base,teacherId);
-//
-//        return result;
-//    }
+    @ResponseBody
+    @RequestMapping("/saveBase")
+    public boolean saveBase(Base base,String teacherId,String collegeId) throws ParseException {
+        String companyName = SessionContextUtil.getCurrentUser().getCompany();
+        Company company = companyService.getCompanyByCompanyName(companyName);
+        boolean result = baseService.addBaseByManager(base,collegeId,teacherId,company.getCompanyId());
+        return true;
+    }
 
     @RequestMapping("/editBase/{baseId}")
     public String editBase(@PathVariable("baseId")String baseId,Model model) {
@@ -108,6 +115,9 @@ public class companyController {
     @RequestMapping(value = "/updateBase",method = RequestMethod.POST)
     public boolean updateBase(Base base,String teacherId) {
         System.out.println(base+teacherId);
+        if (base.getBaseStatus()==null){
+            base.setBaseStatus("0");
+        }
         boolean b = baseService.updateBase(base, teacherId);
         return b;
     }
@@ -151,8 +161,7 @@ public class companyController {
     @ResponseBody
     @RequestMapping("/getMaxTeacherId")
     public int getMaxTeacherId() {
-        String companyName = SessionContextUtil.getCurrentUser().getCompany();
-        int id = teacherService.getMaxTeacherIdByCompanyName(companyName);
+        int id = teacherService.getMaxTeacherId();
         return id+1;
     }
 

@@ -12,15 +12,15 @@
     <link rel="bookmark" th:href="@{/favicon.ico}"/>
     <link rel="Shortcut Icon" th:href="@{/favicon.ico}" />
     <!--[if lt IE 9]>
-    <script type="text/javascript" src="lib/html5.js"></script>
-    <script type="text/javascript" src="lib/respond.min.js"></script>
+    <script type="text/javascript" src="/lib/html5.js"></script>
+    <script type="text/javascript" src="/lib/respond.min.js"></script>
     <![endif]-->
-    <link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" />
-    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" />
-    <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="/lib/Hui-iconfont/1.0.8/iconfont.css" />
 
-    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
-    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="/static/h-ui.admin/css/style.css" />
     <!--[if IE 6]>
     <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
     <script>DD_belatedPNG.fix('*');</script><![endif]-->
@@ -35,7 +35,7 @@
 <div th:replace="common/menu::menu"></div>
 
 <section class="Hui-article-box">
-    <nav class="breadcrumb"><i class="Hui-iconfont"></i> <a href="/" class="maincolor">首页</a>
+    <nav class="breadcrumb"><i class="Hui-iconfont"></i> <a href="/index" class="maincolor">首页</a>
         <span class="c-999 en">&gt;</span><span class="c-666">基地详情</span>
     </nav>
     <div class="Hui-article">
@@ -46,35 +46,39 @@
 
                     <div class="row cl mt-10">
                         <label class="form-label col-xs-4 col-sm-2 ">基地编号：</label>
-                        <label class=" col-sm-5 text-l">4001</label>
+                        <label class=" col-sm-5 text-l" th:text="${base.baseId}"></label>
                     </div>
                     <div class="row cl mt-10">
                         <label class="form-label col-xs-4 col-sm-2 ">基地名称：</label>
-                        <label class=" col-sm-5 text-l">javaweb基地</label>
+                        <label class=" col-sm-5 text-l" th:text="${base.baseName}"></label>
                     </div>
                     <div class="row cl mt-10">
                         <label class="form-label col-xs-4 col-sm-2 ">实训老师：</label>
-                        <label class=" col-sm-5 text-l">马云</label>
+                        <label class=" col-sm-5 text-l" th:text="${base.teacher.teacherName}"></label>
                     </div>
                     <div class="row cl mt-10">
                         <label class="form-label col-xs-4 col-sm-2 ">报名人数：</label>
-                        <label class=" col-sm-5 text-l">14/50</label>
+                        <label class=" col-sm-5 text-l">[[${base.baseEnrolmentNum}]]/[[${base.baseNum}]]</label>
                     </div>
                     <div class="row cl mt-10">
                         <label class="form-label col-xs-4 col-sm-2 ">基地描述：</label>
-                        <div class=" col-sm-5 text-l">4001dddddddddddddddddddddddddddddddfda地方大范德萨范德萨发的范德萨发的</div>
+                        <div class=" col-sm-5 text-l" th:text="${base.baseDescription}"></div>
                     </div>
                     <div class="row cl mt-10">
                         <label class="form-label col-xs-4 col-sm-2 ">基地所属公司：</label>
-                        <label class=" col-sm-5 text-l">阿里</label>
+                        <label class=" col-sm-5 text-l" th:text="${base.company.companyName}"></label>
                     </div>
                     <div class="row cl mt-10">
                         <label class="form-label col-xs-4 col-sm-2 ">报到地址：</label>
-                        <label class=" col-sm-5 text-l">杭州阿里</label>
+                        <label class=" col-sm-5 text-l" th:text="${base.baseAddress}"></label>
                     </div>
                     <div class="row cl mt-10">
                         <label class="form-label col-xs-4 col-sm-2 ">报到日期：</label>
-                        <label class=" col-sm-5 text-l">2019-08-01</label>
+                        <label class=" col-sm-5 text-l" th:text="${#calendars.format(base.baseReportDate,'yyyy-MM-dd hh:mm')}"></label>
+                    </div>
+                    <div class="row cl mt-10">
+                        <label class="form-label col-xs-4 col-sm-2 ">创建日期：</label>
+                        <label class=" col-sm-5 text-l" th:text="${#calendars.format(base.baseCreateTime,'yyyy-MM-dd hh:mm:ss')}"></label>
                     </div>
 
                     <div class="row cl mt-10">

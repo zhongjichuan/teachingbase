@@ -7,8 +7,8 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 	<meta http-equiv="Cache-Control" content="no-siteapp" />
-	<link rel="Bookmark" href="favicon.ico" >
-	<link rel="Shortcut Icon" href="favicon.ico" />
+	<link rel="Bookmark" href="/favicon.ico" >
+	<link rel="Shortcut Icon" href="/favicon.ico" />
 	<!--[if lt IE 9]>
 	<script type="text/javascript" src="/lib/html5.js"></script>
 	<script type="text/javascript" src="/lib/respond.min.js"></script>
@@ -34,12 +34,12 @@
 
 <section class="Hui-article-box">
 	<nav class="breadcrumb"><i class="Hui-iconfont"></i> <a href="/" class="maincolor">首页</a>
-		<span class="c-999 en">&gt;</span><span class="c-666">基地中心</span>
-		<span class="c-999 en">&gt;</span><span class="c-666">学生报到管理</span></nav>
+		<span class="c-999 en">&gt;</span><span class="c-666">实训管理</span>
+		<span class="c-999 en">&gt;</span><span class="c-666">学生考勤管理</span></nav>
 	<div class="Hui-article">
 		<article class="cl pd-20">
 			<div class="panel panel-default">
-				<div class="panel-header">学生报到管理</div>
+				<div class="panel-header">学生考勤管理</div>
 			</div>
 				<table class="table table-border table-bordered table-striped table-hover">
 					<tbody class="text-c">
@@ -47,45 +47,22 @@
 						<td>基地编号</td>
 						<td>基地名</td>
 						<td>基地描述</td>
-						<td>实训教师</td>
 						<td>报名人数</td>
+						<td>报到日期</td>
 						<td>状态</td>
 						<td>操作</td>
 					</tr>
-					<tr>
-						<td><a th:href="@{/baseDetails}" class="c-primary">4001</a></td>
-						<td>javaWeb实训基地</td>
-						<td>进行微博开发</td>
-						<td>马云</td>
-						<td><a th:href="@{/enrolledStudents}" class="c-primary">25/50</a></td>
-						<td class="td-status"><span class="label label-success radius">已启用</span></td>
+					<tr th:each="base:${baseList}">
+						<td><a th:text="${base.baseId}" th:href="@{/teacher/baseDetails(baseId=${base.baseId})}" class="c-primary"></a></td>
+						<td th:text="${base.baseName}"></td>
+						<td th:text="${base.baseDescription}"></td>
+						<td><a class="c-primary" th:href="@{/teacher/enrolledStudents(baseId=${base.baseId})}">[[${base.baseEnrolmentNum}]]/[[${base.baseNum}]]</a></td>
+						<td th:text="${#calendars.format(base.baseReportDate,'yyyy-MM-dd HH:mm')}"></td>
+						<td th:utext="${base.baseStatus=='1'} ? '<span class=\'label label-success radius\'>已启用</span>':'<span class=\'label radius\'>已停用</span>'"></td>
 						<td >
-							<a class="btn btn-primary radius size-MINI" th:href="@{/registryManage}">&nbsp;&nbsp;报到管理&nbsp;&nbsp;</a>
+							<a class="btn btn-primary radius size-MINI" th:href="@{/teacher/registryManage(baseId=${base.baseId})}">&nbsp;&nbsp;考勤管理&nbsp;&nbsp;</a>
 						</td>
 					</tr>
-					<tr>
-						<td><a th:href="@{/baseDetails}" class="c-primary">4001</a></td>
-						<td>javaWeb实训基地</td>
-						<td>进行微博开发</td>
-						<td>马云</td>
-						<td><a th:href="@{/enrolledStudents}" class="c-primary">25/50</a></td>
-						<td class="td-status"><span class="label label-danger radius">待审核</span></td>
-						<td >
-							<a class="btn btn-primary radius size-MINI" th:href="@{/registryManage}">&nbsp;&nbsp;报到管理&nbsp;&nbsp;</a>
-						</td>
-					</tr>
-					<tr>
-						<td><a th:href="@{/baseDetails}" class="c-primary">4001</a></td>
-						<td>javaWeb实训基地</td>
-						<td>进行微博开发</td>
-						<td>马云</td>
-						<td><a th:href="@{/enrolledStudents}" class="c-primary">25/50</a></td>
-						<td class="td-status"><span class="label radius">已停用</span></td>
-						<td >
-							<a class="btn btn-primary radius size-MINI" th:href="@{/registryManage}">&nbsp;&nbsp;报到管理&nbsp;&nbsp;</a>
-						</td>
-					</tr>
-
 					</tbody>
 				</table>
 

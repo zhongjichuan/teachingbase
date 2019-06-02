@@ -25,6 +25,11 @@ public class User implements Serializable {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date updateTime;
 
+    /*学生的级联操作*/
+    private Base base;
+    private ClassStudent classStudent;
+    private BaseStudent baseStudent;
+
     @Override
     public String toString() {
         return "User{" +
@@ -42,7 +47,34 @@ public class User implements Serializable {
                 ", phone='" + phone + '\'' +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
+                ", base=" + base +
+                ", classStudent=" + classStudent +
+                ", baseStudent=" + baseStudent +
                 '}';
+    }
+
+    public Base getBase() {
+        return base;
+    }
+
+    public void setBase(Base base) {
+        this.base = base;
+    }
+
+    public ClassStudent getClassStudent() {
+        return classStudent;
+    }
+
+    public void setClassStudent(ClassStudent classStudent) {
+        this.classStudent = classStudent;
+    }
+
+    public BaseStudent getBaseStudent() {
+        return baseStudent;
+    }
+
+    public void setBaseStudent(BaseStudent baseStudent) {
+        this.baseStudent = baseStudent;
     }
 
     public Integer getId() {

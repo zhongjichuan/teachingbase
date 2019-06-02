@@ -5,4 +5,6 @@ import com.teachingbase.domain.Company;
 
 public interface CompanyService {
     public Company getCompanyByBaseId(Base base);
+
+    public Company getCompanyByCompanyName(String companyName);
 }

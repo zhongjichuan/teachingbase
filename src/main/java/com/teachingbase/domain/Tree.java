@@ -19,6 +19,8 @@ public class Tree<T> {
 
     private String iconUrl; //图标
 
+    private String isActive;
+
     private List<Tree<T>> children = new ArrayList<>(); //子节点信息
 
     @Override
@@ -31,8 +33,17 @@ public class Tree<T> {
                 ", name='" + name + '\'' +
                 ", url='" + url + '\'' +
                 ", iconUrl='" + iconUrl + '\'' +
+                ", isActive='" + isActive + '\'' +
                 ", children=" + children +
                 '}';
+    }
+
+    public String getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(String isActive) {
+        this.isActive = isActive;
     }
 
     public String getIconUrl() {

@@ -35,8 +35,8 @@ public class TeacherServiceImpl implements TeacherService  {
     }
 
     @Override
-    public int getMaxTeacherIdByCompanyName(String companyName) {
-        return teacherMapper.getMaxTeacherIdByCompanyName(companyName);
+    public int getMaxTeacherId() {
+        return teacherMapper.getMaxTeacherId();
     }
 
     /**
@@ -107,5 +107,10 @@ public class TeacherServiceImpl implements TeacherService  {
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();//手动开启事务回滚
             return false;
         }
+    }
+
+    @Override
+    public Teacher getTeacherDetailsByTeacherId(String teacherId) {
+        return teacherMapper.getTeacherDetailsByTeacherId(teacherId);
     }
 }

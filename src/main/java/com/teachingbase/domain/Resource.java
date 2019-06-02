@@ -7,6 +7,8 @@ public class Resource {
     private String url;
     private String permissions;
     private String iconUrl;
+    private String isActive;
+
 
     @Override
     public String toString() {
@@ -17,7 +19,16 @@ public class Resource {
                 ", url='" + url + '\'' +
                 ", permissions='" + permissions + '\'' +
                 ", iconUrl='" + iconUrl + '\'' +
+                ", isActive='" + isActive + '\'' +
                 '}';
+    }
+
+    public String getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(String isActive) {
+        this.isActive = isActive;
     }
 
     public String getIconUrl() {

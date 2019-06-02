@@ -1,6 +1,7 @@
 ﻿<!--_meta 作为公共模版分离出去-->
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
 <meta charset="utf-8">
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -18,10 +19,6 @@
 <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
 <link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/default/skin.css" id="skin" />
 <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" />
-<!--[if IE 6]>
-<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
-<script>DD_belatedPNG.fix('*');</script>
-<![endif]-->
 <!--/meta 作为公共模版分离出去-->
 
 <title>首页</title>
@@ -51,10 +48,10 @@
 		</article>
 
 
-		<!--<div class="panel panel-default">-->
-			<!--<div class="panel-header"><span>用户信息</span>-->
-				<!--<input class="btn radius btn-primary" onClick="edit_modal()" type="button" value="修改">-->
-			<!--</div>-->
+		<div class="panel panel-default">
+			<div class="panel-header"><span>用户信息</span>
+				<input class="btn radius btn-primary" onClick="edit_modal()" type="button" value="修改">
+			</div>
 			<!--<div class="panel-body">-->
 					<!--<ul class="inline ml-30 f-20">-->
 						<!--<li class="ml-20">ID:1001</li>-->
@@ -63,32 +60,35 @@
 						<!--<li class="ml-20">学院:计科院</li>-->
 					<!--</ul>-->
 			<!--</div>-->
-			<!--<table class="table table-border mt-20">-->
-				<!--<tbody class="text-c">-->
+			<shiro:hasRole name="student">
+			<table class="table table-border mt-20">
+				<tbody class="text-c">
 
-				<!--<tr>-->
-					<!--<td>基地编号</td>-->
-					<!--<td>基地所属公司</td>-->
-					<!--<td>基地名称</td>-->
-					<!--<td>基地负责老师</td>-->
-					<!--<td>报到地点</td>-->
-					<!--<td>报道日期</td>-->
-				<!--</tr>-->
-				<!--<tr>-->
-					<!--<td><a th:href="@{/baseDetails}" class="c-primary">2001</a></td>-->
-					<!--<td>阿里巴巴</td>-->
-					<!--<td>java实习</td>-->
-					<!--<td>马云</td>-->
-					<!--<td>杭州</td>-->
-					<!--<td>2019-09-09</td>-->
-				<!--</tr>-->
-				<!--<tr><td colspan="6" style="color: red">-->
-					<!--<h4>未报名校外实训</h4>-->
-				<!--</td>-->
-				<!--</tr>-->
-				<!--</tbody>-->
-			<!--</table>-->
-		<!--</div>-->
+				<tr>
+					<td>基地编号</td>
+					<td>基地所属公司</td>
+					<td>基地名称</td>
+					<td>基地负责老师</td>
+					<td>报到地点</td>
+					<td>报道日期</td>
+				</tr>
+				<tr th:if="${base!=null}">
+					<td><a th:href="@{/baseDetails}" class="c-primary" th:text="${base.baseId}"></a></td>
+					<td th:text="${base.company.companyName}"></td>
+					<td th:text="${base.baseName}"></td>
+					<td th:text="${base.teacher.teacherName}"></td>
+					<td th:text="${base.baseAddress}"></td>
+					<td th:text="${#calendars.format(base.baseReportDate,'yyyy-MM-dd HH:mm')}"></td>
+				</tr>
+				<tr th:if="${base == null}">
+					<td colspan="6" style="color: red">
+					<h4>未报名校外实训</h4>
+				</td>
+				</tr>
+				</tbody>
+			</table>
+			</shiro:hasRole>
+		</div>
 	</div>
 </section>
 <div id="edit_modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -99,23 +99,26 @@
 				<a class="close" data-dismiss="modal" aria-hidden="true" href="#;">×</a>
 			</div>
 			<form class="modal-body" id="editUserForm">
-				ID：<input type="text" class="input-text radius" disabled="disabled" th:value="${user.username}"><br>
-				姓名：<input type="text" class="input-text radius "  disabled="disabled" th:value="${user.name}"><br>
-				学院：<input type="text"  class="input-text radius" disabled="disabled" th:value="${user.roleId=='301'}?${user.college}:${user.company}"><br>
-
+				ID：<input type="text" class="input-text radius" disabled="disabled" th:value="${user.username}">
+				<input type="hidden" class="input-text radius" name="username" th:value="${user.username}"><br>
+				姓名：<input type="text" class="input-text radius "  disabled="disabled" th:value="${user.name}">
+				<input type="hidden" class="input-text radius " name="name" th:value="${user.name}"><br>
+				学院：<input type="text"  class="input-text radius" disabled="disabled" th:value="${user.college!=null}?${user.college}:${user.company}"><br>
+				<input type="hidden"  class="input-text radius" th:name="${user.college!=null}?'college':'company'" th:value="${user.college!=null}?${user.college}:${user.company}">
 				姓别：
-				<div class="check-box"><input type="radio" id="radio-1" name="sex" th:value="1" >
+				<div class="check-box"><input type="radio" id="radio-1" name="sex" th:value="1" th:checked="${user.sex=='1'}">
 						<label for="radio-1" class="f-16">男</label>&nbsp;&nbsp;&nbsp;
-					<input type="radio" id="radio-2" name="sex" th:value="2" class="size-L">
+					<input type="radio" id="radio-2" name="sex" th:value="2" class="size-L" th:checked="${user.sex=='2'}">
 						<label for="radio-2" class="f-16">女</label></div><br>
+				年龄：<input type="text" class="input-text radius" name="age" th:value="${user.age}" ><br>
 				手机号：<input type="text" class="input-text radius" name="phone" th:value="${user.phone}" ><br>
 				邮箱：<input type="text" class="input-text radius" name="email" th:value="${user.email}"><br>
 
-			</form>
 			<div class="modal-footer">
-				<button class="btn btn-primary">保存</button>
-				<button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+				<input type="submit" class="btn btn-primary" value="修改"></input>
+				<button class="btn" data-dismiss="modal" aria-hidden="true" id="cancle">取消</button>
 			</div>
+			</form>
 		</div>
 	</div>
 </div>
@@ -124,6 +127,27 @@
 
 <!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript">
+	$(function () {
+		$("#editUserForm").submit(function () {
+			var data = $("#editUserForm").serializeArray();
+			$.ajax({
+				data:data,
+				type:"post",
+				url:"/user/updateUser",
+				dataType:"json",
+				success:function (data) {
+					if (data){
+						layer.msg("修改成功。");
+						setTimeout('window.location.href="/logout"', 1000);
+					} else {
+						layer.msg("修改失败。");
+					}
+				}
+			});
+			return false;
+		});
+
+	});
 
 	function edit_modal(){
 		$("#edit_modal").modal("show")}

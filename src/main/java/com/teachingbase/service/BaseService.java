@@ -17,7 +17,7 @@ public interface BaseService {
 
     public String getMaxBaseId();
 
-    public boolean addBase(Base base,String companyId,String collegeId);
+    public boolean addBaseByManager(Base base,String collegeId,String teacherId,String companyId);
 
     public int saveBaseTeacher(String baseId,String teacherId);
 
@@ -35,9 +35,26 @@ public interface BaseService {
      */
     public List<Base> getBaseListByCollegeName(String collegeName);
 
+    public boolean addBase(Base base,String companyId,String collegeId);
+
     public List getBaseListBySearchParamsAndCollege(Map params);
 
     public boolean updateBaseByCounselor(Base base);
 
     public boolean delBaseByBaseId(Base base);
+
+    /**
+     * 学生相关操作
+     */
+    public List<Base> getBaseListByStudent(String username);
+
+    public List<Base> getBaseListByStudentAndParams(Map map);
+
+    public Base getBaseByStudentId(String studentId);
+
+    /**
+     * 实训教师
+     */
+    public List<Base> getBaseByTeacherId(String teacherId);
+
 }

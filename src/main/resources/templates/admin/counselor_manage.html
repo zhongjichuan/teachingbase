@@ -358,7 +358,7 @@
         if (data[0]){
             $.each(data,function (index,user) {
                 $("#tbody").append("<tr class='singleData'>\n" +
-                    "                        <td><a th:href=\"@{#}\" class=\"c-primary\">"+user.username+"</a></td>\n" +
+                    "                        <td><a href='/user/getUser/"+user.username+"' class=\"c-primary\">"+user.username+"</a></td>\n" +
                     "                        <td>"+user.name+"</td>\n" +
                     "                        <td>"+user.college+"</td>\n" +
                     "                        <td>"+user.phone+"</td>\n" +

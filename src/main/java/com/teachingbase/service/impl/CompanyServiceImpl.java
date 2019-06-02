@@ -16,4 +16,8 @@ public class CompanyServiceImpl implements CompanyService {
     public Company getCompanyByBaseId(Base base) {
         return companyMapper.getCompanyByBaseId(base);
     }
+
+    public Company getCompanyByCompanyName(String companyName){
+        return companyMapper.getCompanyByCompanyName(companyName);
+    }
 }
